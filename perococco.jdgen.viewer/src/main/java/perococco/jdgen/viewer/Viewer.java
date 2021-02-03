@@ -23,14 +23,9 @@ public class Viewer extends Application {
 
     private final ZoomOperator zoomOperator = new ZoomOperator(true);
 
-    private ImmutableList<Rectangle> generate(JDGenConfiguration configuration) {
-        final var cells = CellsGenerator.generate(configuration);
-        return CellCompactor.compact(cells);
-    }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
-        final GenerationManager generationManager = new GenerationManager(this::generate);
+        final GenerationManager generationManager = new GenerationManager();
         final FXMLLoader loader = new FXMLLoader(Viewer.class.getResource("main.fxml"));
         final BorderPane container = loader.load();
         final MainController controller = loader.getController();

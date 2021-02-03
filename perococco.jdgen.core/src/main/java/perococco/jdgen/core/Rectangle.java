@@ -52,7 +52,7 @@ public class Rectangle {
 
 
     public @NonNull Rectangle withPos(double posX, double posY) {
-        return new Rectangle((int) Math.floor(posX), (int) Math.floor(posY), halfWidth,halfHeight);
+        return new Rectangle((int) Math.round(posX), (int) Math.round(posY), halfWidth,halfHeight);
     }
 
     public @NonNull Rectangle translate(IntVector displacement) {

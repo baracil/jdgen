@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Vector2D {
 
     public static @NonNull Vector2D of(double x, double y) {
