@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>perococco.jdgen</groupId>
+        <artifactId>jdgen-maven</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>maven</relativePath>
+    </parent>
+    <packaging>pom</packaging>
+
+    <artifactId>jdgen</artifactId>
+
+    <name>${application.name}</name>
+
+    <modules>
+        <module>maven</module>
+        <module>perococco.jdgen.core</module>
+        <module>perococco.jdgen.viewer</module>
+        <module>perococco.jdgen.rooms</module>
+    </modules>
+</project>
