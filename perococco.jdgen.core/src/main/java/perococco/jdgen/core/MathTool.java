@@ -47,9 +47,8 @@ public class MathTool {
     }
 
     public static @NonNull DoubleSupplier normalDistribution(int minValue, int maxValue) {
-        final double mean = 0.5*(minValue+maxValue);
-        final double std = (maxValue-minValue)/3.;
-        final var normalDistribution = new NormalDistribution(mean,std);
+        final double std = (maxValue-minValue);
+        final var normalDistribution = new NormalDistribution(minValue,std);
         return normalDistribution::sample;
     }
 }

@@ -25,7 +25,7 @@ public class RoomSelector {
         final var th = configuration.mainRoomThreshold() * ah;
 
         return cells.stream()
-                    .filter(c -> (c.halfHeight() >= th && c.halfWidth() >= aw)||(c.halfHeight()>=ah && c.halfWidth() >=tw))
+                    .filter(c -> (c.halfHeight() >= th && c.halfWidth() >= tw))
                     .map(c -> new Room(c))
                     .collect(ImmutableList.toImmutableList());
 
