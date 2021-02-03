@@ -60,6 +60,8 @@ public class CellsGenerator {
         final var width = MathTool.makeOdd((int)Math.round(randomSupplier.getAsDouble()))/2;
         final var height = MathTool.makeOdd((int)Math.round(randomSupplier.getAsDouble()))/2;
 
+        final double ratio = Math.max(width,height)/(double)Math.min(width,height);
+
         inProgress = new Rectangle(-width/2,-height/2,width/2,height/2);
     }
 

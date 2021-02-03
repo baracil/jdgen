@@ -24,15 +24,17 @@ public class CellCompactor {
         sorted = input.toArray(Rectangle[]::new);
         boolean moved = false;
         do {
+            System.out.println("PLOP");
             moved = performOneIteration();
         } while (moved);
+        System.out.println("DONE");
 
         return ImmutableList.copyOf(sorted);
     }
 
     private boolean performOneIteration() {
         boolean moved = false;
-        Arrays.sort(sorted,Rectangle.DISTANCE_COMPARATOR);
+        Arrays.sort(sorted,Rectangle.DISTANCE_COMPARATOR.reversed());
         for (int i = 0, sortedLength = sorted.length; i < sortedLength; i++) {
             final var rectangle1 = sorted[i];
             final int nx = Math.abs(rectangle1.xc())-rectangle1.halfWidth();
@@ -44,13 +46,13 @@ public class CellCompactor {
 
             var last = rectangle1;
 
-            for (int j = 0; j < n; j++) {
+            for (int j = n-1; j >= 0; j--) {
                 double dx = (rectangle1.xc()*j*1.0)/n;
                 double dy = (rectangle1.yc()*j*1.0)/n;
                 var rect = rectangle1.withPos(dx,dy);
 
                 if (collide(rect,sorted,i)) {
-                    continue;
+                    break;
                 }
                 last = rect;
             }

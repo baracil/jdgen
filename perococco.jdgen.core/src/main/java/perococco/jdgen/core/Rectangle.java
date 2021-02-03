@@ -1,11 +1,13 @@
 package perococco.jdgen.core;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.Value;
 
 import java.util.Comparator;
 
 @Value
+@EqualsAndHashCode(of = {"xc","yc","halfHeight","halfWidth"})
 public class Rectangle {
 
     public static final Comparator<Rectangle> DISTANCE_COMPARATOR = Comparator.comparingDouble(Rectangle::distance);

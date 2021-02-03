@@ -37,8 +37,8 @@ public class Viewer extends Application {
 
         controller.setGenerationManager(generationManager);
 
+        dungeon.setModel(generationManager.getGenerationModel());
 
-        dungeon.bind(generationManager.getGenerationModel().roomsProperty());
         final var pane = new Pane();
         pane.getChildren().add(dungeon);
         container.setCenter(pane);
