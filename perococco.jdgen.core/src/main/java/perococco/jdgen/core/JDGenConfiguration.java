@@ -13,6 +13,4 @@ public class JDGenConfiguration {
 
     double mainRoomThreshold;
 
-    double density;
-
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="perococco.jdgen.viewer.ButtonBarController">
+   <children>
+      <Button mnemonicParsing="false" onAction="#generate" text="Generate" />
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="Dungeon Size" />
+            <Slider fx:id="dungeonSize" blockIncrement="5.0" max="50.0" min="5.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="Room Size1" />
+            <Slider fx:id="roomSize1" blockIncrement="2.0" max="20.0" min="1.0" showTickLabels="true" showTickMarks="true" value="2.0" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER">
+         <children>
+            <Label text="Room Size2" />
+            <Slider fx:id="roomSize2" blockIncrement="2.0" max="20.0" min="1.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

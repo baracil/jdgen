@@ -2,42 +2,49 @@ package perococco.jdgen.viewer;
 
 import com.google.common.collect.ImmutableList;
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
-import lombok.NonNull;
+import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Rectangle;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import perococco.jdgen.rooms.CellCompactor;
+import perococco.jdgen.rooms.CellsGenerator;
 
 public class Viewer extends Application {
 
-
-    private static final Map<String,
-            Pair<ObservableValue<ImmutableList<Rectangle>>,Thread>> PARAM = new HashMap<>();
-
-    public static void launch(@NonNull ObservableValue<ImmutableList<Rectangle>> rooms, Thread t) {
-        final var uuid = UUID.randomUUID();
-        PARAM.put(uuid.toString(),new Pair<>(rooms,t));
-        launch(uuid.toString());
+    public static void main(String[] args) {
+        launch(args);
     }
+
 
     private Dungeon dungeon = new Dungeon();
 
     private final ZoomOperator zoomOperator = new ZoomOperator(true);
 
+    private ImmutableList<Rectangle> generate(JDGenConfiguration configuration) {
+        final var cells = CellsGenerator.generate(configuration);
+        return CellCompactor.compact(cells);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-        final var rooms = PARAM.remove(getParameters().getRaw().get(0));
+        final GenerationManager generationManager = new GenerationManager(this::generate);
+        final FXMLLoader loader = new FXMLLoader(Viewer.class.getResource("main.fxml"));
+        final BorderPane container = loader.load();
+        final MainController controller = loader.getController();
+
+        controller.setGenerationManager(generationManager);
+
+
+        dungeon.bind(generationManager.getGenerationModel().roomsProperty());
         final var pane = new Pane();
         pane.getChildren().add(dungeon);
-        rooms.getValue().start();
-        dungeon.bind(rooms.getKey());
-        final Scene scene = new Scene(pane,600,400);
+        container.setCenter(pane);
+
+
+        final Scene scene = new Scene(container, 600, 400);
 
         pane.setTranslateX(300);
         pane.setTranslateY(200);
@@ -48,13 +55,13 @@ public class Viewer extends Application {
                 return;
             }
             if (e.getDeltaY() < 0) {
-                zoomFactor = 1./1.5;
-            } if (e.getDeltaY() > 0) {
+                zoomFactor = 1. / 1.5;
+            }
+            if (e.getDeltaY() > 0) {
                 zoomFactor = 1.5;
             }
-            zoomOperator.zoom(pane,zoomFactor,e.getSceneX(),e.getSceneY());
+            zoomOperator.zoom(pane, zoomFactor, e.getSceneX(), e.getSceneY());
         });
-
 
 
         primaryStage.setScene(scene);

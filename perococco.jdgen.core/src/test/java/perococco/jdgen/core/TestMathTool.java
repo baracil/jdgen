@@ -15,7 +15,8 @@ public class TestMathTool {
                 Arguments.of(0,10,2,20,9),
                 Arguments.of(0,10,2,2,-5),
                 Arguments.of(0,2,2,2,1),
-                Arguments.of(0,2,-3,5,-3)
+                Arguments.of(0,2,-3,5,-3),
+                Arguments.of(-30,11,-40,15,6)
         );
     }
 

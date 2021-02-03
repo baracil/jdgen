@@ -5,9 +5,11 @@ module jdgen.viewer {
     requires jdgen.core;
 
     requires javafx.graphics;
+    requires javafx.fxml;
     requires javafx.controls;
 
     requires com.google.common;
+    requires jdgen.rooms;
 
     exports perococco.jdgen.viewer;
 }

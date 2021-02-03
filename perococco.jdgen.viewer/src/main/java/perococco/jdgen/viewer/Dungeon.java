@@ -46,10 +46,11 @@ public class Dungeon extends Group {
     }
 
     private javafx.scene.shape.Rectangle synchronizeRoom(@NonNull javafx.scene.shape.Rectangle rectangle, @NonNull Rectangle cell) {
-        rectangle.setHeight(cell.height());
-        rectangle.setWidth(cell.width());
-        rectangle.setX(cell.x());
-        rectangle.setY(cell.y());
+        rectangle.setHeight(cell.halfHeight()*2+1);
+        rectangle.setWidth(cell.halfWidth()*2+1);
+        rectangle.setX(cell.xc()-cell.halfWidth());
+        rectangle.setY(cell.yc()-cell.halfHeight());
+        rectangle.setStrokeWidth(0.01);
         rectangle.setStroke(Color.BLACK);
         rectangle.setFill(Color.BLUE);
         return rectangle;

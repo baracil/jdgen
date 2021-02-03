@@ -3,24 +3,57 @@ package perococco.jdgen.core;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Comparator;
+
 @Value
 public class Rectangle {
 
-    int x;
-    int y;
+    public static final Comparator<Rectangle> DISTANCE_COMPARATOR = Comparator.comparingDouble(Rectangle::distance);
 
-    int width;
-    int height;
+    int xc;
+    int yc;
 
+    int halfWidth;
+    int halfHeight;
+
+    double distance;
+
+    public Rectangle(int xc, int yc, int halfWidth, int halfHeight) {
+        this.xc = xc;
+        this.yc = yc;
+        this.halfWidth = halfWidth;
+        this.halfHeight = halfHeight;
+        this.distance = Math.sqrt(xc * xc + yc * yc);
+    }
 
     public boolean overlap(@NonNull Rectangle other) {
-        boolean xOverlap = other.x <= x + width-1 && x <= other.x + other.width-1;
-        boolean yOverlap = other.y <= y + height-1 && y <= other.y + other.height-1;
+        boolean xOverlap = Math.abs(other.xc - xc) <= (other.halfWidth + this.halfWidth);
+        boolean yOverlap = Math.abs(other.yc - yc) <= (other.halfHeight + this.halfHeight);
         return xOverlap && yOverlap;
+    }
+
+    public int displacementToPutRightOf(@NonNull Rectangle reference) {
+        return (reference.xc - this.xc) + (reference.halfWidth + this.halfWidth + 1);
+    }
+
+    public int displacementToPutLeftOf(@NonNull Rectangle reference) {
+        return (reference.xc - this.xc) - (reference.halfWidth + this.halfWidth + 1);
+    }
+
+    public int displacementToPutAboveOf(@NonNull Rectangle reference) {
+        return (reference.yc - this.yc) - (reference.halfHeight + this.halfHeight + 1);
+    }
+
+    public int displacementToPutBelowOf(@NonNull Rectangle reference) {
+        return (reference.yc - this.yc) + (reference.halfHeight + this.halfHeight + 1);
     }
 
 
     public @NonNull Rectangle withPos(double posX, double posY) {
-        return new Rectangle((int)Math.floor(posX),(int)Math.floor(posY),width,height);
+        return new Rectangle((int) Math.floor(posX), (int) Math.floor(posY), halfWidth,halfHeight);
+    }
+
+    public @NonNull Rectangle translate(IntVector displacement) {
+        return new Rectangle(xc + displacement.x(), yc + displacement.y(), halfWidth,halfHeight);
     }
 }
