@@ -43,7 +43,7 @@ public class CellsSeparator {
             if (anyColliding) {
                 nbIterations++;
             }
-        } while (!Thread.currentThread().isInterrupted() && (anyColliding || nbIterations<200));
+        } while (!Thread.currentThread().isInterrupted() && (anyColliding || nbIterations<1000));
         System.out.println(nbIterations);
         return getFinalCells();
     }
