@@ -44,7 +44,6 @@ public class CellsSeparator {
                 nbIterations++;
             }
         } while (!Thread.currentThread().isInterrupted() && (anyColliding || nbIterations<1000));
-        System.out.println(nbIterations);
         return getFinalCells();
     }
 
