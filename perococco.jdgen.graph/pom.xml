@@ -10,12 +10,12 @@
         <relativePath>../maven</relativePath>
     </parent>
 
-    <artifactId>jdgen-cells</artifactId>
+    <artifactId>jdgen-graph</artifactId>
 
     <name>${application.name} - ${module.name}</name>
 
     <properties>
-        <module.name>Rooms generation</module.name>
+        <module.name>Graph Algo</module.name>
     </properties>
 
     <dependencies>
@@ -28,6 +28,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>

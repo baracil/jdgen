@@ -18,6 +18,7 @@
     <modules>
         <module>maven</module>
         <module>perococco.jdgen.core</module>
+        <module>perococco.jdgen.graph</module>
         <module>perococco.jdgen.viewer</module>
         <module>perococco.jdgen.rooms</module>
     </modules>

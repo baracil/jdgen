@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Vector2D {
+public class Vector2D implements ROVector2D {
 
     public static @NonNull Vector2D of(double x, double y) {
         return new Vector2D(x,y);
@@ -24,6 +24,11 @@ public class Vector2D {
         this.x=other.x;
         this.y=other.y;
         return this;
+    }
+
+    @Override
+    public @NonNull ImmutableVector2D toImmutable() {
+        return new ImmutableVector2D(x,y);
     }
 
     public @NonNull Vector2D setTo(double x, double y) {
