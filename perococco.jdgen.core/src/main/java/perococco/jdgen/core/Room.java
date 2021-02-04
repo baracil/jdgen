@@ -15,8 +15,13 @@ public class Room {
         this.center = new IntVector(geometry.xc(),geometry.yc());
     }
 
-    public IntVector position() {
-        return center;
+    public @NonNull Point2D position() {
+        return ImmutableVector2D.of(center.x(),center.y());
     }
 
+    @Override
+    public String toString() {
+        return "Room{" + center +
+                '}';
+    }
 }

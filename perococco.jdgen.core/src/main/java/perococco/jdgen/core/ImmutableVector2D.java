@@ -63,4 +63,8 @@ public class ImmutableVector2D implements ROVector2D {
         return this.x*this.x+this.y*this.y;
     }
 
+    @Override
+    public String toString() {
+        return "(" + x +", " + y +")";
+    }
 }

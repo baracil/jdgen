@@ -10,6 +10,7 @@ module jdgen.viewer {
 
     requires com.google.common;
     requires jdgen.rooms;
+    requires jdgen.graph;
 
     exports perococco.jdgen.viewer;
 }

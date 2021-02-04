@@ -3,8 +3,9 @@ package perococco.jdgen.graph;
 import com.google.common.collect.ImmutableSet;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.Value;
-import perococco.jdgen.core.ImmutableVector2D;
+import perococco.jdgen.core.Point2D;
 import perococco.jdgen.core.ROVector2D;
 
 import java.util.Set;
@@ -12,20 +13,21 @@ import java.util.stream.Stream;
 
 @Value
 @EqualsAndHashCode(of={"vertices"})
+@ToString(of = "vertices")
 public class Triangle {
-    @NonNull ImmutableSet<ImmutableVector2D> vertices;
+    @NonNull ImmutableSet<Point2D> vertices;
 
     @NonNull ImmutableSet<Edge> edges;
 
     @NonNull Circle circumCircle;
 
-    @NonNull ImmutableVector2D vertex1;
-    @NonNull ImmutableVector2D vertex2;
-    @NonNull ImmutableVector2D vertex3;
+    @NonNull Point2D vertex1;
+    @NonNull Point2D vertex2;
+    @NonNull Point2D vertex3;
 
-    public Triangle(@NonNull ImmutableVector2D vertex1,
-                    @NonNull ImmutableVector2D vertex2,
-                    @NonNull ImmutableVector2D vertex3) {
+    public Triangle(@NonNull Point2D vertex1,
+                    @NonNull Point2D vertex2,
+                    @NonNull Point2D vertex3) {
         this.vertices = ImmutableSet.of(vertex1,vertex2,vertex3);
         this.vertex1 = vertex1;
         this.vertex2 = vertex2;
@@ -42,11 +44,11 @@ public class Triangle {
         return Tools.isInTriangle(point,this);
     }
 
-    public boolean isPointInsideCircumCircle(ROVector2D point) {
+    public boolean isPointInsideCircumCircle(Point2D point) {
         return circumCircle.isInside(point);
     }
 
-    public ImmutableSet<ImmutableVector2D> points() {
+    public ImmutableSet<Point2D> points() {
         return vertices;
     }
 

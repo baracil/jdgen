@@ -1,67 +1,104 @@
 package perococco.jdgen.viewer;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import lombok.NonNull;
+import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Rectangle;
+import perococco.jdgen.core.Room;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Dungeon extends Group {
 
     private final ObjectProperty<ROGenerationModel> model = new SimpleObjectProperty<>();
-
     private final ObjectProperty<ImmutableMap<Rectangle,Color>> rectangles = new SimpleObjectProperty<>(ImmutableMap.of());
+    private final ObjectProperty<ImmutableList<Couple<Room>>> graph = new SimpleObjectProperty<>(ImmutableList.of());
 
-    private final InvalidationListener listener = l -> this.updateCells();
+    private final InvalidationListener listener = l -> this.updateState();
+
+    private final Group rectangleGroup = new Group();
+    private final Group graphGroup = new Group();
 
     public Dungeon() {
+        this.getChildren().addAll(rectangleGroup,graphGroup);
         this.model.addListener((l,o,n) -> onModelChanged(o,n));
         this.rectangles.addListener(l -> updateRooms());
+        this.graph.addListener(l -> updateGraph());
     }
 
     public void setModel(@NonNull ROGenerationModel model) {
         this.model.set(model);
     }
 
-    private void updateCells() {
+    private void updateState() {
         final var m = model.get();
         if (m == null) {
             this.rectangles.set(ImmutableMap.of());
             return;
         }
 
-        final var cells = m.getCells();
-        final var rooms = m.getRooms();
+        final var state = m.getState();
 
         final Map<Rectangle,Color> rectangles = new HashMap<>();
-        cells.forEach(c -> rectangles.put(c,Color.BLUE));
-        rooms.forEach(r -> rectangles.put(r.geometry(),Color.RED));
+        state.cells().forEach(c -> rectangles.put(c,Color.BLUE));
+        state.rooms().forEach(r -> rectangles.put(r.geometry(),Color.RED));
         this.rectangles.set(ImmutableMap.copyOf(rectangles));
+
+        if (state.emstree().isEmpty()) {
+            this.graph.set(state.delaunayGraph());
+        } else {
+            this.graph.set(state.emstree());
+        }
     }
 
     private void onModelChanged(ROGenerationModel o, ROGenerationModel n) {
         if (o != null) {
-            o.cellsProperty().removeListener(listener);
-            o.roomsProperty().removeListener(listener);
+            o.stateProperty().removeListener(listener);
         }
         if (n!=null) {
-            n.cellsProperty().addListener(listener);
-            n.roomsProperty().addListener(listener);
+            n.stateProperty().addListener(listener);
         }
-        this.updateCells();
+        this.updateState();
     }
 
 
+    private void updateGraph() {
+        final var lines = graph.get().stream().map(this::toLine).collect(Collectors.toList());
+        graphGroup.getChildren().setAll(lines);
+    }
+
+    private @NonNull Line toLine(@NonNull Couple<Room> edge) {
+        final var line = new Line();
+        final var start = edge.value1().position();
+        final var end = edge.value2().position();
+        line.setStroke(Color.rgb(0,255,0));
+        line.setStrokeWidth(4);
+        line.setStartX(start.x());
+        line.setStartY(start.y());
+        line.setEndX(end.x());
+        line.setEndY(end.y());
+        return line;
+    }
+
+
+
+
     private void updateRooms() {
-        this.synchronizeRooms(getChildren(), rectangles.get());
+        this.synchronizeRooms(rectangleGroup.getChildren(), rectangles.get());
     }
 
     private void synchronizeRooms(@NonNull ObservableList<Node> children, @NonNull ImmutableMap<Rectangle,Color> rectangles) {

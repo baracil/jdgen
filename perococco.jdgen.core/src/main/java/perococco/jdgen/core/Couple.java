@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -16,6 +17,12 @@ public class Couple<T> {
 
     public static <T> @NonNull Couple<T> of(@NonNull T vertex1, @NonNull T vertex2) {
         return new Couple<>(vertex1,vertex2);
+    }
+
+    public <R> @NonNull Couple<R> map(@NonNull Function<? super T, ? extends R> mapper) {
+        final var newValue1 = mapper.apply(value1);
+        final var newValue2 = mapper.apply(value2);
+        return Couple.of(newValue1,newValue2);
     }
 
     public @NonNull Couple<T> swap() {

@@ -1,17 +1,7 @@
 package perococco.jdgen.viewer;
 
-import com.google.common.collect.ImmutableList;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.JDGenConfiguration;
-import perococco.jdgen.core.Rectangle;
-import perococco.jdgen.core.Room;
-import perococco.jdgen.rooms.CellsGenerator;
-import perococco.jdgen.rooms.CellsGenerator2;
-import perococco.jdgen.rooms.CellsSeparator;
-import perococco.jdgen.rooms.RoomSelector;
 
 import java.util.Optional;
 
@@ -20,36 +10,25 @@ public class GenerationManager {
 
     private GenerationModel generationModel = new GenerationModel();
 
-    private final FXUpdater<ImmutableList<Rectangle>> fxUpdater = new FXUpdater<>(l -> generationModel.setCells(l));
+    private final FXUpdater<ViewerState> fxUpdater = new FXUpdater<>(state -> generationModel.setState(state));
 
     private Thread thread = null;
 
     public void generate(double dungeonSize, double roomSize1, double roomSize2) {
-        var task = new Task<ImmutableList<Room>>() {
+        final var task = new Runnable() {
             @Override
-            protected ImmutableList<Room> call() throws Exception {
+            public void run() {
                 try {
-                    Platform.runLater(() -> {
-                        generationModel.setCells(ImmutableList.of());
-                        generationModel.setRooms(ImmutableList.of());
-                    });
-                    final var configuration = new JDGenConfiguration((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2), 1.25);
-                    final var cells = CellsGenerator.generate(configuration);
-                    fxUpdater.set(cells);
-
-                    final var c = CellsSeparator.separate(configuration,cells,l -> fxUpdater.set(l));
-                    return RoomSelector.select(configuration, c);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    throw e;
+                    new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2));
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception ignored) {
+                    ignored.printStackTrace();
                 }
             }
-
-            @Override
-            protected void succeeded() {
-                generationModel.setRooms(this.getValue());
-            }
         };
+
+
         this.stop();
         this.thread = new Thread(task);
         this.thread.setDaemon(true);
@@ -61,7 +40,7 @@ public class GenerationManager {
     }
 
 
-    public ROGenerationModel getGenerationModel() {
+    public @NonNull ROGenerationModel getGenerationModel() {
         return generationModel;
     }
 

@@ -101,4 +101,10 @@ public class Vector2D implements ROVector2D {
         }
         return normalize().scale(maxSpeed);
     }
+
+    @Override
+    public String toString() {
+        return "(" + x +", " + y +")";
+    }
+
 }
