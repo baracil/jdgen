@@ -19,10 +19,17 @@ public class Triangle {
 
     @NonNull Circle circumCircle;
 
+    @NonNull ImmutableVector2D vertex1;
+    @NonNull ImmutableVector2D vertex2;
+    @NonNull ImmutableVector2D vertex3;
+
     public Triangle(@NonNull ImmutableVector2D vertex1,
                     @NonNull ImmutableVector2D vertex2,
                     @NonNull ImmutableVector2D vertex3) {
         this.vertices = ImmutableSet.of(vertex1,vertex2,vertex3);
+        this.vertex1 = vertex1;
+        this.vertex2 = vertex2;
+        this.vertex3 = vertex3;
         this.edges = ImmutableSet.of(new Edge(vertex1,vertex2), new Edge(vertex2,vertex3),new Edge(vertex3,vertex1));
         this.circumCircle = Circle.circumscribedCircleOf(vertex1, vertex2, vertex3);
     }
