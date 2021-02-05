@@ -29,8 +29,6 @@ public class FXGenerator {
         //-8321297611080575982
         final long seed = RANDOM.nextLong();
 
-        System.out.println("Seed : "+seed);
-
         final var configuration = new JDGenConfiguration(seed, dungeonSize, minRoomSize, maxRoomSize, 1.25);
 
         final var cells = CellsGenerator.generate(configuration);
