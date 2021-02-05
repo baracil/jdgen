@@ -5,6 +5,8 @@ import lombok.Value;
 @Value
 public class JDGenConfiguration {
 
+    long seed;
+
     int dungeonSize;
 
     int minRoomSize;

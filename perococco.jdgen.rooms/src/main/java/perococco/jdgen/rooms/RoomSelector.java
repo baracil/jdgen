@@ -26,7 +26,7 @@ public class RoomSelector {
 
         return cells.stream()
                     .filter(c -> (c.halfHeight() >= th && c.halfWidth() >= tw))
-                    .map(c -> new Room(c))
+                    .map(Room::new)
                     .collect(ImmutableList.toImmutableList());
 
     }

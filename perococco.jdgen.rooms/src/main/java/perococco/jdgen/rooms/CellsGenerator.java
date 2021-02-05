@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.math3.random.RandomGenerator;
+import org.apache.commons.math3.random.Well19937c;
 import perococco.jdgen.core.IntVector;
 import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.MathTool;
@@ -21,6 +23,8 @@ public class CellsGenerator {
         return new CellsGenerator(configuration).generate();
     }
 
+    private final RandomGenerator randomGenerator = new Well19937c();
+
     private final @NonNull JDGenConfiguration configuration;
     private int nbRooms;
 
@@ -31,6 +35,7 @@ public class CellsGenerator {
     private Rectangle inProgress;
 
     private @NonNull ImmutableList<Rectangle> generate() {
+        randomGenerator.setSeed(configuration.seed());
         this.computeTheTotalNumberOfRooms();
         this.createTheRandomGenerator();
         this.prepareOutputList();
@@ -45,11 +50,11 @@ public class CellsGenerator {
     }
 
     private void computeTheTotalNumberOfRooms() {
-        this.nbRooms = (int) Math.floor(configuration.dungeonSize() * (5 + Math.random()));
+        this.nbRooms = (int) Math.floor(configuration.dungeonSize() * (5 + randomGenerator.nextDouble()));
     }
 
     private void createTheRandomGenerator() {
-        this.randomSupplier = MathTool.normalDistribution(configuration.minRoomSize(), configuration.maxRoomSize());
+        this.randomSupplier = MathTool.normalDistribution(randomGenerator,configuration.minRoomSize(), configuration.maxRoomSize());
     }
 
     private void prepareOutputList() {
@@ -65,7 +70,7 @@ public class CellsGenerator {
     }
 
     private void moveRoomToAvoidOverlaps() {
-        final var angle = Math.random() * Math.PI * 2;
+        final var angle = randomGenerator.nextDouble() * Math.PI * 2;
         final var dx = Math.cos(angle);
         final var dy = Math.sin(angle);
 
