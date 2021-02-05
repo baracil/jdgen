@@ -1,7 +1,5 @@
 package perococco.jdgen.viewer;
 
-import com.google.common.collect.ImmutableList;
-import javafx.application.Platform;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Room;
@@ -9,7 +7,6 @@ import perococco.jdgen.graph.Delaunay;
 import perococco.jdgen.graph.EMSTBuilder;
 import perococco.jdgen.rooms.CellCompactor;
 import perococco.jdgen.rooms.CellsGenerator;
-import perococco.jdgen.rooms.CellsSeparator;
 import perococco.jdgen.rooms.RoomSelector;
 
 import java.util.Random;
@@ -36,12 +33,18 @@ public class FXGenerator {
 
         final var c = CellCompactor.compact(configuration, cells, l -> fxUpdater.update(s -> s.withCells(l)));
         final var rooms = RoomSelector.select(configuration, c);
+        Thread.sleep(300);
         fxUpdater.update(s -> s.withRooms(rooms));
 
+
         final var graph = Delaunay.triangulize(rooms, Room::position);
+
+        Thread.sleep(300);
         fxUpdater.update(s -> s.withDelaunayGraph(graph));
 
+
         final var tree = EMSTBuilder.buildTree(graph, Room::position);
+        Thread.sleep(300);
         fxUpdater.update(s -> s.withEMSTree(tree));
 
     }

@@ -28,11 +28,7 @@ public class CellCompactor {
 
     private @NonNull ImmutableList<Rectangle> compact() {
         sorted = cells.toArray(Rectangle[]::new);
-        boolean moved = false;
-        do {
-            moved = performOneIteration();
-        } while (moved);
-
+        performOneIteration();
         return ImmutableList.copyOf(sorted);
     }
 
