@@ -16,7 +16,7 @@ public class Room {
     }
 
     public @NonNull Point2D position() {
-        return ImmutableVector2D.of(center.x(),center.y());
+        return Point2D.of(center.x(), center.y());
     }
 
     @Override

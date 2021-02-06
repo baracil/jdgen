@@ -8,10 +8,13 @@ import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Rectangle;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Consumer;
+import java.util.function.IntFunction;
+import java.util.stream.IntStream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class CellCompactor {
+public final class CellCompactor {
 
     public static ImmutableList<Rectangle> compact(@NonNull JDGenConfiguration configuration,
                                                    @NonNull ImmutableList<Rectangle> cells, @NonNull Consumer<ImmutableList<Rectangle>> observer) {
@@ -32,45 +35,38 @@ public class CellCompactor {
         return ImmutableList.copyOf(sorted);
     }
 
-    private boolean performOneIteration() {
-        boolean moved = false;
+    private void performOneIteration() {
         Arrays.sort(sorted, Rectangle.DISTANCE_COMPARATOR);
         for (int i = 0, sortedLength = sorted.length; i < sortedLength; i++) {
-            final var rectangle1 = sorted[i];
-            final int nx = Math.abs(rectangle1.xc());
-            final int ny = Math.abs(rectangle1.yc());
+            final var rectangle = sorted[i];
+
+
+            final int nx = Math.abs(rectangle.xc());
+            final int ny = Math.abs(rectangle.yc());
             if (Math.max(nx, ny) == 0) {
                 continue;
             }
 
-            var last = rectangle1;
-            double dist = rectangle1.xc() * rectangle1.xc() + rectangle1.yc() * rectangle1.yc();
+            final var sx = rectangle.xc() < 0 ? -1 : 1;
+            final var sy = rectangle.yc() < 0 ? -1 : 1;
 
-            for (int j = 0; j < ny; j++) {
-                for (int k = 0; k < nx; k++) {
-                    double dx = (rectangle1.xc() * k * 1.0) / nx;
-                    double dy = (rectangle1.yc() * j * 1.0) / ny;
+            var closestNotColliding = rectangle;
 
-                    double d2 = dx * dx + dy * dy;
-
-                    if (d2 >= dist) {
+            for (int dx = 0; dx < nx; dx++) {
+                final var x = dx*sx;
+                for (int dy = 0; dy < ny; dy++) {
+                    final var rect = rectangle.withPos(x,dy*sy);
+                    if (rect.distance()>=closestNotColliding.distance()) {
                         continue;
                     }
-
-                    var rect = rectangle1.withPos(dx, dy);
-
-                    if (collide(rect, sorted, i)) {
-                        continue;
+                    if (!collide(rect, sorted, i)) {
+                        closestNotColliding = rect;
                     }
-                    dist = d2;
-                    last = rect;
                 }
             }
-            moved = moved || last != rectangle1;
-            sorted[i] = last;
+            sorted[i] = closestNotColliding;
             observer.accept(ImmutableList.copyOf(sorted));
         }
-        return moved;
     }
 
     private boolean collide(Rectangle rect, Rectangle[] sorted, int toSkip) {
@@ -84,25 +80,4 @@ public class CellCompactor {
         }
         return false;
     }
-
-    private double computeDelta(int p1, int hl1, int p2, int hl2) {
-        if (p1 == 0) {
-            return Double.NaN;
-        }
-        if (p1 < 0) {
-            return -computeDelta(-p1, hl1, -p2, hl2);
-        }
-        assert p1 > 0;
-        if (p2 > p1 || p2 < 0) {
-            return Double.NaN;
-        }
-
-        var delta = (p1 - hl1) - (p2 + hl2 + 1);
-        if (delta > 0) {
-            return Double.NaN;
-        }
-        return -delta;
-    }
-
-
 }

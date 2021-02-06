@@ -1,17 +1,28 @@
 package perococco.jdgen.core;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.Value;
 
-public interface Point2D {
+@Value
+@EqualsAndHashCode(of = {"x","y"})
+public class Point2D {
 
-    static @NonNull Point2D of(double x, double y) {
-        return new SimplePoint2D(x,y);
+    public static @NonNull Point2D of(double x, double y) {
+        return new Point2D(x,y);
     }
 
-    double x();
-    double y();
+    double x;
+    double y;
+    double d2;
 
-    default double distanceToOriginSquared() {
-        return x()*x()+y()*y();
+    public Point2D(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.d2 = x*x+y*y;
+    }
+
+    public double distanceToOriginSquared() {
+        return d2;
     }
 }

@@ -1,16 +1,11 @@
 package perococco.jdgen.viewer;
 
-import com.google.common.collect.ImmutableBiMap;
-import javafx.scene.layout.HBox;
-import lombok.NonNull;
+import javafx.fxml.FXML;
 
 public class MainController {
+    @FXML
     public ButtonBarController buttonBarController;
 
-
-    public void setGenerator() {
-
-    }
 
     public void setGenerationManager(GenerationManager generationManager) {
         buttonBarController.setGenerationManager(generationManager);

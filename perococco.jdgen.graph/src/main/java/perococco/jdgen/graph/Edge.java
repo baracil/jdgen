@@ -8,7 +8,6 @@ import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Point2D;
 
 import java.util.Comparator;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Value
@@ -50,22 +49,4 @@ public class Edge {
         return vertices.value2();
     }
 
-    @NonNull
-    public static <T> Couple<T> of(@NonNull T vertex1, @NonNull T vertex2) {
-        return Couple.of(vertex1, vertex2);
-    }
-
-    @NonNull
-    public <R> Couple<R> map(@NonNull Function<? super Point2D, ? extends R> mapper) {
-        return vertices.map(mapper);
-    }
-
-    @NonNull
-    public Couple<Point2D> swap() {
-        return vertices.swap();
-    }
-
-    public Stream<Point2D> stream() {
-        return vertices.stream();
-    }
 }

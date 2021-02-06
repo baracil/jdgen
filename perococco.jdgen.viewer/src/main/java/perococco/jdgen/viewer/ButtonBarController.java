@@ -14,7 +14,7 @@ public class ButtonBarController {
         this.generationManager = generationManager;
     }
 
-    public void generate(ActionEvent actionEvent) {
+    public void generate() {
         generationManager.generate(dungeonSize.getValue(), minLength.getValue(), minLength.getValue()*ratio.getValue());
     }
 }

@@ -8,6 +8,12 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+/**
+ * A couple of value of same type.
+ * Two couple are identicals if they contain the same value without taking
+ * order into accound (like a set)
+ * @param <T>
+ */
 @RequiredArgsConstructor
 @Getter
 public class Couple<T> {

@@ -2,17 +2,17 @@ package perococco.jdgen.graph;
 
 import lombok.NonNull;
 import lombok.Value;
-import perococco.jdgen.core.ImmutableVector2D;
+import perococco.jdgen.core.Vector2D;
 import perococco.jdgen.core.Point2D;
 
 @Value
 public class Circle {
 
-    @NonNull ImmutableVector2D center;
+    @NonNull Vector2D center;
     double radius;
     double radius2;
 
-    public Circle(@NonNull ImmutableVector2D center, double radius) {
+    public Circle(@NonNull Vector2D center, double radius) {
         this.center = center;
         this.radius = radius;
         this.radius2 = radius * radius;
@@ -37,7 +37,7 @@ public class Circle {
         final double x =  id* Tools.determinant2D(da2,pa.y(),db2,pb.y(), dc2,pc.y());
         final double y = -id* Tools.determinant2D(da2,pa.x(),db2,pb.x(), dc2,pc.x());
 
-        return new Circle(ImmutableVector2D.of(x,y),radius);
+        return new Circle(Vector2D.of(x, y), radius);
     }
 
     public boolean isInside(@NonNull Point2D point) {

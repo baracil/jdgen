@@ -10,22 +10,6 @@ public class IntVector {
     int x;
     int y;
 
-    public @NonNull IntVector add(@NonNull IntVector other) {
-        return new IntVector(x+other.x, y+other.y);
-    }
-
-    public @NonNull IntVector negate() {
-        return new IntVector(-x, -y);
-    }
-
-    public @NonNull double norm2() {
-        return x*x+y*y;
-    }
-
-    public boolean isNil() {
-        return x == 0 && y == 0;
-    }
-
     @Override
     public String toString() {
         return "(" + x +", " + y +")";

@@ -7,6 +7,4 @@ import perococco.jdgen.core.Rectangle;
 
 public interface Worker extends Runnable {
 
-    @NonNull ObservableValue<ImmutableList<Rectangle>> observableRectangles();
-
 }

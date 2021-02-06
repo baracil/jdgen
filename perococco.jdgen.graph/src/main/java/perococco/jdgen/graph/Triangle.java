@@ -6,9 +6,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.Value;
 import perococco.jdgen.core.Point2D;
-import perococco.jdgen.core.ROVector2D;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 @Value
@@ -40,19 +38,8 @@ public class Triangle {
         return edges.stream();
     }
 
-    public boolean isInside(@NonNull ROVector2D point) {
-        return Tools.isInTriangle(point,this);
-    }
-
     public boolean isPointInsideCircumCircle(Point2D point) {
         return circumCircle.isInside(point);
     }
 
-    public ImmutableSet<Point2D> points() {
-        return vertices;
-    }
-
-    public Set<Edge> edges() {
-        return edges;
-    }
 }

@@ -7,7 +7,6 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Couple;
-import perococco.jdgen.core.ImmutableVector2D;
 import perococco.jdgen.core.Point2D;
 
 import java.util.Arrays;
@@ -18,10 +17,20 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class Delaunay<O> {
+public final class Delaunay<O> {
 
-    public static <O> ImmutableList<Couple<O>> triangulize(
-            @NonNull ImmutableCollection<O> objects, @NonNull Function<? super O, ? extends Point2D> positionGetter) {
+    /**
+     * Perform a Delaunay triangulation for a set of objects by using the
+     * <a href="https://en.wikipedia.org/wiki/Bowyer%E2%80%93Watson_algorithm#Pseudocode">Bowyer-Watson algorithm</a>
+     *
+     * @param objects        the objects to triangulize
+     * @param positionGetter a method that return the position of an object
+     * @param <O>            the type of the objects
+     * @return the list of the edge of the Delaunay triangulation
+     */
+    public static <O> @NonNull ImmutableList<Couple<O>> triangulize(
+            @NonNull ImmutableCollection<O> objects,
+            @NonNull Function<? super O, ? extends Point2D> positionGetter) {
         return new Delaunay<O>(objects, positionGetter).triangulize();
     }
 
@@ -40,38 +49,44 @@ public class Delaunay<O> {
     private ImmutableList<Couple<O>> triangulize() {
         this.createSuperTriangle();
         this.addSuperTriangleToTriangulation();
-        for (O object : objects) {
-            final var point = positionGetter.apply(object);
-            formPolygon(point);
-            triangulizePolygon(point);
-        }
+
+        objects.stream()
+               .map(positionGetter)
+               .forEach(point -> {
+                   findBadTrianglesAndFormPolygon(point);
+                   triangulizePolygon(point);
+               });
+
         this.cleanUpTriangulation();
-        this.buildMap();
+        this.constructFinalGraph();
 
         return graph;
     }
 
-    private void buildMap() {
-        final Map<Point2D, O> objectByPosition = objects.stream().collect(Collectors.toMap(positionGetter, o -> o));
-        final Function<Couple<Point2D>, Couple<O>> coupleMapper = couple -> couple.map(objectByPosition::get);
 
-        graph = triangulation.stream()
-                             .flatMap(Triangle::edgeStream)
-                             .distinct()
-                             .map(Edge::vertices)
-                             .map(coupleMapper)
-                             .collect(ImmutableList.toImmutableList());
+    private void createSuperTriangle() {
+        final var sx = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::x));
+        final var sy = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::y));
 
+        final var xmin = sx.getMin();
+        final var xmax = sx.getMax();
+
+        final var ymin = sy.getMin();
+        final var ymax = sy.getMax();
+
+        final var epsi = (sx.getMax() - sx.getMin()) / 5.0;
+
+        final var a = Point2D.of(xmin - epsi, ymin - epsi);
+        final var b = Point2D.of(xmin + 2 * (xmax - xmin) + 3 * epsi, ymin - epsi);
+        final var c = Point2D.of(xmin - epsi, ymin + 2 * (ymax - ymin) + 3 * epsi);
+        this.superTriangle = new Triangle(a, b, c);
     }
 
-    private void cleanUpTriangulation() {
-        final ImmutableSet<Point2D> pointInSuperTri = superTriangle.vertices();
-        triangulation.removeIf(t -> t.edgeStream()
-                                     .flatMap(Edge::vertexStream)
-                                     .anyMatch(pointInSuperTri::contains));
+    private void addSuperTriangleToTriangulation() {
+        this.triangulation.add(superTriangle);
     }
 
-    private void formPolygon(@NonNull Point2D pointToAdd) {
+    private void findBadTrianglesAndFormPolygon(@NonNull Point2D pointToAdd) {
         final var badTriangles = triangulation.stream()
                                               .filter(t -> t.isPointInsideCircumCircle(pointToAdd))
                                               .collect(Collectors.toSet());
@@ -91,27 +106,24 @@ public class Delaunay<O> {
         Arrays.stream(polygon).map(e -> e.createTriangle(point)).forEach(triangulation::add);
     }
 
-
-    private void createSuperTriangle() {
-        final var sx = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::x));
-        final var sy = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::y));
-
-        final var xmin = sx.getMin();
-        final var xmax = sx.getMax();
-
-        final var ymin = sy.getMin();
-        final var ymax = sy.getMax();
-
-        final var epsi = (sx.getMax() - sx.getMin()) / 5.0;
-
-        final var a = ImmutableVector2D.of(xmin - epsi, ymin - epsi);
-        final var b = ImmutableVector2D.of(xmin + 2 * (xmax - xmin) + 3 * epsi, ymin - epsi);
-        final var c = ImmutableVector2D.of(xmin - epsi, ymin + 2 * (ymax - ymin) + 3 * epsi);
-        this.superTriangle = new Triangle(a, b, c);
+    private void cleanUpTriangulation() {
+        final ImmutableSet<Point2D> pointInSuperTri = superTriangle.vertices();
+        triangulation.removeIf(t -> t.edgeStream()
+                                     .flatMap(Edge::vertexStream)
+                                     .anyMatch(pointInSuperTri::contains));
     }
 
-    private void addSuperTriangleToTriangulation() {
-        this.triangulation.add(superTriangle);
+    private void constructFinalGraph() {
+        final Map<Point2D, O> objectsByPosition = objects.stream().collect(Collectors.toMap(positionGetter, Function.identity()));
+        final Function<Couple<Point2D>, Couple<O>> coupleMapper = couple -> couple.map(objectsByPosition::get);
+
+        graph = triangulation.stream()
+                             .flatMap(Triangle::edgeStream)
+                             .map(Edge::vertices)
+                             .distinct()
+                             .map(coupleMapper)
+                             .collect(ImmutableList.toImmutableList());
+
     }
 
 

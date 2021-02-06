@@ -8,23 +8,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GenerationManager {
 
-    private GenerationModel generationModel = new GenerationModel();
+    private final GenerationModel generationModel = new GenerationModel();
 
-    private final FXUpdater<ViewerState> fxUpdater = new FXUpdater<>(state -> generationModel.setState(state));
+    private final FXUpdater<ViewerState> fxUpdater = new FXUpdater<>(generationModel::setState);
 
     private Thread thread = null;
 
     public void generate(double dungeonSize, double roomSize1, double roomSize2) {
-        final var task = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                } catch (Exception ignored) {
-                    ignored.printStackTrace();
-                }
+        final Runnable task = () -> {
+            try {
+                new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2));
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (Exception error) {
+                System.err.println("Generation failed");
+                error.printStackTrace();
+                fxUpdater.set(ViewerState.initial());
             }
         };
 

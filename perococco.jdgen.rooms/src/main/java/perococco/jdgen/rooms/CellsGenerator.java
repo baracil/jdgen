@@ -17,7 +17,7 @@ import java.util.function.DoubleSupplier;
 import java.util.function.ToIntFunction;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class CellsGenerator {
+public final class CellsGenerator {
 
     public static ImmutableList<Rectangle> generate(@NonNull JDGenConfiguration configuration) {
         return new CellsGenerator(configuration).generate();
