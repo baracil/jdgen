@@ -14,16 +14,16 @@ public class GenerationManager {
 
     private Thread thread = null;
 
-    public void generate(double dungeonSize, double roomSize1, double roomSize2) {
+    public void generate(double dungeonSize, double roomSize1, double roomSize2, long seed) {
         final Runnable task = () -> {
             try {
-                new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2));
+                new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2),seed);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } catch (Exception error) {
                 System.err.println("Generation failed");
                 error.printStackTrace();
-                fxUpdater.set(ViewerState.initial());
+                fxUpdater.set(ViewerState.initial((int)roomSize1));
             }
         };
 

@@ -5,6 +5,7 @@ import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.graph.Delaunay;
 import perococco.jdgen.graph.EMSTBuilder;
+import perococco.jdgen.graph.PathBuilder;
 import perococco.jdgen.rooms.CellCompactor;
 import perococco.jdgen.rooms.CellsGenerator;
 import perococco.jdgen.rooms.RoomSelector;
@@ -18,13 +19,12 @@ public class FXGenerator {
 
     private static final Random RANDOM = new Random();
 
-    public void generate(int dungeonSize, int minRoomSize, int maxRoomSize) throws Exception {
-        fxUpdater.set(ViewerState.initial());
+    public void generate(int dungeonSize, int minRoomSize, int maxRoomSize, long seed) throws Exception {
+        fxUpdater.set(ViewerState.initial(minRoomSize));
 
         //2032149330135465102
         //-124302025836551960
         //-8321297611080575982
-        final long seed = RANDOM.nextLong();
 
         final var configuration = new JDGenConfiguration(seed, dungeonSize, minRoomSize, maxRoomSize, 1.25);
 
@@ -46,6 +46,10 @@ public class FXGenerator {
         final var tree = EMSTBuilder.buildTree(graph, Room::position);
         Thread.sleep(300);
         fxUpdater.update(s -> s.withPath(tree));
+
+        final var path = PathBuilder.buildPath(configuration,graph,tree);
+        Thread.sleep(300);
+        fxUpdater.update(s -> s.withPath(path));
 
     }
 

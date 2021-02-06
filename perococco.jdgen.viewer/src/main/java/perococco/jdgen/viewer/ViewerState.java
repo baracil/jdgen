@@ -14,6 +14,8 @@ import perococco.jdgen.core.Room;
 @Builder(toBuilder = true)
 public class ViewerState {
 
+    private final int minRoomSize;
+
     private final @NonNull ImmutableList<Rectangle> cells;
 
     private final @NonNull ImmutableList<Room> rooms;
@@ -22,8 +24,16 @@ public class ViewerState {
 
     private final @NonNull ImmutableList<Couple<Room>> path;
 
+    public static @NonNull ViewerState initial(int minRoomSize) {
+        return new ViewerState(minRoomSize,ImmutableList.of(),ImmutableList.of(), ImmutableList.of(), ImmutableList.of());
+    }
+
     public static @NonNull ViewerState initial() {
-        return new ViewerState(ImmutableList.of(),ImmutableList.of(), ImmutableList.of(), ImmutableList.of());
+        return initial(1);
+    }
+
+    public @NonNull ViewerState withMinRoomSize(int minRoomSize) {
+        return toBuilder().minRoomSize(minRoomSize).build();
     }
 
     public @NonNull ViewerState withCells(ImmutableList<Rectangle> cells) {

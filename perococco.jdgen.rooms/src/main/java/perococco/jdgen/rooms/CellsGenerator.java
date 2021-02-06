@@ -62,11 +62,14 @@ public final class CellsGenerator {
     }
 
     private void createNewRoom() {
-        final var width = MathTool.makeOdd(Math.max(configuration.minRoomSize(), (int) Math.round(randomSupplier.getAsDouble())));
-        final var height = MathTool.makeOdd(Math.max(configuration.minRoomSize(), (int) Math.round(randomSupplier.getAsDouble())));
-
+        final var width = pickOneCellLength();
+        final var height = pickOneCellLength();
 
         inProgress = new Rectangle(-width / 2, -height / 2, width / 2, height / 2);
+    }
+
+    private int pickOneCellLength() {
+        return MathTool.makeOdd(Math.max(configuration.minRoomSize(), (int) Math.round(randomSupplier.getAsDouble())));
     }
 
     private void moveRoomToAvoidOverlaps() {

@@ -79,11 +79,12 @@ public class Dungeon extends Group {
     }
 
     private @NonNull Line toLine(@NonNull Couple<Room> edge) {
+        final var state = model.get().getState();
         final var line = new Line();
         final var start = edge.value1().position();
         final var end = edge.value2().position();
         line.setStroke(Color.rgb(0,255,0));
-        line.setStrokeWidth(4);
+        line.setStrokeWidth(state.minRoomSize()/4.);
         line.setStartX(start.x());
         line.setStartY(start.y());
         line.setEndX(end.x());
