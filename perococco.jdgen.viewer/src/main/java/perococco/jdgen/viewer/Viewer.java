@@ -1,16 +1,11 @@
 package perococco.jdgen.viewer;
 
-import com.google.common.collect.ImmutableList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import perococco.jdgen.core.JDGenConfiguration;
-import perococco.jdgen.core.Rectangle;
-import perococco.jdgen.rooms.CellCompactor;
-import perococco.jdgen.rooms.CellsGenerator;
 
 public class Viewer extends Application {
 

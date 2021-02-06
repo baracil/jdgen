@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
@@ -27,7 +26,6 @@ public class FXUpdater<T> {
         if (!updateRequested.getAndSet(true)) {
             Platform.runLater(this::updateInFX);
         }
-
     }
 
     private void updateInFX() {

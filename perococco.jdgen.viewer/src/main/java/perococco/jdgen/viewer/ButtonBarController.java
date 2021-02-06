@@ -1,6 +1,5 @@
 package perococco.jdgen.viewer;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.Slider;
 
 public class ButtonBarController {

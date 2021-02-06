@@ -2,8 +2,8 @@ package perococco.jdgen.graph;
 
 import lombok.NonNull;
 import lombok.Value;
-import perococco.jdgen.core.Vector2D;
 import perococco.jdgen.core.Point2D;
+import perococco.jdgen.core.Vector2D;
 
 @Value
 public class Circle {

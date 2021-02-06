@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Point2D;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;

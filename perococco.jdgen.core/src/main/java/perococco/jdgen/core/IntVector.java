@@ -1,6 +1,5 @@
 package perococco.jdgen.core;
 
-import lombok.NonNull;
 import lombok.Value;
 
 @Value

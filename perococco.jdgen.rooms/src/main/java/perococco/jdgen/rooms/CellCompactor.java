@@ -8,10 +8,7 @@ import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Rectangle;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.function.Consumer;
-import java.util.function.IntFunction;
-import java.util.stream.IntStream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CellCompactor {

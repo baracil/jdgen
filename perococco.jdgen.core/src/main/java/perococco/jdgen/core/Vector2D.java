@@ -1,6 +1,7 @@
 package perococco.jdgen.core;
 
-import lombok.*;
+import lombok.NonNull;
+import lombok.Value;
 
 @Value
 public class Vector2D {
