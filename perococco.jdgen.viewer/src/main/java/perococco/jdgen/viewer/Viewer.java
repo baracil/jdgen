@@ -1,6 +1,9 @@
 package perococco.jdgen.viewer;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -15,8 +18,11 @@ public class Viewer extends Application {
 
 
     private Dungeon dungeon = new Dungeon();
+    private MapView mapView = new MapView();
 
     private final ZoomOperator zoomOperator = new ZoomOperator(true);
+
+    private final BooleanProperty showMapView = new SimpleBooleanProperty(false);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,10 +34,30 @@ public class Viewer extends Application {
         controller.setGenerationManager(generationManager);
 
         dungeon.setModel(generationManager.getGenerationModel());
+        mapView.setModel(generationManager.getGenerationModel());
+        mapView.setStyle("-fx-background-color: red");
 
         final var pane = new Pane();
-        pane.getChildren().add(dungeon);
         container.setCenter(pane);
+        showMapView.addListener((l,o,showMap) -> {
+            if (showMap) {
+                System.out.println("SET MAP VIEW TO PANE");
+                pane.getChildren().setAll(mapView);
+                mapView.widthProperty().bind(pane.widthProperty());
+                mapView.heightProperty().bind(pane.heightProperty());
+            } else {
+                System.out.println("SET DUNGEON VIEW TO PANE");
+                pane.getChildren().setAll(dungeon);
+            }
+        });
+
+        showMapView.bind(Bindings.createBooleanBinding(
+                () -> generationManager.getGenerationModel()
+                                       .getState()
+                                       .map().isPresent(),
+                generationManager.getGenerationModel().stateProperty()));
+
+        pane.getChildren().setAll(dungeon);
 
 
         final Scene scene = new Scene(container, 600, 400);

@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Rectangle;
 import perococco.jdgen.core.Room;
+import perococco.jdgen.mapper.Map;
+
+import java.util.Optional;
 
 @Getter
 @RequiredArgsConstructor
@@ -24,8 +27,14 @@ public class ViewerState {
 
     private final @NonNull ImmutableList<Couple<Room>> path;
 
+    private final Map map;
+
+    public @NonNull Optional<Map> map() {
+        return Optional.ofNullable(map);
+    }
+
     public static @NonNull ViewerState initial(int minRoomSize) {
-        return new ViewerState(minRoomSize,ImmutableList.of(),ImmutableList.of(), ImmutableList.of(), ImmutableList.of());
+        return new ViewerState(minRoomSize,ImmutableList.of(),ImmutableList.of(), ImmutableList.of(), ImmutableList.of(),null);
     }
 
     public static @NonNull ViewerState initial() {
@@ -50,5 +59,9 @@ public class ViewerState {
 
     public @NonNull ViewerState withPath(@NonNull ImmutableList<Couple<Room>> path) {
         return toBuilder().path(path).build();
+    }
+
+    public @NonNull ViewerState withMap(@NonNull Map map) {
+        return toBuilder().map(map).build();
     }
 }

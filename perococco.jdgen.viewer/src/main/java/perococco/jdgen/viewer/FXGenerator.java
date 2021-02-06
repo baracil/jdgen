@@ -3,9 +3,12 @@ package perococco.jdgen.viewer;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Room;
+import perococco.jdgen.core.Size;
 import perococco.jdgen.graph.Delaunay;
 import perococco.jdgen.graph.EMSTBuilder;
 import perococco.jdgen.graph.PathBuilder;
+import perococco.jdgen.mapper.Map;
+import perococco.jdgen.mapper.Mapper;
 import perococco.jdgen.rooms.CellCompactor;
 import perococco.jdgen.rooms.CellsGenerator;
 import perococco.jdgen.rooms.RoomSelector;
@@ -31,25 +34,33 @@ public class FXGenerator {
         final var cells = CellsGenerator.generate(configuration);
         fxUpdater.update(s -> s.withCells(cells));
 
-        final var c = CellCompactor.compact(cells, l -> fxUpdater.update(s -> s.withCells(l)));
-        final var rooms = RoomSelector.select(configuration, c);
-        Thread.sleep(300);
+        final var compactedCells = CellCompactor.compact(cells, l -> fxUpdater.update(s -> s.withCells(l)));
+        final var rooms = RoomSelector.select(configuration, compactedCells);
+        Thread.sleep(200);
         fxUpdater.update(s -> s.withRooms(rooms));
 
 
         final var graph = Delaunay.triangulize(rooms, Room::position);
 
-        Thread.sleep(300);
+        Thread.sleep(1000);
         fxUpdater.update(s -> s.withDelaunayGraph(graph));
 
 
         final var tree = EMSTBuilder.buildTree(graph, Room::position);
-        Thread.sleep(300);
+        Thread.sleep(200);
         fxUpdater.update(s -> s.withPath(tree));
 
-        final var path = PathBuilder.buildPath(configuration,graph,tree);
-        Thread.sleep(300);
-        fxUpdater.update(s -> s.withPath(path));
+        final var corridors = PathBuilder.buildPath(configuration,graph,tree);
+        Thread.sleep(200);
+        fxUpdater.update(s -> s.withPath(corridors));
+
+        final var size = new Size(100,100);
+
+        Thread.sleep(200);
+        final var map = Mapper.perform(compactedCells, rooms, corridors);
+
+        fxUpdater.update(s -> s.withMap(map));
+
 
     }
 

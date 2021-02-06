@@ -15,7 +15,7 @@
       <VBox alignment="CENTER">
          <children>
             <Label text="Min Length" />
-            <Slider fx:id="minLength" blockIncrement="1.0" majorTickUnit="10.0" max="32.0" min="1.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="20" />
+            <Slider fx:id="minLength" blockIncrement="1.0" majorTickUnit="10.0" max="10.0" min="1.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" value="4" />
          </children>
       </VBox>
       <VBox alignment="CENTER">

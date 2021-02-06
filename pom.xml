@@ -21,5 +21,6 @@
         <module>perococco.jdgen.graph</module>
         <module>perococco.jdgen.viewer</module>
         <module>perococco.jdgen.rooms</module>
+        <module>perococco.jdgen.mapper</module>
     </modules>
 </project>

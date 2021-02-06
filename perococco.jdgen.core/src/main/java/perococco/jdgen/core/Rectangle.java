@@ -5,9 +5,11 @@ import lombok.NonNull;
 import lombok.Value;
 
 import java.util.Comparator;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Value
-@EqualsAndHashCode(of = {"xc","yc","halfHeight","halfWidth"})
+@EqualsAndHashCode(of = {"xc", "yc", "halfHeight", "halfWidth"})
 public class Rectangle {
 
     public static final Comparator<Rectangle> DISTANCE_COMPARATOR = Comparator.comparingDouble(Rectangle::distance);
@@ -26,6 +28,20 @@ public class Rectangle {
         this.halfWidth = halfWidth;
         this.halfHeight = halfHeight;
         this.distance = Math.sqrt(xc * xc + yc * yc);
+    }
+
+    public @NonNull Stream<RectanglePosition> streamPositions() {
+        return IntStream.iterate(-halfWidth, w -> w <= halfWidth, w -> w + 1)
+                        .mapToObj(w -> IntStream.iterate(-halfHeight, h -> h <= halfHeight, h -> h + 1)
+                                                .mapToObj(h -> new IntVector(w, h)))
+                        .flatMap(s -> s)
+                        .map(this::toRectanglePosition);
+    }
+
+    private @NonNull RectanglePosition toRectanglePosition(@NonNull IntVector relativePosition) {
+        final boolean border = Math.abs(relativePosition.x()) == halfWidth || Math.abs(relativePosition.y()) == halfHeight;
+        return new RectanglePosition(relativePosition.x() + xc, relativePosition.y() + yc, border);
+
     }
 
     public boolean overlap(@NonNull Rectangle other) {
@@ -52,10 +68,10 @@ public class Rectangle {
 
 
     public @NonNull Rectangle withPos(double posX, double posY) {
-        return new Rectangle((int) Math.round(posX), (int) Math.round(posY), halfWidth,halfHeight);
+        return new Rectangle((int) Math.round(posX), (int) Math.round(posY), halfWidth, halfHeight);
     }
 
     public @NonNull Rectangle translate(IntVector displacement) {
-        return new Rectangle(xc + displacement.x(), yc + displacement.y(), halfWidth,halfHeight);
+        return new Rectangle(xc + displacement.x(), yc + displacement.y(), halfWidth, halfHeight);
     }
 }

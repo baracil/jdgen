@@ -11,6 +11,7 @@ module jdgen.viewer {
     requires com.google.common;
     requires jdgen.rooms;
     requires jdgen.graph;
+    requires jdgen.mapper;
 
     exports perococco.jdgen.viewer;
 }

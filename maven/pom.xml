@@ -60,6 +60,11 @@
                 <artifactId>jdgen-viewer</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>perococco.jdgen</groupId>
+                <artifactId>jdgen-mapper</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.google.guava</groupId>

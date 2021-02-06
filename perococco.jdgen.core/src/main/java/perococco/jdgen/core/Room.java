@@ -12,7 +12,7 @@ public class Room {
 
     public Room(@NonNull Rectangle geometry) {
         this.geometry = geometry;
-        this.center = new IntVector(geometry.xc(),geometry.yc());
+        this.center = new IntVector(geometry.xc(), geometry.yc());
     }
 
     public @NonNull Point2D position() {
