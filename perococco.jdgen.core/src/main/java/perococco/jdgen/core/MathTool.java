@@ -16,7 +16,7 @@ public class MathTool {
     }
 
     public static @NonNull DoubleSupplier normalDistribution(@NonNull RandomGenerator randomGenerator, int minValue, int maxValue) {
-        final double std = (maxValue-minValue);
+        final double std = Math.max(minValue*0.01,(maxValue-minValue));
         final var normalDistribution = new NormalDistribution(randomGenerator,minValue,std);
         return normalDistribution::sample;
     }
