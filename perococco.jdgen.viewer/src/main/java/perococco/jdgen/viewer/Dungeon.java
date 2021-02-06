@@ -55,10 +55,10 @@ public class Dungeon extends Group {
         state.rooms().forEach(r -> rectangles.put(r.geometry(),Color.RED));
         this.rectangles.set(ImmutableMap.copyOf(rectangles));
 
-        if (state.emstree().isEmpty()) {
+        if (state.path().isEmpty()) {
             this.graph.set(state.delaunayGraph());
         } else {
-            this.graph.set(state.emstree());
+            this.graph.set(state.path());
         }
     }
 

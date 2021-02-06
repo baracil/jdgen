@@ -31,7 +31,7 @@ public class FXGenerator {
         final var cells = CellsGenerator.generate(configuration);
         fxUpdater.update(s -> s.withCells(cells));
 
-        final var c = CellCompactor.compact(configuration, cells, l -> fxUpdater.update(s -> s.withCells(l)));
+        final var c = CellCompactor.compact(cells, l -> fxUpdater.update(s -> s.withCells(l)));
         final var rooms = RoomSelector.select(configuration, c);
         Thread.sleep(300);
         fxUpdater.update(s -> s.withRooms(rooms));
@@ -45,7 +45,7 @@ public class FXGenerator {
 
         final var tree = EMSTBuilder.buildTree(graph, Room::position);
         Thread.sleep(300);
-        fxUpdater.update(s -> s.withEMSTree(tree));
+        fxUpdater.update(s -> s.withPath(tree));
 
     }
 

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.JDGenConfiguration;
 import perococco.jdgen.core.Rectangle;
 
 import java.util.Arrays;
@@ -13,13 +12,16 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CellCompactor {
 
-    public static ImmutableList<Rectangle> compact(@NonNull JDGenConfiguration configuration,
-                                                   @NonNull ImmutableList<Rectangle> cells, @NonNull Consumer<ImmutableList<Rectangle>> observer) {
-        return new CellCompactor(configuration, cells, observer).compact();
+    public static ImmutableList<Rectangle> compact(@NonNull ImmutableList<Rectangle> cells,
+                                                   @NonNull Consumer<ImmutableList<Rectangle>> observer) {
+        return new CellCompactor(cells, observer).compact();
+    }
+
+    public static ImmutableList<Rectangle> compact(@NonNull ImmutableList<Rectangle> cells) {
+        return compact(cells, l -> {});
     }
 
 
-    private final JDGenConfiguration configuration;
     private final ImmutableList<Rectangle> cells;
 
     private final Consumer<ImmutableList<Rectangle>> observer;

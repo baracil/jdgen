@@ -20,7 +20,7 @@ public class ViewerState {
 
     private final @NonNull ImmutableList<Couple<Room>> delaunayGraph;
 
-    private final @NonNull ImmutableList<Couple<Room>> emstree;
+    private final @NonNull ImmutableList<Couple<Room>> path;
 
     public static @NonNull ViewerState initial() {
         return new ViewerState(ImmutableList.of(),ImmutableList.of(), ImmutableList.of(), ImmutableList.of());
@@ -38,7 +38,7 @@ public class ViewerState {
         return toBuilder().delaunayGraph(graph).build();
     }
 
-    public @NonNull ViewerState withEMSTree(@NonNull ImmutableList<Couple<Room>> emstree) {
-        return toBuilder().emstree(emstree).build();
+    public @NonNull ViewerState withPath(@NonNull ImmutableList<Couple<Room>> path) {
+        return toBuilder().path(path).build();
     }
 }

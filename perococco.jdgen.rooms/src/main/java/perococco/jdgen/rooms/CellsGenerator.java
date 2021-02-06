@@ -19,7 +19,7 @@ import java.util.function.ToIntFunction;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CellsGenerator {
 
-    public static ImmutableList<Rectangle> generate(@NonNull JDGenConfiguration configuration) {
+    public static @NonNull ImmutableList<Rectangle> generate(@NonNull JDGenConfiguration configuration) {
         return new CellsGenerator(configuration).generate();
     }
 

@@ -22,7 +22,8 @@ import static perococco.jdgen.graph.Edge.EDGE_LENGTH_COMPARATOR;
 public class EMSTBuilder<O> {
 
     public static <O> ImmutableList<Couple<O>> buildTree(
-            @NonNull ImmutableCollection<Couple<O>> objects, @NonNull Function<? super O, ? extends Point2D> positionGetter) {
+            @NonNull ImmutableCollection<Couple<O>> objects,
+            @NonNull Function<? super O, ? extends Point2D> positionGetter) {
         return new EMSTBuilder<O>(objects, positionGetter).build();
     }
 
