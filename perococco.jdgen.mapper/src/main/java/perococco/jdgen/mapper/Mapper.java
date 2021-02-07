@@ -46,7 +46,7 @@ public final class Mapper {
 
     private void intializeRandomGenerator() {
         this.random = new Random();
-        this.random.setSeed(configuration.seed());
+        this.random.setSeed(configuration.getSeed());
     }
 
     private void computeMapGeometry() {
@@ -58,7 +58,7 @@ public final class Mapper {
     }
 
     private void createEmptyMap() {
-        this.map = Map.create(geometry.size());
+        this.map = Map.create(geometry.getSize());
     }
 
     private void fillCellsForMainRooms() {

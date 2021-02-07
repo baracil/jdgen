@@ -51,14 +51,14 @@ public class Dungeon extends Group {
         final var state = m.getState();
 
         final Map<Rectangle,Color> rectangles = new HashMap<>();
-        state.cells().forEach(c -> rectangles.put(c,Color.BLUE));
-        state.rooms().forEach(r -> rectangles.put(r.rectangle(), Color.RED));
+        state.getCells().forEach(c -> rectangles.put(c,Color.BLUE));
+        state.getRooms().forEach(r -> rectangles.put(r.getRectangle(), Color.RED));
         this.rectangles.set(ImmutableMap.copyOf(rectangles));
 
-        if (state.path().isEmpty()) {
-            this.graph.set(state.delaunayGraph());
+        if (state.getPath().isEmpty()) {
+            this.graph.set(state.getDelaunayGraph());
         } else {
-            this.graph.set(state.path());
+            this.graph.set(state.getPath());
         }
     }
 
@@ -81,14 +81,14 @@ public class Dungeon extends Group {
     private @NonNull Line toLine(@NonNull Couple<Room> edge) {
         final var state = model.get().getState();
         final var line = new Line();
-        final var start = edge.value1().position();
-        final var end = edge.value2().position();
+        final var start = edge.getValue1().position();
+        final var end = edge.getValue2().position();
         line.setStroke(Color.rgb(0,255,0));
-        line.setStrokeWidth(state.minRoomSize()/4.);
-        line.setStartX(start.x());
-        line.setStartY(start.y());
-        line.setEndX(end.x());
-        line.setEndY(end.y());
+        line.setStrokeWidth(state.getMinRoomSize()/4.);
+        line.setStartX(start.getX());
+        line.setStartY(start.getY());
+        line.setEndX(end.getX());
+        line.setEndY(end.getY());
         return line;
     }
 
@@ -122,10 +122,10 @@ public class Dungeon extends Group {
     }
 
     private javafx.scene.shape.Rectangle synchronizeRoom(@NonNull javafx.scene.shape.Rectangle rectangle, @NonNull Rectangle cell, @NonNull Color color) {
-        rectangle.setHeight(cell.halfHeight()*2+1);
-        rectangle.setWidth(cell.halfWidth()*2+1);
-        rectangle.setX(cell.xc()-cell.halfWidth());
-        rectangle.setY(cell.yc()-cell.halfHeight());
+        rectangle.setHeight(cell.getHalfHeight()*2+1);
+        rectangle.setWidth(cell.getHalfWidth()*2+1);
+        rectangle.setX(cell.getXc()-cell.getHalfWidth());
+        rectangle.setY(cell.getYc()-cell.getHalfHeight());
         rectangle.setStrokeWidth(0.01);
         rectangle.setStroke(Color.BLACK);
         rectangle.setFill(color);

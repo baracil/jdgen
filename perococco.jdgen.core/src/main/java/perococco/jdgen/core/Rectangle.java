@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 @EqualsAndHashCode(of = {"xc", "yc", "halfHeight", "halfWidth"})
 public class Rectangle {
 
-    public static final Comparator<Rectangle> DISTANCE_COMPARATOR = Comparator.comparingDouble(Rectangle::distance);
+    public static final Comparator<Rectangle> DISTANCE_COMPARATOR = Comparator.comparingDouble(Rectangle::getDistance);
 
     int xc;
     int yc;
@@ -40,8 +40,8 @@ public class Rectangle {
     }
 
     private @NonNull RectanglePosition toRectanglePosition(@NonNull IntVector relativePosition) {
-        final boolean border = Math.abs(relativePosition.x()) == halfWidth || Math.abs(relativePosition.y()) == halfHeight;
-        return new RectanglePosition(relativePosition.x() + xc, relativePosition.y() + yc, border);
+        final boolean border = Math.abs(relativePosition.getX()) == halfWidth || Math.abs(relativePosition.getY()) == halfHeight;
+        return new RectanglePosition(relativePosition.getX() + xc, relativePosition.getY() + yc, border);
 
     }
 
@@ -100,6 +100,6 @@ public class Rectangle {
     }
 
     public @NonNull Rectangle translate(@NonNull IntVector displacement) {
-        return new Rectangle(xc + displacement.x(), yc + displacement.y(), halfWidth, halfHeight);
+        return new Rectangle(xc + displacement.getX(), yc + displacement.getY(), halfWidth, halfHeight);
     }
 }

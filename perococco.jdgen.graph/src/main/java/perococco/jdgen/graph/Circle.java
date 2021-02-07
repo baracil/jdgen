@@ -33,15 +33,15 @@ public class Circle {
 
         final var id = 1./(2*Tools.determinant2D(pa,pb,pc));
 
-        final double x =  id* Tools.determinant2D(da2,pa.y(),db2,pb.y(), dc2,pc.y());
-        final double y = -id* Tools.determinant2D(da2,pa.x(),db2,pb.x(), dc2,pc.x());
+        final double x =  id* Tools.determinant2D(da2,pa.getY(),db2,pb.getY(), dc2,pc.getY());
+        final double y = -id* Tools.determinant2D(da2,pa.getX(),db2,pb.getX(), dc2,pc.getX());
 
         return new Circle(Point2D.of(x, y), radius);
     }
 
     public boolean isInside(@NonNull Point2D point) {
-        final var dx = point.x() - center.x();
-        final var dy = point.y() - center.y();
+        final var dx = point.getX() - center.getX();
+        final var dy = point.getY() - center.getY();
         return dx * dx + dy * dy <= radius2;
     }
 }

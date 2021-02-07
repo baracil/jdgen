@@ -22,14 +22,14 @@ public class MainRoomFiller {
 
     private void fill() {
         rooms.stream()
-             .map(r -> r.rectangle())
+             .map(r -> r.getRectangle())
              .forEach(this::fillCellsForRoom);
     }
 
     private void fillCellsForRoom(@NonNull Rectangle rectangle) {
         rectangle.streamPositions()
                  .forEach(p -> {
-                     final var cellType = p.border() ? CellType.WALL : CellType.FLOOR;
+                     final var cellType = p.isBorder() ? CellType.WALL : CellType.FLOOR;
                      final var cell = new Cell(cellType);
                      map.setCellAt(cell, geometry.offsetToMapCoordinates(p));
                  });

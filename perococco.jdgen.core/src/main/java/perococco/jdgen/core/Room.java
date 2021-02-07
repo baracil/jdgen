@@ -12,11 +12,11 @@ public class Room {
 
     public Room(@NonNull Rectangle rectangle) {
         this.rectangle = rectangle;
-        this.center = new IntVector(rectangle.xc(), rectangle.yc());
+        this.center = new IntVector(rectangle.getXc(), rectangle.getYc());
     }
 
     public @NonNull Point2D position() {
-        return Point2D.of(center.x(), center.y());
+        return Point2D.of(center.getX(), center.getY());
     }
 
     @Override

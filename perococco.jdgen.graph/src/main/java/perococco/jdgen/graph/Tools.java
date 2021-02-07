@@ -10,8 +10,8 @@ public class Tools {
     }
 
     public static double distance2(@NonNull Point2D p1, @NonNull Point2D p2) {
-        final var dx = p1.x() - p2.x();
-        final var dy = p1.y() - p2.y();
+        final var dx = p1.getX() - p2.getX();
+        final var dy = p1.getY() - p2.getY();
         return dx * dx + dy * dy;
     }
 
@@ -24,7 +24,7 @@ public class Tools {
     }
 
     private static double crossProduct(@NonNull Point2D v1, @NonNull Point2D v2) {
-        return v1.x() * v2.y() - v1.y() * v2.x();
+        return v1.getX() * v2.getY() - v1.getY() * v2.getX();
     }
 
     private static double crossProduct(double x1, double y1, double x2, double y2) {

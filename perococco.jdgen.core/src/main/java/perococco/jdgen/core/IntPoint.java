@@ -2,6 +2,6 @@ package perococco.jdgen.core;
 
 public interface IntPoint {
 
-    int x();
-    int y();
+    int getX();
+    int getY();
 }

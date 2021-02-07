@@ -28,7 +28,7 @@ public class EMSTBuilder<O> {
     }
 
     private final static Collector<Couple<Point2D>, ?, Map<Point2D, Set<Edge>>> CONNECTIONS_COLLECTOR
-            = Collectors.groupingBy(Couple::value1,
+            = Collectors.groupingBy(Couple::getValue1,
                                     Collectors.mapping(Edge::fromCoupleOfPoints, Collectors.toSet()));
 
 
@@ -121,7 +121,7 @@ public class EMSTBuilder<O> {
         final Function<Couple<Point2D>, Couple<O>> mapper = c -> c.map(objectMapper::get);
 
         return pickedEdges.stream()
-                          .map(Edge::vertices)
+                          .map(Edge::getVertices)
                           .map(mapper)
                           .collect(ImmutableList.toImmutableList());
 

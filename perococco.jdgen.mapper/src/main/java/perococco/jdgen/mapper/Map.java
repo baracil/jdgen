@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.IntPoint;
-import perococco.jdgen.core.IntVector;
 import perococco.jdgen.core.Size;
 
 import java.util.Arrays;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 public final class Map {
 
     public static @NonNull Map create(@NonNull Size size) {
-        final Cell[] cells = new Cell[size.height()*size.width()];
+        final Cell[] cells = new Cell[size.getHeight()*size.getWidth()];
         Arrays.fill(cells,Cell.empty());
         return new Map(size,cells);
     }
@@ -35,15 +34,15 @@ public final class Map {
     }
 
     public void setCellAt(@NonNull Cell cell, IntPoint position) {
-        this.setCellAt(cell,position.x(),position.y());
+        this.setCellAt(cell, position.getX(), position.getY());
     }
 
     private int toLinearCoordinate(int x, int y) {
-        return x+y*size.width();
+        return x+y*size.getWidth();
     }
 
     private void checkCoordinate(int x, int y) {
-        if (x<0 || x >= size.width() || y < 0 || y >= size.height()) {
+        if (x<0 || x >= size.getWidth() || y < 0 || y >= size.getHeight()) {
             throw new IllegalArgumentException("Coordinate are outside of the map x='"+x+"' y='"+y+"'");
         }
     }

@@ -15,6 +15,6 @@ public class MapGeometry {
     @NonNull Size size;
 
     public @NonNull IntPoint offsetToMapCoordinates(@NonNull IntPoint rectanglePosition) {
-        return new IntVector(rectanglePosition.x()+xOffset,rectanglePosition.y()+yOffset);
+        return new IntVector(rectanglePosition.getX()+xOffset, rectanglePosition.getY()+yOffset);
     }
 }

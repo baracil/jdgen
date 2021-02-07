@@ -55,15 +55,15 @@ public class MapView extends Canvas {
             return;
         }
 
-        final var size = map.size();
+        final var size = map.getSize();
 
-        final var sizeX = w/size.width();
-        final var sizeY = h/size.height();
+        final var sizeX = w/size.getWidth();
+        final var sizeY = h/size.getHeight();
 
         final var cellSize = Math.min(sizeX,sizeY);
 
-        for (int x = 0; x < size.width(); x++) {
-            for(int y = 0; y<size.height();y++) {
+        for (int x = 0; x < size.getWidth(); x++) {
+            for(int y = 0; y<size.getHeight();y++) {
                 var cell = map.getCellAt(x,y);
                 drawCell(context,x,y,cell,cellSize);
             }
@@ -85,7 +85,7 @@ public class MapView extends Canvas {
     }
 
     private Color getCellColor(@NonNull Cell cell) {
-        return switch (cell.type()) {
+        return switch (cell.getType()) {
             case EMPTY -> Color.WHITE;
             case DOOR -> Color.GOLD;
             case FLOOR -> Color.GRAY;

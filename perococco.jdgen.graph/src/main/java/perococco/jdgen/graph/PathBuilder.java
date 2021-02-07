@@ -46,7 +46,7 @@ public final class PathBuilder<O> {
 
     private void shuffleNotUsedEdges() {
         final Random random = new Random();
-        random.setSeed(configuration.seed());
+        random.setSeed(configuration.getSeed());
         Collections.shuffle(notUsed, random);
     }
 

@@ -19,13 +19,13 @@ public class RoomSelector {
     private final @NonNull ImmutableList<Rectangle> cells;
 
     private ImmutableList<Room> select() {
-        final var aw = cells.stream().mapToInt(Rectangle::halfWidth).average().orElse(0);
-        final var ah = cells.stream().mapToInt(Rectangle::halfHeight).average().orElse(0);
-        final var tw = configuration.mainRoomThreshold() * aw;
-        final var th = configuration.mainRoomThreshold() * ah;
+        final var aw = cells.stream().mapToInt(Rectangle::getHalfWidth).average().orElse(0);
+        final var ah = cells.stream().mapToInt(Rectangle::getHalfHeight).average().orElse(0);
+        final var tw = configuration.getMainRoomThreshold() * aw;
+        final var th = configuration.getMainRoomThreshold() * ah;
 
         return cells.stream()
-                    .filter(c -> (c.halfHeight() >= th && c.halfWidth() >= tw))
+                    .filter(c -> (c.getHalfHeight() >= th && c.getHalfWidth() >= tw))
                     .map(Room::new)
                     .collect(ImmutableList.toImmutableList());
 

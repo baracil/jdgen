@@ -65,12 +65,12 @@ public class OneCorridorBuilder {
 
     private void buildVerticalCorridor() {
         assert xOverlap != null;
-        final var xDoor = xOverlap.pickAtRandom(configuration.random());
-        final var room1IsAboveRoom2 = room1.yc() > room2.yc();
+        final var xDoor = xOverlap.pickAtRandom(configuration.getRandom());
+        final var room1IsAboveRoom2 = room1.getXc() > room2.getYc();
         final var upperRoom = room1IsAboveRoom2 ? room1 : room2;
         final var lowerRoom = room1IsAboveRoom2 ? room2 : room1;
 
-        IntStream.range(lowerRoom.yc() + lowerRoom.halfHeight(), upperRoom.yc() - upperRoom.halfHeight()+1)
+        IntStream.range(lowerRoom.getYc() + lowerRoom.getHalfHeight(), upperRoom.getYc() - upperRoom.getHalfHeight()+1)
                  .mapToObj(y -> new IntVector(xDoor, y))
                  .map(configuration::offsetToMapCoordinates)
                  .forEach(p -> map.setCellAt(new Cell(CellType.FLOOR), p));
@@ -79,12 +79,12 @@ public class OneCorridorBuilder {
 
     private void buildHorizontalCorridor() {
         assert yOverlap != null;
-        final var yDoor = yOverlap.pickAtRandom(configuration.random());
-        final var room1IsRightOfRoom2 = room1.xc() > room2.xc();
+        final var yDoor = yOverlap.pickAtRandom(configuration.getRandom());
+        final var room1IsRightOfRoom2 = room1.getXc() > room2.getXc();
         final var rightRoom = room1IsRightOfRoom2 ? room1 : room2;
         final var leftRoom = room1IsRightOfRoom2 ? room2 : room1;
 
-        IntStream.range(leftRoom.xc() + leftRoom.halfWidth(), rightRoom.xc() - rightRoom.halfWidth()+1)
+        IntStream.range(leftRoom.getXc() + leftRoom.getHalfWidth(), rightRoom.getXc() - rightRoom.getHalfWidth()+1)
                  .mapToObj(x -> new IntVector(x, yDoor))
                  .map(configuration::offsetToMapCoordinates)
                  .forEach(p -> map.setCellAt(new Cell(CellType.FLOOR), p));

@@ -39,19 +39,19 @@ public class CircumscribedCircleTest {
     @MethodSource("pointSampleForRadius")
     public void shouldHaveRadius(double expectedRadius, @NonNull Point2D a, @NonNull Point2D b, @NonNull Point2D c) {
         final var circle = Circle.circumscribedCircleOf(a, b, c);
-        Assertions.assertEquals(expectedRadius, circle.radius(), 1e-6);
+        Assertions.assertEquals(expectedRadius, circle.getRadius(), 1e-6);
     }
 
     @ParameterizedTest
     @MethodSource("pointSampleForXPosition")
     public void shouldHaveCorrectXCenter(double expectedX, @NonNull Point2D a, @NonNull Point2D b, @NonNull Point2D c) {
         final var circle = Circle.circumscribedCircleOf(a, b, c);
-        Assertions.assertEquals(expectedX, circle.center().x(), 1e-6);
+        Assertions.assertEquals(expectedX, circle.getCenter().getX(), 1e-6);
     }
     @ParameterizedTest
     @MethodSource("pointSampleForYPosition")
     public void shouldHaveCorrectYCenter(double expectedY, @NonNull Point2D a, @NonNull Point2D b, @NonNull Point2D c) {
         final var circle = Circle.circumscribedCircleOf(a, b, c);
-        Assertions.assertEquals(expectedY, circle.center().y(), 1e-6);
+        Assertions.assertEquals(expectedY, circle.getCenter().getY(), 1e-6);
     }
 }

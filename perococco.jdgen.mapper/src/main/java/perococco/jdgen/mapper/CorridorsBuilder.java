@@ -21,10 +21,10 @@ public class CorridorsBuilder {
     private final @NonNull ImmutableList<Couple<Room>> corridors;
 
     private void build() {
-        corridors.forEach(c -> this.createCorridor(c));
+        corridors.forEach(this::createCorridor);
     }
 
     private void createCorridor(Couple<Room> couple) {
-        OneCorridorBuilder.build(configuration, map,couple.value1().rectangle(), couple.value2().rectangle());
+        OneCorridorBuilder.build(configuration, map,couple.getValue1().getRectangle(), couple.getValue2().getRectangle());
     }
 }

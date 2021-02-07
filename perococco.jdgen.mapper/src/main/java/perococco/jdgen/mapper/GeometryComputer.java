@@ -36,11 +36,11 @@ public class GeometryComputer {
     }
 
     private void computeXStatistic() {
-        this.xStat = compute(Rectangle::xc, Rectangle::halfWidth);
+        this.xStat = compute(Rectangle::getXc, Rectangle::getHalfWidth);
     }
 
     private void computeYStatistic() {
-        this.yStat = compute(Rectangle::yc, Rectangle::halfHeight);
+        this.yStat = compute(Rectangle::getYc, Rectangle::getHalfHeight);
     }
 
     private void createGeometry() {
@@ -54,7 +54,7 @@ public class GeometryComputer {
 
     private IntSummaryStatistics compute(@NonNull ToIntFunction<Rectangle> position, ToIntFunction<Rectangle> length) {
         return rooms.stream()
-                    .map(Room::rectangle)
+                    .map(Room::getRectangle)
                     .flatMap(r -> {
                         var p = position.applyAsInt(r);
                         var l = length.applyAsInt(r);

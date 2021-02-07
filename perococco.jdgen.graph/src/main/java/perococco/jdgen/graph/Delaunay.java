@@ -65,8 +65,8 @@ public final class Delaunay<O> {
 
 
     private void createSuperTriangle() {
-        final var sx = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::x));
-        final var sy = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::y));
+        final var sx = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::getX));
+        final var sy = objects.stream().map(positionGetter).collect(Collectors.summarizingDouble(Point2D::getY));
 
         final var xmin = sx.getMin();
         final var xmax = sx.getMax();
@@ -107,7 +107,7 @@ public final class Delaunay<O> {
     }
 
     private void cleanUpTriangulation() {
-        final ImmutableSet<Point2D> pointInSuperTri = superTriangle.vertices();
+        final ImmutableSet<Point2D> pointInSuperTri = superTriangle.getVertices();
         triangulation.removeIf(t -> t.edgeStream()
                                      .flatMap(Edge::vertexStream)
                                      .anyMatch(pointInSuperTri::contains));
@@ -119,7 +119,7 @@ public final class Delaunay<O> {
 
         graph = triangulation.stream()
                              .flatMap(Triangle::edgeStream)
-                             .map(Edge::vertices)
+                             .map(Edge::getVertices)
                              .distinct()
                              .map(coupleMapper)
                              .collect(ImmutableList.toImmutableList());

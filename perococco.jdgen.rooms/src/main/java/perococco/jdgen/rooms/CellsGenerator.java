@@ -35,7 +35,7 @@ public final class CellsGenerator {
     private Rectangle inProgress;
 
     private @NonNull ImmutableList<Rectangle> generate() {
-        randomGenerator.setSeed(configuration.seed());
+        randomGenerator.setSeed(configuration.getSeed());
         this.computeTheTotalNumberOfRooms();
         this.createTheRandomGenerator();
         this.prepareOutputList();
@@ -50,11 +50,11 @@ public final class CellsGenerator {
     }
 
     private void computeTheTotalNumberOfRooms() {
-        this.nbRooms = (int) Math.floor(configuration.dungeonSize() * (5 + randomGenerator.nextDouble()));
+        this.nbRooms = (int) Math.floor(configuration.getDungeonSize() * (5 + randomGenerator.nextDouble()));
     }
 
     private void createTheRandomGenerator() {
-        this.randomSupplier = MathTool.normalDistribution(randomGenerator,configuration.minRoomSize(), configuration.maxRoomSize());
+        this.randomSupplier = MathTool.normalDistribution(randomGenerator,configuration.getMinRoomSize(), configuration.getMaxRoomSize());
     }
 
     private void prepareOutputList() {
@@ -69,7 +69,7 @@ public final class CellsGenerator {
     }
 
     private int pickOneCellLength() {
-        return MathTool.makeOdd(Math.max(configuration.minRoomSize(), (int) Math.round(randomSupplier.getAsDouble())));
+        return MathTool.makeOdd(Math.max(configuration.getMinRoomSize(), (int) Math.round(randomSupplier.getAsDouble())));
     }
 
     private void moveRoomToAvoidOverlaps() {

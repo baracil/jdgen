@@ -40,14 +40,14 @@ public final class CellCompactor {
             final var rectangle = sorted[i];
 
 
-            final int nx = Math.abs(rectangle.xc());
-            final int ny = Math.abs(rectangle.yc());
+            final int nx = Math.abs(rectangle.getXc());
+            final int ny = Math.abs(rectangle.getYc());
             if (Math.max(nx, ny) == 0) {
                 continue;
             }
 
-            final var sx = rectangle.xc() < 0 ? -1 : 1;
-            final var sy = rectangle.yc() < 0 ? -1 : 1;
+            final var sx = rectangle.getXc() < 0 ? -1 : 1;
+            final var sy = rectangle.getYc() < 0 ? -1 : 1;
 
             var closestNotColliding = rectangle;
 
@@ -55,7 +55,7 @@ public final class CellCompactor {
                 final var x = dx*sx;
                 for (int dy = 0; dy < ny; dy++) {
                     final var rect = rectangle.withPos(x,dy*sy);
-                    if (rect.distance()>=closestNotColliding.distance()) {
+                    if (rect.getDistance()>=closestNotColliding.getDistance()) {
                         continue;
                     }
                     if (!collide(rect, sorted, i)) {
