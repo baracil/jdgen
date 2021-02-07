@@ -1,9 +1,11 @@
 package perococco.jdgen.core;
 
 import lombok.NonNull;
+import org.apache.commons.math3.random.RandomGenerator;
 
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Stream;
 
 public interface RectangleGeometry {
@@ -19,9 +21,29 @@ public interface RectangleGeometry {
 
     int getHalfHeight();
 
+    default int getWidth() {
+        return getHalfWidth()*2+1;
+    }
+
+    default int getHeight() {
+        return getHalfHeight()*2+1;
+    }
+
+    default int pickPositionOnHeightWithoutBorder(@NonNull Random random) {
+        return getYc()+random.nextInt(2*getHalfHeight()-1)-getHalfHeight()+1;
+    }
+
+    default int pickPositionOnWidthWithoutBorder(@NonNull Random random) {
+        return getXc()+random.nextInt(2*getHalfWidth()-1)-getHalfWidth()+1;
+    }
+
     double getDistance();
 
     @NonNull Stream<RectanglePosition> streamPositions();
+
+    default @NonNull Stream<RectanglePosition> streamPositionsWithoutBorders() {
+        return streamPositions().filter(p -> !p.isBorder());
+    }
 
     @NonNull Optional<Overlap> computeXOverlap(@NonNull RectangleGeometry other);
 
@@ -50,6 +72,10 @@ public interface RectangleGeometry {
             return rectangle.getHalfWidth();
         }
 
+        @Override
+        public int pickPositionOnSizeWithoutBorder(@NonNull RectangleGeometry rectangle, @NonNull Random random) {
+            return rectangle.pickPositionOnWidthWithoutBorder(random);
+        }
     };
 
     AxisOperations Y_AXIS_GETTER = new AxisOperations() {
@@ -63,6 +89,10 @@ public interface RectangleGeometry {
             return rectangle.getHalfHeight();
         }
 
+        @Override
+        public int pickPositionOnSizeWithoutBorder(@NonNull RectangleGeometry rectangle, @NonNull Random random) {
+            return rectangle.pickPositionOnHeightWithoutBorder(random);
+        }
     };
 
 
@@ -82,6 +112,8 @@ public interface RectangleGeometry {
         default @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry geometry1, @NonNull RectangleGeometry geometry2) {
             return geometry1.computeOverlap(geometry2,this);
         }
+
+        int pickPositionOnSizeWithoutBorder(@NonNull RectangleGeometry rectangle, @NonNull Random random);
     }
 
 }

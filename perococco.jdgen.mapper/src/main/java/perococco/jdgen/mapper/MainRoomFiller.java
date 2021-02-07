@@ -20,7 +20,7 @@ public class MainRoomFiller {
     }
 
     private void fillCellsForRoom(@NonNull RectangleGeometry rectangle) {
-        rectangle.streamPositions()
+        rectangle.streamPositionsWithoutBorders()
                  .forEach(p -> {
                      final var cellType = p.isBorder() ? CellType.WALL : CellType.FLOOR;
                      final var cell = new MapCell(cellType);
