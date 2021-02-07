@@ -32,10 +32,10 @@ public class Rectangle {
     }
 
     public @NonNull Stream<RectanglePosition> streamPositions() {
-        return IntStream.iterate(-halfWidth, w -> w <= halfWidth, w -> w + 1)
-                        .mapToObj(w -> IntStream.iterate(-halfHeight, h -> h <= halfHeight, h -> h + 1)
-                                                .mapToObj(h -> new IntVector(w, h)))
-                        .flatMap(s -> s)
+        final int width = halfWidth * 2 + 1;
+        final int height = halfHeight * 2 + 1;
+        return IntStream.range(0, width * height)
+                        .mapToObj(i -> new IntVector((i % width) - halfWidth, (i / width) - halfHeight))
                         .map(this::toRectanglePosition);
     }
 
@@ -46,24 +46,21 @@ public class Rectangle {
     }
 
     public @NonNull Optional<Overlap> computeXOverlap(@NonNull Rectangle other) {
-        if (!overlapOnX(other)) {
-            return Optional.empty();
-        }
-        if (xc > other.xc) {
-            return other.computeXOverlap(this);
-        }
-        return Optional.of(new Overlap( other.xc - other.halfWidth,this.xc + this.halfWidth));
+        return computeOverlap(other, X_AXIS_GETTER);
     }
 
     public @NonNull Optional<Overlap> computeYOverlap(@NonNull Rectangle other) {
-        if (!overlapOnY(other)) {
+        return computeOverlap(other, Y_AXIS_GETTER);
+    }
+
+    private @NonNull Optional<Overlap> computeOverlap(@NonNull Rectangle other, @NonNull AxisGetter axisGetter) {
+        if (axisGetter.getCenter(other) < axisGetter.getCenter(this)) {
+            return other.computeOverlap(this, axisGetter);
+        }
+        if (!overlapOnAxis(other, axisGetter)) {
             return Optional.empty();
         }
-        if (yc > other.yc) {
-            return other.computeYOverlap(this);
-        }
-        return Optional.of(new Overlap(other.yc - other.halfHeight, this.yc + this.halfHeight));
-
+        return Optional.of(new Overlap(axisGetter.getLowerBound(other), axisGetter.getUpperBound(this)));
     }
 
     public boolean overlap(@NonNull Rectangle other) {
@@ -71,11 +68,15 @@ public class Rectangle {
     }
 
     public boolean overlapOnX(@NonNull Rectangle other) {
-        return Math.abs(other.xc - this.xc) <= (other.halfWidth + this.halfWidth);
+        return overlapOnAxis(other, X_AXIS_GETTER);
     }
 
     public boolean overlapOnY(@NonNull Rectangle other) {
-        return Math.abs(other.yc - this.yc) <= (other.halfHeight + this.halfHeight);
+        return overlapOnAxis(other, Y_AXIS_GETTER);
+    }
+
+    private boolean overlapOnAxis(@NonNull Rectangle other, @NonNull Rectangle.AxisGetter axisGetter) {
+        return Math.abs(axisGetter.getCenter(other) - axisGetter.getCenter(this)) <= (axisGetter.getHalfLength(other) + axisGetter.getHalfLength(this));
     }
 
     public int displacementToPutRightOf(@NonNull Rectangle reference) {
@@ -102,4 +103,47 @@ public class Rectangle {
     public @NonNull Rectangle translate(@NonNull IntVector displacement) {
         return new Rectangle(xc + displacement.getX(), yc + displacement.getY(), halfWidth, halfHeight);
     }
+
+
+    public static final AxisGetter X_AXIS_GETTER = new AxisGetter() {
+        @Override
+        public int getCenter(@NonNull Rectangle rectangle) {
+            return rectangle.getXc();
+        }
+
+        @Override
+        public int getHalfLength(@NonNull Rectangle rectangle) {
+            return rectangle.getHalfWidth();
+        }
+    };
+
+    public static final AxisGetter Y_AXIS_GETTER = new AxisGetter() {
+        @Override
+        public int getCenter(@NonNull Rectangle rectangle) {
+            return rectangle.getYc();
+        }
+
+        @Override
+        public int getHalfLength(@NonNull Rectangle rectangle) {
+            return rectangle.getHalfHeight();
+        }
+
+
+    };
+
+    public interface AxisGetter {
+        int getCenter(@NonNull Rectangle rectangle);
+
+        int getHalfLength(@NonNull Rectangle rectangle);
+
+        default int getLowerBound(@NonNull Rectangle rectangle) {
+            return getCenter(rectangle) - getHalfLength(rectangle);
+        }
+
+        default int getUpperBound(@NonNull Rectangle rectangle) {
+            return getCenter(rectangle) + getHalfLength(rectangle);
+        }
+    }
+
+
 }
