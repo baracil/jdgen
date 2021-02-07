@@ -99,7 +99,7 @@ public class Rectangle {
         return new Rectangle((int) Math.round(posX), (int) Math.round(posY), halfWidth, halfHeight);
     }
 
-    public @NonNull Rectangle translate(IntVector displacement) {
+    public @NonNull Rectangle translate(@NonNull IntVector displacement) {
         return new Rectangle(xc + displacement.x(), yc + displacement.y(), halfWidth, halfHeight);
     }
 }
