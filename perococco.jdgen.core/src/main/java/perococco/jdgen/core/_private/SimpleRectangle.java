@@ -54,13 +54,14 @@ public class SimpleRectangle implements Rectangle {
     }
 
     public @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry other, @NonNull RectangleGeometry.AxisOperations axisOperations) {
-        if (axisOperations.getCenter(other) < axisOperations.getCenter(this)) {
-            return other.computeOverlap(this, axisOperations);
-        }
         if (!overlapOnAxis(other, axisOperations)) {
             return Optional.empty();
         }
-        return Optional.of(new Overlap(axisOperations.getLowerBound(other), axisOperations.getUpperBound(this)));
+
+        final var lower = Math.max(axisOperations.getLowerBound(other), axisOperations.getLowerBound(this));
+        final var upper = Math.min(axisOperations.getUpperBound(other), axisOperations.getUpperBound(this));
+
+        return Optional.of(new Overlap(lower,upper));
     }
 
     public boolean overlapOnX(@NonNull RectangleGeometry other) {
