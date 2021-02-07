@@ -10,7 +10,7 @@ public class RectanglePositionTest {
 
     @Test
     public void shouldHaveRightRectanglePositions() {
-        final Rectangle rectangle = new Rectangle(2,2,2,2);
+        final Rectangle rectangle = Rectangle.with(2, 2, 2, 2);
 
         final Set<RectanglePosition> positions = rectangle.streamPositions().collect(Collectors.toSet());
 

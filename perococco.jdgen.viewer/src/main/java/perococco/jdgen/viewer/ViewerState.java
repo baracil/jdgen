@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.core.Cell;
 import perococco.jdgen.core.Couple;
-import perococco.jdgen.core.Rectangle;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.mapper.Map;
 
@@ -19,7 +19,7 @@ public class ViewerState {
 
     private final int minRoomSize;
 
-    private final @NonNull ImmutableList<Rectangle> cells;
+    private final @NonNull ImmutableList<Cell> cells;
 
     private final @NonNull ImmutableList<Room> rooms;
 
@@ -45,7 +45,7 @@ public class ViewerState {
         return toBuilder().minRoomSize(minRoomSize).build();
     }
 
-    public @NonNull ViewerState withCells(ImmutableList<Rectangle> cells) {
+    public @NonNull ViewerState withCells(ImmutableList<Cell> cells) {
         return toBuilder().cells(cells).build();
     }
 

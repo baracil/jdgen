@@ -7,24 +7,20 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Room;
 
-import java.util.Random;
-
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class CorridorsBuilder {
 
-    public static void build(@NonNull MapperConfiguration configuration, @NonNull Map map, @NonNull ImmutableList<Couple<Room>> rooms) {
-        new CorridorsBuilder(configuration, map, rooms).build();
+    public static void build(@NonNull MapperParameters parameters) {
+        new CorridorsBuilder(parameters).build();
     }
 
-    private final @NonNull MapperConfiguration configuration;
-    private final @NonNull Map map;
-    private final @NonNull ImmutableList<Couple<Room>> corridors;
+    private final @NonNull MapperParameters parameters;
 
     private void build() {
-        corridors.forEach(this::createCorridor);
+        parameters.forEachCorridors(this::createCorridor);
     }
 
     private void createCorridor(Couple<Room> couple) {
-        OneCorridorBuilder.build(configuration, map,couple.getValue1().getRectangle(), couple.getValue2().getRectangle());
+        OneCorridorBuilder.build(parameters,couple.getValue1(), couple.getValue2());
     }
 }

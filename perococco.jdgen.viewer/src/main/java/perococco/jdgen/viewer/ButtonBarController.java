@@ -25,6 +25,7 @@ public class ButtonBarController {
     private final ChangeListener<String> listener = (l,o,n) -> this.onSeedChanged(n);
 
     private void onSeedChanged(String n) {
+        System.out.println("N="+n);
         noSeed.set(false);
     }
 
@@ -38,7 +39,6 @@ public class ButtonBarController {
 
     public void initialize() {
         seedValue.clear();
-//        seedValue.setStyle("-fx-text-fill: gray");
         seedValue.styleProperty().bind(Bindings.createStringBinding(() -> noSeed.get()?"-fx-text-fill: gray":"",noSeed));
         this.listenToSeed();
     }

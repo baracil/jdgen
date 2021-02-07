@@ -13,28 +13,28 @@ import java.util.Arrays;
 public final class Map {
 
     public static @NonNull Map create(@NonNull Size size) {
-        final Cell[] cells = new Cell[size.getHeight()*size.getWidth()];
-        Arrays.fill(cells,Cell.empty());
-        return new Map(size,cells);
+        final MapCell[] mapCells = new MapCell[size.getHeight()*size.getWidth()];
+        Arrays.fill(mapCells, MapCell.empty());
+        return new Map(size, mapCells);
     }
 
     @Getter
     private final @NonNull Size size;
 
-    private final @NonNull Cell[] cells;
+    private final @NonNull MapCell[] mapCells;
 
-    public Cell getCellAt(int x, int y) {
+    public MapCell getCellAt(int x, int y) {
         this.checkCoordinate(x,y);
-        return cells[toLinearCoordinate(x,y)];
+        return mapCells[toLinearCoordinate(x, y)];
     }
 
-    public void setCellAt(@NonNull Cell cell, int x, int y) {
+    public void setCellAt(@NonNull MapCell mapCell, int x, int y) {
         this.checkCoordinate(x,y);
-        cells[toLinearCoordinate(x,y)] = cell;
+        mapCells[toLinearCoordinate(x, y)] = mapCell;
     }
 
-    public void setCellAt(@NonNull Cell cell, IntPoint position) {
-        this.setCellAt(cell, position.getX(), position.getY());
+    public void setCellAt(@NonNull MapCell mapCell, IntPoint position) {
+        this.setCellAt(mapCell, position.getX(), position.getY());
     }
 
     private int toLinearCoordinate(int x, int y) {

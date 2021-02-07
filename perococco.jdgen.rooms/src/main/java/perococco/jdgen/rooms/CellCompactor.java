@@ -4,7 +4,9 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.core.Cell;
 import perococco.jdgen.core.Rectangle;
+import perococco.jdgen.core.RectangleGeometry;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -12,54 +14,54 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CellCompactor {
 
-    public static ImmutableList<Rectangle> compact(@NonNull ImmutableList<Rectangle> cells,
-                                                   @NonNull Consumer<ImmutableList<Rectangle>> observer) {
+    public static ImmutableList<Cell> compact(@NonNull ImmutableList<Cell> cells,
+                                              @NonNull Consumer<ImmutableList<Cell>> observer) {
         return new CellCompactor(cells, observer).compact();
     }
 
-    public static ImmutableList<Rectangle> compact(@NonNull ImmutableList<Rectangle> cells) {
+    public static ImmutableList<Cell> compact(@NonNull ImmutableList<Cell> cells) {
         return compact(cells, l -> {});
     }
 
 
-    private final ImmutableList<Rectangle> cells;
+    private final ImmutableList<Cell> mapCells;
 
-    private final Consumer<ImmutableList<Rectangle>> observer;
+    private final Consumer<ImmutableList<Cell>> observer;
 
-    private Rectangle[] sorted;
+    private Cell[] sorted;
 
-    private @NonNull ImmutableList<Rectangle> compact() {
-        sorted = cells.toArray(Rectangle[]::new);
+    private @NonNull ImmutableList<Cell> compact() {
+        sorted = mapCells.toArray(Cell[]::new);
         performOneIteration();
         return ImmutableList.copyOf(sorted);
     }
 
     private void performOneIteration() {
-        Arrays.sort(sorted, Rectangle.DISTANCE_COMPARATOR);
+        Arrays.sort(sorted, RectangleGeometry.DISTANCE_COMPARATOR);
         for (int i = 0, sortedLength = sorted.length; i < sortedLength; i++) {
-            final var rectangle = sorted[i];
+            final var cell = sorted[i];
 
 
-            final int nx = Math.abs(rectangle.getXc());
-            final int ny = Math.abs(rectangle.getYc());
+            final int nx = Math.abs(cell.getXc());
+            final int ny = Math.abs(cell.getYc());
             if (Math.max(nx, ny) == 0) {
                 continue;
             }
 
-            final var sx = rectangle.getXc() < 0 ? -1 : 1;
-            final var sy = rectangle.getYc() < 0 ? -1 : 1;
+            final var sx = cell.getXc() < 0 ? -1 : 1;
+            final var sy = cell.getYc() < 0 ? -1 : 1;
 
-            var closestNotColliding = rectangle;
+            var closestNotColliding = cell;
 
             for (int dx = 0; dx < nx; dx++) {
                 final var x = dx*sx;
                 for (int dy = 0; dy < ny; dy++) {
-                    final var rect = rectangle.withPos(x,dy*sy);
-                    if (rect.getDistance()>=closestNotColliding.getDistance()) {
+                    final var movedCell = cell.withPos(x,dy*sy);
+                    if (movedCell.getDistance()>=closestNotColliding.getDistance()) {
                         continue;
                     }
-                    if (!collide(rect, sorted, i)) {
-                        closestNotColliding = rect;
+                    if (!collide(movedCell, sorted, i)) {
+                        closestNotColliding = movedCell;
                     }
                 }
             }
@@ -68,7 +70,7 @@ public final class CellCompactor {
         }
     }
 
-    private boolean collide(Rectangle rect, Rectangle[] sorted, int toSkip) {
+    private boolean collide(RectangleGeometry rect, RectangleGeometry[] sorted, int toSkip) {
         for (int i = 0; i < sorted.length; i++) {
             if (i == toSkip) {
                 continue;

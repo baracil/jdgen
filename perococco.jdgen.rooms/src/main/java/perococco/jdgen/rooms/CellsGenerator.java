@@ -6,10 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
-import perococco.jdgen.core.IntVector;
-import perococco.jdgen.core.JDGenConfiguration;
-import perococco.jdgen.core.MathTool;
-import perococco.jdgen.core.Rectangle;
+import perococco.jdgen.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +16,7 @@ import java.util.function.ToIntFunction;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CellsGenerator {
 
-    public static @NonNull ImmutableList<Rectangle> generate(@NonNull JDGenConfiguration configuration) {
+    public static @NonNull ImmutableList<Cell> generate(@NonNull JDGenConfiguration configuration) {
         return new CellsGenerator(configuration).generate();
     }
 
@@ -34,7 +31,7 @@ public final class CellsGenerator {
 
     private Rectangle inProgress;
 
-    private @NonNull ImmutableList<Rectangle> generate() {
+    private @NonNull ImmutableList<Cell> generate() {
         randomGenerator.setSeed(configuration.getSeed());
         this.computeTheTotalNumberOfRooms();
         this.createTheRandomGenerator();
@@ -46,7 +43,7 @@ public final class CellsGenerator {
             this.addRoomToResult();
         }
 
-        return ImmutableList.copyOf(result);
+        return result.stream().map(Cell::new).collect(ImmutableList.toImmutableList());
     }
 
     private void computeTheTotalNumberOfRooms() {
@@ -65,7 +62,7 @@ public final class CellsGenerator {
         final var width = pickOneCellLength();
         final var height = pickOneCellLength();
 
-        inProgress = new Rectangle(-width / 2, -height / 2, width / 2, height / 2);
+        inProgress = Rectangle.with(0,0, width / 2, height / 2);
     }
 
     private int pickOneCellLength() {

@@ -1,27 +1,31 @@
 package perococco.jdgen.core;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Delegate;
 
-public class Room {
+public class Room implements RectangleGeometry {
 
     @Getter
-    private final @NonNull Rectangle rectangle;
+    @Delegate(types = RectangleGeometry.class)
+    private final @NonNull Cell reference;
 
-    private final @NonNull IntVector center;
+    @Getter
+    private final Point2D position;
 
-    public Room(@NonNull Rectangle rectangle) {
-        this.rectangle = rectangle;
-        this.center = new IntVector(rectangle.getXc(), rectangle.getYc());
-    }
-
-    public @NonNull Point2D position() {
-        return Point2D.of(center.getX(), center.getY());
+    public Room(@NonNull Cell cell) {
+        this.reference = cell;
+        this.position = new Point2D(cell.getXc(),cell.getYc());
     }
 
     @Override
     public String toString() {
-        return "Room{" + center +
-                '}';
+        return "Room{" + getXc() +","+getYc()+'}';
     }
+
+    public @NonNull Rectangle getContainer() {
+        return reference.getContainer();
+    }
+
 }

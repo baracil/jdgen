@@ -51,8 +51,8 @@ public class Dungeon extends Group {
         final var state = m.getState();
 
         final Map<Rectangle,Color> rectangles = new HashMap<>();
-        state.getCells().forEach(c -> rectangles.put(c,Color.BLUE));
-        state.getRooms().forEach(r -> rectangles.put(r.getRectangle(), Color.RED));
+        state.getCells().forEach(c -> rectangles.put(c.getContainer(), Color.BLUE));
+        state.getRooms().forEach(r -> rectangles.put(r.getContainer(), Color.RED));
         this.rectangles.set(ImmutableMap.copyOf(rectangles));
 
         if (state.getPath().isEmpty()) {
@@ -81,8 +81,8 @@ public class Dungeon extends Group {
     private @NonNull Line toLine(@NonNull Couple<Room> edge) {
         final var state = model.get().getState();
         final var line = new Line();
-        final var start = edge.getValue1().position();
-        final var end = edge.getValue2().position();
+        final var start = edge.getValue1().getPosition();
+        final var end = edge.getValue2().getPosition();
         line.setStroke(Color.rgb(0,255,0));
         line.setStrokeWidth(state.getMinRoomSize()/4.);
         line.setStartX(start.getX());

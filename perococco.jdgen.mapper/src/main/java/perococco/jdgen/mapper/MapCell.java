@@ -5,13 +5,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class Cell {
+public class MapCell {
 
-    public static @NonNull Cell empty() {
+    public static @NonNull MapCell empty() {
         return EMPTY;
     }
 
-    private static final Cell EMPTY = new Cell(CellType.EMPTY);
+    private static final MapCell EMPTY = new MapCell(CellType.EMPTY);
 
     @Getter
     private final @NonNull CellType type;

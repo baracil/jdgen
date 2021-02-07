@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.Rectangle;
+import perococco.jdgen.core.RectangleGeometry;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.core.Size;
 
 import java.util.IntSummaryStatistics;
-import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -36,11 +35,11 @@ public class GeometryComputer {
     }
 
     private void computeXStatistic() {
-        this.xStat = compute(Rectangle::getXc, Rectangle::getHalfWidth);
+        this.xStat = compute(RectangleGeometry.X_AXIS_GETTER);
     }
 
     private void computeYStatistic() {
-        this.yStat = compute(Rectangle::getYc, Rectangle::getHalfHeight);
+        this.yStat = compute(RectangleGeometry.Y_AXIS_GETTER);
     }
 
     private void createGeometry() {
@@ -52,12 +51,11 @@ public class GeometryComputer {
                 size);
     }
 
-    private IntSummaryStatistics compute(@NonNull ToIntFunction<Rectangle> position, ToIntFunction<Rectangle> length) {
+    private IntSummaryStatistics compute(@NonNull RectangleGeometry.AxisOperations axisOperations) {
         return rooms.stream()
-                    .map(Room::getRectangle)
                     .flatMap(r -> {
-                        var p = position.applyAsInt(r);
-                        var l = length.applyAsInt(r);
+                        var p = axisOperations.getCenter(r);
+                        var l = axisOperations.getHalfLength(r);
                         return IntStream.of(p - l, p + l).boxed();
                     })
                     .collect(Collectors.summarizingInt(i -> i));

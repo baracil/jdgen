@@ -12,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import perococco.jdgen.core.Exec;
 
 import java.util.Optional;
 
@@ -48,8 +49,8 @@ public class Viewer extends Application {
         mapView.heightProperty().bind(mapPane.heightProperty());
         mapView.widthProperty().bind(mapPane.widthProperty());
 
-        tabPane.getTabs().add(new Tab("Graph",graphPane));
-        tabPane.getTabs().add(new Tab("Map",mapPane));
+        tabPane.getTabs().add(Exec.with(new Tab("Graph", graphPane)).run(t -> t.setClosable(false)));
+        tabPane.getTabs().add(Exec.with(new Tab("Map",mapPane)).run(t -> t.setClosable(false)));
 
         container.setCenter(tabPane);
 
@@ -69,7 +70,7 @@ public class Viewer extends Application {
                 return;
             }
             Optional.ofNullable(tabPane.getSelectionModel().getSelectedItem())
-                    .map(t -> t.getContent())
+                    .map(Tab::getContent)
                     .ifPresent(n -> zoomOperator.zoom(n,zoomFactor,e.getSceneX(),e.getSceneY())
                     );
         });
