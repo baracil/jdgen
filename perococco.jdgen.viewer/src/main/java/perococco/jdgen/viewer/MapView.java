@@ -87,7 +87,9 @@ public class MapView extends Canvas {
         return switch (mapCell.getType()) {
             case EMPTY -> Color.WHITE;
             case DOOR -> Color.GOLD;
-            case FLOOR -> Color.GRAY;
+            case CELL_FLOOR -> Color.BLUE;
+            case ROOM_FLOOR -> Color.RED;
+            case CORRIDOR_FLOOR -> Color.GREEN;
             case WALL -> Color.BLACK;
         };
     }

@@ -24,7 +24,6 @@ public class OneCorridorBuilder {
         }
     }
 
-
     private final @NonNull MapperParameters parameters;
     private final @NonNull Room upperRoom;
     private final @NonNull Room lowerRoom;
@@ -95,7 +94,7 @@ public class OneCorridorBuilder {
 
         IntStream.rangeClosed(op.getUpperBound(lowerRoom), op.getLowerBound(upperRoom))
                  .mapToObj(corridorPoint)
-                 .forEach(p -> parameters.getMap().setCellAt(new MapCell(CellType.FLOOR), p));
+                 .forEach(p -> parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR), p));
     }
 
     private void buildLShapeCorridor() {
@@ -189,14 +188,14 @@ public class OneCorridorBuilder {
             final var ys = Math.min(start.getY(), end.getY());
             final var ye = Math.max(start.getY(), end.getY());
             for (int y = ys; y <= ye ; y++) {
-                parameters.getMap().setCellAt(new MapCell(CellType.FLOOR),start.getX(),y);
+                parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR),start.getX(),y);
             }
         }
         else if (start.getY() == end.getY()) {
             final var xs = Math.min(start.getX(), end.getX());
             final var xe = Math.max(start.getX(), end.getX());
             for (int x = xs; x <= xe ; x++) {
-                parameters.getMap().setCellAt(new MapCell(CellType.FLOOR),x,start.getY());
+                parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR),x,start.getY());
             }
 
         }

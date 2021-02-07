@@ -2,7 +2,9 @@ package perococco.jdgen.mapper;
 
 public enum CellType {
     WALL,
-    FLOOR,
+    ROOM_FLOOR,
+    CORRIDOR_FLOOR,
+    CELL_FLOOR,
     DOOR,
     EMPTY,
     ;

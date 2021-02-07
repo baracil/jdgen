@@ -7,13 +7,15 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.RectangleGeometry;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class MainRoomFiller {
+public class RoomFiller {
 
-    public static void fillMainRooms(@NonNull MapperParameters parameters) {
-        new MainRoomFiller(parameters).fill();
+    public static void fillMainRooms(@NonNull MapperParameters parameters, @NonNull CellType cellType) {
+        new RoomFiller(parameters, cellType).fill();
     }
 
     private final @NonNull MapperParameters parameters;
+
+    private final @NonNull CellType cellType;
 
     private void fill() {
         parameters.forEachRooms(this::fillCellsForRoom);
@@ -22,9 +24,8 @@ public class MainRoomFiller {
     private void fillCellsForRoom(@NonNull RectangleGeometry rectangle) {
         rectangle.streamPositionsWithoutBorders()
                  .forEach(p -> {
-                     final var cellType = p.isBorder() ? CellType.WALL : CellType.FLOOR;
                      final var cell = new MapCell(cellType);
-                     parameters.getMap().setCellAt(cell, p);
+                     parameters.getMap().setCellAtIfEmpty(cell, p);
                  });
     }
 

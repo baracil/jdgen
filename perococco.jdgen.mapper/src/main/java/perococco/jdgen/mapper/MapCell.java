@@ -16,4 +16,8 @@ public class MapCell {
     @Getter
     private final @NonNull CellType type;
 
+    public boolean isEmpty() {
+        return type == CellType.EMPTY;
+    }
+
 }

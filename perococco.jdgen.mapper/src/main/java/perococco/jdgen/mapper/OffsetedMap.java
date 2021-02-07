@@ -2,7 +2,6 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.IntPoint;
 import perococco.jdgen.core.Size;
 
 @RequiredArgsConstructor
@@ -28,11 +27,6 @@ public class OffsetedMap implements Map {
     }
 
     @Override
-    public void setCellAt(@NonNull MapCell mapCell, IntPoint position) {
-        setCellAt(mapCell,position.getX(),position.getY());
-    }
-
-    @Override
     public @NonNull Map offsetMap(int xOffset, int yOffset) {
         return new OffsetedMap(delegate,this.xOffset+xOffset, this.yOffset+yOffset);
     }
@@ -41,4 +35,5 @@ public class OffsetedMap implements Map {
     public @NonNull Map clearOffsets() {
         return delegate.clearOffsets();
     }
+
 }

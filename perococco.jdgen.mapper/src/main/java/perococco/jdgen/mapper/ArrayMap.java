@@ -33,10 +33,6 @@ public final class ArrayMap implements Map {
         mapCells[toLinearCoordinate(x, y)] = mapCell;
     }
 
-    public void setCellAt(@NonNull MapCell mapCell, IntPoint position) {
-        this.setCellAt(mapCell, position.getX(), position.getY());
-    }
-
     private int toLinearCoordinate(int x, int y) {
         return x+y*size.getWidth();
     }
