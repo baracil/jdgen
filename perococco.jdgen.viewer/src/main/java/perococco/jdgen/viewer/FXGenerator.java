@@ -36,28 +36,21 @@ public class FXGenerator {
 
         final var compactedCells = CellCompactor.compact(cells, l -> fxUpdater.update(s -> s.withCells(l)));
         final var rooms = RoomSelector.select(configuration, compactedCells);
-        Thread.sleep(200);
         fxUpdater.update(s -> s.withRooms(rooms));
 
 
         final var graph = Delaunay.triangulize(rooms, Room::position);
 
-        Thread.sleep(1000);
         fxUpdater.update(s -> s.withDelaunayGraph(graph));
 
 
         final var tree = EMSTBuilder.buildTree(graph, Room::position);
-        Thread.sleep(200);
         fxUpdater.update(s -> s.withPath(tree));
 
         final var corridors = PathBuilder.buildPath(configuration,graph,tree);
-        Thread.sleep(200);
         fxUpdater.update(s -> s.withPath(corridors));
 
-        final var size = new Size(100,100);
-
-        Thread.sleep(200);
-        final var map = Mapper.perform(compactedCells, rooms, corridors);
+        final var map = Mapper.perform(configuration,compactedCells, rooms, corridors);
 
         fxUpdater.update(s -> s.withMap(map));
 

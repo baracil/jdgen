@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.Value;
 
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -44,10 +45,37 @@ public class Rectangle {
 
     }
 
+    public @NonNull Optional<Overlap> computeXOverlap(@NonNull Rectangle other) {
+        if (!overlapOnX(other)) {
+            return Optional.empty();
+        }
+        if (xc > other.xc) {
+            return other.computeXOverlap(this);
+        }
+        return Optional.of(new Overlap( other.xc - other.halfWidth,this.xc + this.halfWidth));
+    }
+
+    public @NonNull Optional<Overlap> computeYOverlap(@NonNull Rectangle other) {
+        if (!overlapOnY(other)) {
+            return Optional.empty();
+        }
+        if (yc > other.yc) {
+            return other.computeYOverlap(this);
+        }
+        return Optional.of(new Overlap(other.yc - other.halfHeight, this.yc + this.halfHeight));
+
+    }
+
     public boolean overlap(@NonNull Rectangle other) {
-        boolean xOverlap = Math.abs(other.xc - xc) <= (other.halfWidth + this.halfWidth);
-        boolean yOverlap = Math.abs(other.yc - yc) <= (other.halfHeight + this.halfHeight);
-        return xOverlap && yOverlap;
+        return overlapOnX(other) && overlapOnY(other);
+    }
+
+    public boolean overlapOnX(@NonNull Rectangle other) {
+        return Math.abs(other.xc - this.xc) <= (other.halfWidth + this.halfWidth);
+    }
+
+    public boolean overlapOnY(@NonNull Rectangle other) {
+        return Math.abs(other.yc - this.yc) <= (other.halfHeight + this.halfHeight);
     }
 
     public int displacementToPutRightOf(@NonNull Rectangle reference) {

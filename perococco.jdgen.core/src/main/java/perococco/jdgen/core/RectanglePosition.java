@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value
-public class RectanglePosition {
+public class RectanglePosition  implements IntPoint {
 
     int x;
     int y;

@@ -52,7 +52,7 @@ public class Dungeon extends Group {
 
         final Map<Rectangle,Color> rectangles = new HashMap<>();
         state.cells().forEach(c -> rectangles.put(c,Color.BLUE));
-        state.rooms().forEach(r -> rectangles.put(r.geometry(),Color.RED));
+        state.rooms().forEach(r -> rectangles.put(r.rectangle(), Color.RED));
         this.rectangles.set(ImmutableMap.copyOf(rectangles));
 
         if (state.path().isEmpty()) {

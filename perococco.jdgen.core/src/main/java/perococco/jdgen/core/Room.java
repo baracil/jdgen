@@ -6,13 +6,13 @@ import lombok.NonNull;
 public class Room {
 
     @Getter
-    private final @NonNull Rectangle geometry;
+    private final @NonNull Rectangle rectangle;
 
     private final @NonNull IntVector center;
 
-    public Room(@NonNull Rectangle geometry) {
-        this.geometry = geometry;
-        this.center = new IntVector(geometry.xc(), geometry.yc());
+    public Room(@NonNull Rectangle rectangle) {
+        this.rectangle = rectangle;
+        this.center = new IntVector(rectangle.xc(), rectangle.yc());
     }
 
     public @NonNull Point2D position() {

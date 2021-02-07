@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.Value;
 
 @Value
-public class IntVector {
+public class IntVector implements IntPoint {
 
     public static final IntVector NIL = new IntVector(0, 0);
     int x;

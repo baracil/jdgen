@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.core.IntPoint;
+import perococco.jdgen.core.IntVector;
 import perococco.jdgen.core.Size;
 
 import java.util.Arrays;
@@ -30,6 +32,10 @@ public final class Map {
     public void setCellAt(@NonNull Cell cell, int x, int y) {
         this.checkCoordinate(x,y);
         cells[toLinearCoordinate(x,y)] = cell;
+    }
+
+    public void setCellAt(@NonNull Cell cell, IntPoint position) {
+        this.setCellAt(cell,position.x(),position.y());
     }
 
     private int toLinearCoordinate(int x, int y) {

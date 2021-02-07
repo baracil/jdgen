@@ -1,14 +1,19 @@
 package perococco.jdgen.viewer;
 
+import com.google.common.collect.Table;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class Viewer extends Application {
 
@@ -35,48 +40,38 @@ public class Viewer extends Application {
 
         dungeon.setModel(generationManager.getGenerationModel());
         mapView.setModel(generationManager.getGenerationModel());
-        mapView.setStyle("-fx-background-color: red");
 
-        final var pane = new Pane();
-        container.setCenter(pane);
-        showMapView.addListener((l,o,showMap) -> {
-            if (showMap) {
-                System.out.println("SET MAP VIEW TO PANE");
-                pane.getChildren().setAll(mapView);
-                mapView.widthProperty().bind(pane.widthProperty());
-                mapView.heightProperty().bind(pane.heightProperty());
-            } else {
-                System.out.println("SET DUNGEON VIEW TO PANE");
-                pane.getChildren().setAll(dungeon);
-            }
-        });
+        final var graphPane = new Pane(dungeon);
+        final var mapPane = new Pane(mapView);
+        final var tabPane = new TabPane();
 
-        showMapView.bind(Bindings.createBooleanBinding(
-                () -> generationManager.getGenerationModel()
-                                       .getState()
-                                       .map().isPresent(),
-                generationManager.getGenerationModel().stateProperty()));
+        mapView.heightProperty().bind(mapPane.heightProperty());
+        mapView.widthProperty().bind(mapPane.widthProperty());
 
-        pane.getChildren().setAll(dungeon);
+        tabPane.getTabs().add(new Tab("Graph",graphPane));
+        tabPane.getTabs().add(new Tab("Map",mapPane));
 
+        container.setCenter(tabPane);
 
         final Scene scene = new Scene(container, 600, 400);
 
-        pane.setTranslateX(300);
-        pane.setTranslateY(200);
+        graphPane.setTranslateX(300);
+        graphPane.setTranslateY(200);
 
         scene.setOnScroll(e -> {
-            double zoomFactor = 1.5;
-            if (e.getDeltaY() == 0) {
-                return;
-            }
+            final double zoomFactor;
             if (e.getDeltaY() < 0) {
                 zoomFactor = 1. / 1.5;
             }
-            if (e.getDeltaY() > 0) {
+            else if (e.getDeltaY() > 0) {
                 zoomFactor = 1.5;
+            } else {
+                return;
             }
-            zoomOperator.zoom(pane, zoomFactor, e.getSceneX(), e.getSceneY());
+            Optional.ofNullable(tabPane.getSelectionModel().getSelectedItem())
+                    .map(t -> t.getContent())
+                    .ifPresent(n -> zoomOperator.zoom(n,zoomFactor,e.getSceneX(),e.getSceneY())
+                    );
         });
 
 
