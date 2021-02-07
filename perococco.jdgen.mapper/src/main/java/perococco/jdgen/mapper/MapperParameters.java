@@ -38,7 +38,8 @@ public class MapperParameters {
                 configuration,
                 Exec.with(new Random()).run(r -> r.setSeed(configuration.getSeed())),
                 GeometryComputer.compute(rooms),
-                Map.create(geometry.getSize()),
+                Map.create(geometry.getSize())
+                   .offsetMap(geometry.getXOffset(),geometry.getYOffset()),
                 cellsNotInRoom,
                 rooms,
                 corridors
@@ -58,7 +59,4 @@ public class MapperParameters {
         corridors.forEach(corridorConsumer);
     }
 
-    public IntPoint offsetToMapCoordinates(IntPoint intVector) {
-        return geometry.offsetToMapCoordinates(intVector);
-    }
 }

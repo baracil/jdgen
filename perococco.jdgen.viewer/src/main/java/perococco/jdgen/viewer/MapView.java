@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
+import perococco.jdgen.mapper.Map;
 import perococco.jdgen.mapper.MapCell;
 
 import java.util.Random;
@@ -47,7 +48,7 @@ public class MapView extends Canvas {
         final var h = this.getHeight();
 
 
-        final var map = this.model.get().getState().map().orElse(null);
+        final var map = this.model.get().getState().map().map(Map::clearOffsets).orElse(null);
         if (map == null) {
             context.clearRect(0,0,w,h);
             return;

@@ -95,7 +95,6 @@ public class OneCorridorBuilder {
 
         IntStream.rangeClosed(op.getUpperBound(lowerRoom), op.getLowerBound(upperRoom))
                  .mapToObj(corridorPoint)
-                 .map(parameters::offsetToMapCoordinates)
                  .forEach(p -> parameters.getMap().setCellAt(new MapCell(CellType.FLOOR), p));
     }
 
@@ -128,9 +127,9 @@ public class OneCorridorBuilder {
         var xe = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
         var ye = Y_AXIS_GETTER.getUpperBound(lowerRoom);
 
-        final var start = parameters.offsetToMapCoordinates(new IntVector(xs,ys));
-        final var end = parameters.offsetToMapCoordinates(new IntVector(xe,ye));
-        final var middle = parameters.offsetToMapCoordinates(new IntVector(xe,ys));
+        final var start = new IntVector(xs,ys);
+        final var end = new IntVector(xe,ye);
+        final var middle = new IntVector(xe,ys);
 
         fillLine(start,middle);
         fillLine(end,middle);

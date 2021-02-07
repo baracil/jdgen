@@ -24,7 +24,7 @@ public class MainRoomFiller {
                  .forEach(p -> {
                      final var cellType = p.isBorder() ? CellType.WALL : CellType.FLOOR;
                      final var cell = new MapCell(cellType);
-                     parameters.getMap().setCellAt(cell, parameters.getGeometry().offsetToMapCoordinates(p));
+                     parameters.getMap().setCellAt(cell, p);
                  });
     }
 
