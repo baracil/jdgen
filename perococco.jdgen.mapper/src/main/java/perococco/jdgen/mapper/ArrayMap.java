@@ -4,13 +4,14 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.IntPoint;
 import perococco.jdgen.core.Size;
 
 import java.util.Arrays;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ArrayMap implements Map {
+
+    private final static MapCell EMPTY = new MapCell(CellType.EMPTY);
 
     public static @NonNull ArrayMap create(@NonNull Size size) {
         final MapCell[] mapCells = new MapCell[size.getHeight()*size.getWidth()];
@@ -24,7 +25,9 @@ public final class ArrayMap implements Map {
     private final @NonNull MapCell[] mapCells;
 
     public MapCell getCellAt(int x, int y) {
-        this.checkCoordinate(x,y);
+        if (this.isOutside(x, y)) {
+            return EMPTY;
+        }
         return mapCells[toLinearCoordinate(x, y)];
     }
 
@@ -38,9 +41,13 @@ public final class ArrayMap implements Map {
     }
 
     private void checkCoordinate(int x, int y) {
-        if (x<0 || x >= size.getWidth() || y < 0 || y >= size.getHeight()) {
+        if (isOutside(x, y)) {
             throw new IllegalArgumentException("Coordinate are outside of the map x='"+x+"' y='"+y+"'");
         }
+    }
+
+    public boolean isOutside(int x, int y) {
+        return (x<0 || x >= size.getWidth() || y < 0 || y >= size.getHeight());
     }
 
     @Override

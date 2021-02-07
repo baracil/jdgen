@@ -9,6 +9,7 @@ import perococco.jdgen.core.*;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class MapperParameters {
@@ -22,6 +23,25 @@ public class MapperParameters {
     private final @NonNull ImmutableList<Cell> cells;
     private final @NonNull ImmutableList<Room> rooms;
     private final @NonNull ImmutableList<Couple<Room>> corridors;
+
+
+
+    public @NonNull Stream<Cell> cellStream() {
+        return cells.stream();
+    }
+
+    public void forEachRooms(@NonNull Consumer<? super Room> roomConsumer) {
+        rooms.forEach(roomConsumer);
+    }
+
+    public MapGeometry getGeometry() {
+        return geometry;
+    }
+
+    public void forEachCorridors(@NonNull Consumer<? super Couple<Room>> corridorConsumer) {
+        corridors.forEach(corridorConsumer);
+    }
+
 
 
     public static MapperParameters create(
@@ -44,19 +64,6 @@ public class MapperParameters {
                 rooms,
                 corridors
         );
-    }
-
-
-    public void forEachRooms(@NonNull Consumer<? super Room> roomConsumer) {
-        rooms.forEach(roomConsumer);
-    }
-
-    public MapGeometry getGeometry() {
-        return geometry;
-    }
-
-    public void forEachCorridors(@NonNull Consumer<? super Couple<Room>> corridorConsumer) {
-        corridors.forEach(corridorConsumer);
     }
 
 }

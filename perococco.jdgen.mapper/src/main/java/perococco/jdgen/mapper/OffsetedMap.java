@@ -36,4 +36,8 @@ public class OffsetedMap implements Map {
         return delegate.clearOffsets();
     }
 
+    @Override
+    public boolean isOutside(int x, int y) {
+        return delegate.isOutside(x+xOffset,y+yOffset);
+    }
 }

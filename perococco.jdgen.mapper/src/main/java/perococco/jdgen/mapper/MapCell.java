@@ -20,4 +20,11 @@ public class MapCell {
         return type == CellType.EMPTY;
     }
 
+    public boolean isCorridor() {
+        return type == CellType.CORRIDOR_FLOOR;
+    }
+
+    public boolean isRoom() {
+        return type == CellType.ROOM_FLOOR;
+    }
 }

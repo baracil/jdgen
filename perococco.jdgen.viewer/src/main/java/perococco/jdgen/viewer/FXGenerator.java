@@ -20,11 +20,9 @@ public class FXGenerator {
     public void generate(int dungeonSize, int minRoomSize, int maxRoomSize, long seed) throws Exception {
         fxUpdater.set(ViewerState.initial(minRoomSize));
 
-        //2032149330135465102
-        //-124302025836551960
-        //-8321297611080575982
-        //7fcae4efcb27e254
-        //e62c9015eff868e
+        //dee66a063bc3cf09
+        //66f4aba0c5ffa174 //5-5-2
+        //9292867ca9ccf846
 
         final var configuration = new JDGenConfiguration(seed, dungeonSize, minRoomSize, maxRoomSize, 1.25);
 

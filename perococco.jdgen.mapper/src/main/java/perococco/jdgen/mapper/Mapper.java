@@ -16,6 +16,7 @@ public final class Mapper {
     private @NonNull Map perform() {
         this.fillCellsForMainRooms();
         this.createCorridors();
+        this.addCellOverCorridors();
         return mapperParameters.getMap();
     }
 
@@ -26,6 +27,11 @@ public final class Mapper {
     private void createCorridors() {
         CorridorsBuilder.build(mapperParameters);
     }
+
+    private void addCellOverCorridors() {
+        CellAdder.addCells(mapperParameters);
+    }
+
 
 
 }

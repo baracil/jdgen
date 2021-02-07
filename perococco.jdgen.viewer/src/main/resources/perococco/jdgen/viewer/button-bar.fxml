@@ -9,7 +9,7 @@
       <VBox alignment="CENTER">
          <children>
             <Label text="Dungeon Size" />
-            <Slider fx:id="dungeonSize" blockIncrement="5.0" max="50.0" min="5.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+            <Slider fx:id="dungeonSize" blockIncrement="5.0" max="500.0" min="5.0" showTickLabels="true" showTickMarks="true" value="20.0" />
          </children>
       </VBox>
       <VBox alignment="CENTER">

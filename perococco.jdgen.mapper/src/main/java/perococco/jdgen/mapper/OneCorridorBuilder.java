@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.*;
 
 import java.util.function.IntFunction;
+import java.util.function.UnaryOperator;
 import java.util.stream.IntStream;
 
 import static perococco.jdgen.core.RectangleGeometry.X_AXIS_GETTER;
@@ -92,9 +93,14 @@ public class OneCorridorBuilder {
         final var upperRoom = room1IsHigher ? this.upperRoom : lowerRoom;
         final var lowerRoom = room1IsHigher ? this.lowerRoom : this.upperRoom;
 
-        IntStream.rangeClosed(op.getUpperBound(lowerRoom), op.getLowerBound(upperRoom))
-                 .mapToObj(corridorPoint)
-                 .forEach(p -> parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR), p));
+        final var start = corridorPoint.apply(op.getUpperBound(lowerRoom));
+        final var end = corridorPoint.apply(op.getLowerBound(upperRoom));
+
+
+        fillLine(start,end);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+
     }
 
     private void buildLShapeCorridor() {
@@ -132,6 +138,8 @@ public class OneCorridorBuilder {
 
         fillLine(start,middle);
         fillLine(end,middle);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
     }
 
     private void generateCorridorForBasDroite() {
@@ -147,6 +155,8 @@ public class OneCorridorBuilder {
 
         fillLine(start,middle);
         fillLine(end,middle);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
 
     }
 
@@ -163,6 +173,8 @@ public class OneCorridorBuilder {
 
         fillLine(start,middle);
         fillLine(end,middle);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
 
     }
 
@@ -180,6 +192,9 @@ public class OneCorridorBuilder {
 
         fillLine(start,middle);
         fillLine(end,middle);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+
     }
 
 

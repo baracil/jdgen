@@ -2,8 +2,10 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import perococco.jdgen.core.IntPoint;
-import perococco.jdgen.core.RectanglePosition;
 import perococco.jdgen.core.Size;
+
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 public interface Map {
 
@@ -38,4 +40,16 @@ public interface Map {
             setCellAt(cell,x,y);
         }
     }
+
+    default void updateCell(@NonNull UnaryOperator<MapCell> cellUpdate, int x, int y) {
+        final var cell = getCellAt(x,y);
+        final var newCell = cellUpdate.apply(cell);
+        setCellAt(newCell,x,y);
+    }
+
+    default boolean isOutside(@NonNull IntPoint position) {
+        return isOutside(position.getX(), position.getY());
+    }
+
+    boolean isOutside(int x, int y);
 }
