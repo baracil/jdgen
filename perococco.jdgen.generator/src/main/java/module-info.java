@@ -1,5 +1,7 @@
+import perococco.gen.generator.DungeonGenerator;
+
 module jdgen.generator {
-    uses perococco.gen.generator.Generator;
+    uses DungeonGenerator;
     requires static lombok;
     requires jdgen.api;
     requires jdgen.core;
