@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.gen.generator.Map;
 import perococco.jdgen.core.*;
 
 import java.util.Random;
@@ -25,7 +26,6 @@ public class MapperParameters {
     private final @NonNull ImmutableList<Couple<Room>> corridors;
 
 
-
     public @NonNull Stream<Cell> cellStream() {
         return cells.stream();
     }
@@ -43,7 +43,6 @@ public class MapperParameters {
     }
 
 
-
     public static MapperParameters create(
             @NonNull JDGenConfiguration configuration,
             @NonNull ImmutableList<Cell> cells,
@@ -58,8 +57,8 @@ public class MapperParameters {
                 configuration,
                 Exec.with(new Random()).run(r -> r.setSeed(configuration.getSeed())),
                 GeometryComputer.compute(rooms),
-                Map.create(geometry.getSize().addMargin(2))
-                   .offsetMap(geometry.getXOffset()+1,geometry.getYOffset()+1),
+                ArrayMap.create(geometry.getSize().addMargin(2))
+                        .offsetMap(geometry.getXOffset() + 1, geometry.getYOffset() + 1),
                 cellsNotInRoom,
                 rooms,
                 corridors

@@ -2,6 +2,7 @@ package perococco.jdgen.core;
 
 import lombok.NonNull;
 import lombok.Value;
+import perococco.gen.generator.IntPoint;
 
 @Value
 public class IntVector implements IntPoint {

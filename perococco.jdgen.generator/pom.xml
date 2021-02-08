@@ -10,19 +10,15 @@
         <relativePath>../maven</relativePath>
     </parent>
 
-    <artifactId>jdgen-core</artifactId>
+    <artifactId>jdgen-generator</artifactId>
 
     <name>${application.name} - ${module.name}</name>
 
     <properties>
-        <module.name>Core</module.name>
+        <module.name>Generator</module.name>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>perococco.jdgen</groupId>
-            <artifactId>jdgen-generator</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>

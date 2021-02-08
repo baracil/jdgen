@@ -2,6 +2,7 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.gen.generator.CellType;
 import perococco.jdgen.core.Cell;
 
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class CellAdder {
     private void addCells() {
         parameters.cellStream()
                   .filter(this::overlapACorridor)
-                  .forEach(OneRoomFiller.createFiller(parameters,CellType.CELL_FLOOR,true));
+                  .forEach(OneRoomFiller.createFiller(parameters, CellType.CELL_FLOOR, true));
     }
 
     private boolean overlapACorridor(@NonNull Cell cell) {

@@ -3,6 +3,8 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.gen.generator.CellType;
+import perococco.gen.generator.Map;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Mapper {

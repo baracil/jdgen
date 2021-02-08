@@ -4,9 +4,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.IntPoint;
+import perococco.gen.generator.*;
 import perococco.jdgen.core.IntVector;
-import perococco.jdgen.core.Size;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;

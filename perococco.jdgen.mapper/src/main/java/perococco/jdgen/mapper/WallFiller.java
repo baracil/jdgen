@@ -2,7 +2,9 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.IntPoint;
+import perococco.gen.generator.CellType;
+import perococco.gen.generator.IntPoint;
+import perococco.gen.generator.MapCell;
 
 @RequiredArgsConstructor
 public class WallFiller {

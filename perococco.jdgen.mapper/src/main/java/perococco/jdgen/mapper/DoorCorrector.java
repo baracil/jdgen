@@ -2,12 +2,13 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.IntPoint;
+import perococco.gen.generator.CellType;
+import perococco.gen.generator.IntPoint;
+import perococco.gen.generator.MapCell;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class DoorCorrector {

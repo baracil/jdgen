@@ -20,6 +20,7 @@
 
     <modules>
         <module>maven</module>
+        <module>perococco.jdgen.generator</module>
         <module>perococco.jdgen.core</module>
         <module>perococco.jdgen.graph</module>
         <module>perococco.jdgen.viewer</module>

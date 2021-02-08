@@ -1,4 +1,4 @@
-package perococco.jdgen.mapper;
+package perococco.gen.generator;
 
 public enum CellType {
     WALL,

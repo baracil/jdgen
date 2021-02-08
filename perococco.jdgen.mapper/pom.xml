@@ -23,6 +23,10 @@
             <groupId>perococco.jdgen</groupId>
             <artifactId>jdgen-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>perococco.jdgen</groupId>
+            <artifactId>jdgen-generator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>

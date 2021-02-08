@@ -3,6 +3,9 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.gen.generator.CellType;
+import perococco.gen.generator.IntPoint;
+import perococco.gen.generator.MapCell;
 import perococco.jdgen.core.*;
 
 import java.util.function.IntFunction;
@@ -96,8 +99,8 @@ public class OneCorridorBuilder {
 
 
         fillLine(start,end);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR), start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR), end);
 
     }
 

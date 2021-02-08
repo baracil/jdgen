@@ -2,7 +2,7 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.Value;
-import perococco.jdgen.core.Size;
+import perococco.gen.generator.Size;
 
 @Value
 public class MapGeometry {

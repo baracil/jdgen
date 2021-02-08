@@ -56,6 +56,11 @@
             </dependency>
             <dependency>
                 <groupId>perococco.jdgen</groupId>
+                <artifactId>jdgen-generator</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perococco.jdgen</groupId>
                 <artifactId>jdgen-cells</artifactId>
                 <version>${project.version}</version>
             </dependency>

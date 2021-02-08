@@ -1,17 +1,12 @@
-package perococco.jdgen.mapper;
+package perococco.gen.generator;
 
 import lombok.NonNull;
-import perococco.jdgen.core.IntPoint;
-import perococco.jdgen.core.Size;
 
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 public interface Map {
 
-    static Map create(Size size) {
-        return ArrayMap.create(size);
-    }
 
     MapCell getCellAt(int x, int y);
 

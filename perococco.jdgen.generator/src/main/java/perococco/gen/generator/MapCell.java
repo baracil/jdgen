@@ -1,4 +1,4 @@
-package perococco.jdgen.mapper;
+package perococco.gen.generator;
 
 import lombok.Getter;
 import lombok.NonNull;
