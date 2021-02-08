@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Couple;
-import perococco.jdgen.core.JDGenConfiguration;
+import perococco.gen.generator.JDGenConfiguration;
 
 import java.util.*;
 import java.util.stream.Collectors;

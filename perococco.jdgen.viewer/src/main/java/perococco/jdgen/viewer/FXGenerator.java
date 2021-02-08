@@ -1,7 +1,7 @@
 package perococco.jdgen.viewer;
 
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.JDGenConfiguration;
+import perococco.gen.generator.JDGenConfiguration;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.graph.Delaunay;
 import perococco.jdgen.graph.EMSTBuilder;
@@ -17,7 +17,7 @@ public class FXGenerator {
 
     private final FXUpdater<ViewerState> fxUpdater;
 
-    public void generate(int dungeonSize, int minRoomSize, int maxRoomSize, long seed) throws Exception {
+    public void generate(int dungeonSize, int minRoomSize, int maxRoomSize, long seed)  {
         fxUpdater.set(ViewerState.initial(minRoomSize));
 
         //dee66a063bc3cf09
