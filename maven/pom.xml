@@ -9,6 +9,14 @@
     <packaging>pom</packaging>
 
     <name>${application.name} - ${module.name}</name>
+    <description>Java Dungeon Generator</description>
+
+    <scm>
+        <connection>scm:git:git@github.com:Perococco/jdgen.git</connection>
+        <developerConnection>scm:git:git@github.com:Perococco/jdgen.git</developerConnection>
+        <url>https://github.com/Perococco/jdgen</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <application.name>Java Dungeon Generator</application.name>

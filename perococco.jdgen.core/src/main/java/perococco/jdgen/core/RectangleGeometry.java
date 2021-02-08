@@ -1,7 +1,6 @@
 package perococco.jdgen.core;
 
 import lombok.NonNull;
-import org.apache.commons.math3.random.RandomGenerator;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -30,11 +29,11 @@ public interface RectangleGeometry {
     }
 
     default int pickPositionOnHeightWithoutBorder(@NonNull Random random) {
-        return getYc()+random.nextInt(2*getHalfHeight()-1)-getHalfHeight()+1;
+        return getYc()+random.nextInt(getHeight()-2)-getHalfHeight()+1;
     }
 
     default int pickPositionOnWidthWithoutBorder(@NonNull Random random) {
-        return getXc()+random.nextInt(2*getHalfWidth()-1)-getHalfWidth()+1;
+        return getXc()+random.nextInt(getWidth()-2)-getHalfWidth()+1;
     }
 
     double getDistance();
@@ -44,10 +43,6 @@ public interface RectangleGeometry {
     default @NonNull Stream<RectanglePosition> streamPositionsWithoutBorders() {
         return streamPositions().filter(p -> !p.isBorder());
     }
-
-    @NonNull Optional<Overlap> computeXOverlap(@NonNull RectangleGeometry other);
-
-    @NonNull Optional<Overlap> computeYOverlap(@NonNull RectangleGeometry other);
 
     @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry rectangle, @NonNull RectangleGeometry.AxisOperations axisOperations);
 

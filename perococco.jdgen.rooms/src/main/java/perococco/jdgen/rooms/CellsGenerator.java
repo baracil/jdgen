@@ -70,7 +70,7 @@ public final class CellsGenerator {
     }
 
     private void moveRoomToAvoidOverlaps() {
-        final var angle = randomGenerator.nextDouble() * Math.PI * 2;
+        final var angle = Math.atan2(randomGenerator.nextDouble()*2-1, randomGenerator.nextDouble()*2-1);
         final var dx = Math.cos(angle);
         final var dy = Math.sin(angle);
 

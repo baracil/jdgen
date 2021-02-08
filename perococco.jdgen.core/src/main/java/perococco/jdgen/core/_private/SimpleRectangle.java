@@ -45,14 +45,6 @@ public class SimpleRectangle implements Rectangle {
 
     }
 
-    public @NonNull Optional<Overlap> computeXOverlap(@NonNull RectangleGeometry other) {
-        return computeOverlap(other, X_AXIS_GETTER);
-    }
-
-    public @NonNull Optional<Overlap> computeYOverlap(@NonNull RectangleGeometry other) {
-        return computeOverlap(other, Y_AXIS_GETTER);
-    }
-
     public @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry other, @NonNull RectangleGeometry.AxisOperations axisOperations) {
         if (!overlapOnAxis(other, axisOperations)) {
             return Optional.empty();

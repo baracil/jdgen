@@ -15,6 +15,9 @@
 
     <name>${application.name}</name>
 
+
+
+
     <modules>
         <module>maven</module>
         <module>perococco.jdgen.core</module>

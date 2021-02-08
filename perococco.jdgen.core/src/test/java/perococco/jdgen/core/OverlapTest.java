@@ -18,7 +18,7 @@ public class OverlapTest {
     @ParameterizedTest
     @MethodSource("rectangles")
     public void testOverlapOnY(RectangleGeometry r1, RectangleGeometry r2, Overlap expected) {
-        final Overlap actual = r1.computeYOverlap(r2).orElse(null);
+        final Overlap actual = r1.computeOverlap(r2,RectangleGeometry.Y_AXIS_GETTER).orElse(null);
 
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(expected,actual);

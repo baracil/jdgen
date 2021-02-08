@@ -125,6 +125,13 @@ public class OneCorridorBuilder {
         generator.run();
     }
 
+    private void fillCorridor(@NonNull IntPoint start, @NonNull IntPoint end, @NonNull IntPoint middle) {
+        fillLine(start,middle);
+        fillLine(end,middle);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
+        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+    }
+
     private void generateCorridorForGaucheHaut() {
         var xs = X_AXIS_GETTER.getLowerBound(upperRoom);
         var ys = Y_AXIS_GETTER.pickPositionOnSizeWithoutBorder(upperRoom,parameters.getRandom());
@@ -136,10 +143,20 @@ public class OneCorridorBuilder {
         final var end = new IntVector(xe,ye);
         final var middle = new IntVector(xe,ys);
 
-        fillLine(start,middle);
-        fillLine(end,middle);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+        fillCorridor(start,end,middle);
+    }
+    private void generateCorridorForDroiteHaut() {
+        var xs = X_AXIS_GETTER.getUpperBound(upperRoom);
+        var ys = Y_AXIS_GETTER.pickPositionOnSizeWithoutBorder(upperRoom, parameters.getRandom());
+
+        var xe = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
+        var ye = Y_AXIS_GETTER.getUpperBound(lowerRoom);
+
+        final var start = new IntVector(xs,ys);
+        final var end = new IntVector(xe,ye);
+        final var middle = new IntVector(xe,ys);
+
+        fillCorridor(start,end,middle);
     }
 
     private void generateCorridorForBasDroite() {
@@ -153,31 +170,8 @@ public class OneCorridorBuilder {
         final var end = new IntVector(xe,ye);
         final var middle = new IntVector(xs,ye);
 
-        fillLine(start,middle);
-        fillLine(end,middle);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
-
+        fillCorridor(start,end,middle);
     }
-
-    private void generateCorridorForDroiteHaut() {
-        var xs = X_AXIS_GETTER.getUpperBound(upperRoom);
-        var ys = Y_AXIS_GETTER.pickPositionOnSizeWithoutBorder(upperRoom, parameters.getRandom());
-
-        var xe = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
-        var ye = Y_AXIS_GETTER.getUpperBound(lowerRoom);
-
-        final var start = new IntVector(xs,ys);
-        final var end = new IntVector(xe,ye);
-        final var middle = new IntVector(xe,ys);
-
-        fillLine(start,middle);
-        fillLine(end,middle);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
-
-    }
-
     private void generateCorridorForBasGauche() {
 
         var xs = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(upperRoom, parameters.getRandom());
@@ -190,12 +184,9 @@ public class OneCorridorBuilder {
         final var end = new IntVector(xe,ye);
         final var middle = new IntVector(xs,ye);
 
-        fillLine(start,middle);
-        fillLine(end,middle);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
-
+        fillCorridor(start,end,middle);
     }
+
 
 
     private void fillLine(@NonNull IntPoint start, @NonNull IntPoint end) {
