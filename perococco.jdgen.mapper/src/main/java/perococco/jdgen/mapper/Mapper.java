@@ -17,6 +17,8 @@ public final class Mapper {
         this.fillCellsForMainRooms();
         this.createCorridors();
         this.addCellOverCorridors();
+        this.correctDoors();
+        this.fillWalls();
         return mapperParameters.getMap();
     }
 
@@ -31,6 +33,15 @@ public final class Mapper {
     private void addCellOverCorridors() {
         CellAdder.addCells(mapperParameters);
     }
+
+    private void correctDoors() {
+        DoorCorrector.correct(mapperParameters);
+    }
+
+    private void fillWalls() {
+        WallFiller.fill(mapperParameters);
+    }
+
 
 
 

@@ -4,9 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.core.IntPoint;
+import perococco.jdgen.core.IntVector;
 import perococco.jdgen.core.Size;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ArrayMap implements Map {
@@ -36,8 +40,18 @@ public final class ArrayMap implements Map {
         mapCells[toLinearCoordinate(x, y)] = mapCell;
     }
 
+    @Override
+    public @NonNull Stream<IntPoint> allMapPositions() {
+        return IntStream.range(0,mapCells.length).mapToObj(this::toPointCoordinate);
+    }
+
     private int toLinearCoordinate(int x, int y) {
         return x+y*size.getWidth();
+    }
+
+    private @NonNull IntPoint toPointCoordinate(int linearCoordinate) {
+        final var width = size.getWidth();
+        return new IntVector(linearCoordinate%width, linearCoordinate/width);
     }
 
     private void checkCoordinate(int x, int y) {

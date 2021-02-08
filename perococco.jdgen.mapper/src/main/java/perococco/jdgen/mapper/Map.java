@@ -5,6 +5,7 @@ import perococco.jdgen.core.IntPoint;
 import perococco.jdgen.core.Size;
 
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 public interface Map {
 
@@ -29,6 +30,8 @@ public interface Map {
     @NonNull Map clearOffsets();
 
     @NonNull Size getSize();
+
+    @NonNull Stream<IntPoint> allMapPositions();
 
     default void setCellAtIfEmpty(MapCell cell, IntPoint position) {
         setCellAtIfEmpty(cell,position.getX(),position.getY());

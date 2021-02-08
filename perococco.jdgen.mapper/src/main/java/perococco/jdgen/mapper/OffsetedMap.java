@@ -2,7 +2,10 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.core.IntPoint;
 import perococco.jdgen.core.Size;
+
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class OffsetedMap implements Map {
@@ -29,6 +32,11 @@ public class OffsetedMap implements Map {
     @Override
     public @NonNull Map offsetMap(int xOffset, int yOffset) {
         return new OffsetedMap(delegate,this.xOffset+xOffset, this.yOffset+yOffset);
+    }
+
+    @Override
+    public @NonNull Stream<IntPoint> allMapPositions() {
+        return delegate.allMapPositions().map(p -> p.translate(-xOffset,-yOffset));
     }
 
     @Override
