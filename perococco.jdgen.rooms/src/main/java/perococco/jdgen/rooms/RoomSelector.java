@@ -3,8 +3,8 @@ package perococco.jdgen.rooms;
 import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.Cell;
-import perococco.gen.generator.JDGenConfiguration;
 import perococco.jdgen.core.RectangleGeometry;
 import perococco.jdgen.core.Room;
 

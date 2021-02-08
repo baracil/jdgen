@@ -18,8 +18,6 @@ public class GenerationManager {
         final Runnable task = () -> {
             try {
                 new FXGenerator(fxUpdater).generate((int) dungeonSize, (int) Math.min(roomSize1, roomSize2), (int) Math.max(roomSize1, roomSize2),seed);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
             } catch (Exception error) {
                 System.err.println("Generation failed");
                 error.printStackTrace();

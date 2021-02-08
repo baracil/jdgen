@@ -1,7 +1,7 @@
-package perococco.gen.generator;
+package perococco.jdgen.api;
 
 import lombok.NonNull;
-import perococco.gen.generator._private.BasicIntPoint;
+import perococco.jdgen.api._private.BasicIntPoint;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.Map;
+import perococco.jdgen.api.Map;
 import perococco.jdgen.core.Cell;
 import perococco.jdgen.core.Couple;
 import perococco.jdgen.core.Room;

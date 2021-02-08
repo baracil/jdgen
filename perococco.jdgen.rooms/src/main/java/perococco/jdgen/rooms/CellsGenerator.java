@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.JDGenConfiguration;
+import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.*;
 
 import java.util.ArrayList;

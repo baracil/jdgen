@@ -7,8 +7,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
-import perococco.gen.generator.Map;
-import perococco.gen.generator.MapCell;
+import perococco.jdgen.api.Map;
+import perococco.jdgen.api.MapCell;
 
 import java.util.Random;
 

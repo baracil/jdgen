@@ -3,7 +3,7 @@ module jdgen.mapper {
 
     requires com.google.common;
     requires jdgen.core;
-    requires jdgen.generator;
+    requires jdgen.api;
 
     exports perococco.jdgen.mapper;
 }

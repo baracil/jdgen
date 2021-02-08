@@ -51,6 +51,11 @@
         <dependencies>
             <dependency>
                 <groupId>perococco.jdgen</groupId>
+                <artifactId>jdgen-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perococco.jdgen</groupId>
                 <artifactId>jdgen-core</artifactId>
                 <version>${project.version}</version>
             </dependency>

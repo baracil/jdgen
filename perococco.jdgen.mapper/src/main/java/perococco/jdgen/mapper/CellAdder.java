@@ -2,7 +2,7 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.CellType;
+import perococco.jdgen.api.CellType;
 import perococco.jdgen.core.Cell;
 
 @RequiredArgsConstructor

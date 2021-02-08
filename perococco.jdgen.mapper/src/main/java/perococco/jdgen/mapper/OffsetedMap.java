@@ -2,10 +2,10 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.IntPoint;
-import perococco.gen.generator.Map;
-import perococco.gen.generator.MapCell;
-import perococco.gen.generator.Size;
+import perococco.jdgen.api.IntPoint;
+import perococco.jdgen.api.Map;
+import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Size;
 
 import java.util.stream.Stream;
 

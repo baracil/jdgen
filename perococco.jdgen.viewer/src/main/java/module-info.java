@@ -8,7 +8,7 @@ module jdgen.viewer {
     requires javafx.controls;
 
     requires com.google.common;
-    requires jdgen.generator;
+    requires jdgen.api;
     requires jdgen.core;
     requires jdgen.rooms;
     requires jdgen.graph;

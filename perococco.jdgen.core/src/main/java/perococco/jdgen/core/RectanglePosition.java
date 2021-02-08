@@ -1,7 +1,7 @@
 package perococco.jdgen.core;
 
 import lombok.Value;
-import perococco.gen.generator.IntPoint;
+import perococco.jdgen.api.IntPoint;
 
 @Value
 public class RectanglePosition implements IntPoint {

@@ -4,8 +4,8 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.CellType;
-import perococco.gen.generator.MapCell;
+import perococco.jdgen.api.CellType;
+import perococco.jdgen.api.MapCell;
 import perococco.jdgen.core.RectangleGeometry;
 import perococco.jdgen.core.RectanglePosition;
 

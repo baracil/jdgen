@@ -2,7 +2,7 @@ module jdgen.core {
     requires static lombok;
     requires java.desktop;
 
-    requires jdgen.generator;
+    requires jdgen.api;
 
     exports perococco.jdgen.core;
 }

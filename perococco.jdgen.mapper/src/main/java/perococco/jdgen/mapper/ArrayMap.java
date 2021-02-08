@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.*;
+import perococco.jdgen.api.*;
 import perococco.jdgen.core.IntVector;
 
 import java.util.Arrays;

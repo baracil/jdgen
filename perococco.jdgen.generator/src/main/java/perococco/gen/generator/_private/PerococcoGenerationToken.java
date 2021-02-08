@@ -3,7 +3,7 @@ package perococco.gen.generator._private;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import perococco.gen.generator.GenerationToken;
-import perococco.gen.generator.Map;
+import perococco.jdgen.api.Map;
 
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Future;

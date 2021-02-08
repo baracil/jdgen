@@ -2,6 +2,7 @@ package perococco.gen.generator;
 
 import lombok.NonNull;
 import perococco.gen.generator._private.PerococcoGenerator;
+import perococco.jdgen.api.JDGenConfiguration;
 
 import java.util.ServiceLoader;
 

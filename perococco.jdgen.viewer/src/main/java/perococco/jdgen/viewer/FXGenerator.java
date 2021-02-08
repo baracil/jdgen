@@ -1,7 +1,7 @@
 package perococco.jdgen.viewer;
 
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.JDGenConfiguration;
+import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.graph.Delaunay;
 import perococco.jdgen.graph.EMSTBuilder;

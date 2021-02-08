@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.Couple;
-import perococco.gen.generator.JDGenConfiguration;
 
 import java.util.*;
 import java.util.stream.Collectors;

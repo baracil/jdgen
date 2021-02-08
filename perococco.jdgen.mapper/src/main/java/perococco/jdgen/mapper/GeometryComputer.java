@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.Size;
 import perococco.jdgen.core.RectangleGeometry;
 import perococco.jdgen.core.Room;
-import perococco.gen.generator.Size;
 
 import java.util.IntSummaryStatistics;
 import java.util.stream.Collectors;

@@ -4,7 +4,7 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.gen.generator.CellType;
+import perococco.jdgen.api.CellType;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class RoomFiller {
