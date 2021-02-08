@@ -14,7 +14,7 @@
     <scm>
         <connection>scm:git:git@github.com:Perococco/jdgen.git</connection>
         <developerConnection>scm:git:git@github.com:Perococco/jdgen.git</developerConnection>
-        <url>https://github.com/Perococco/jdgen</url>
+        <url>https://github.com/Perococco/jdgen.git</url>
         <tag>HEAD</tag>
     </scm>
 
