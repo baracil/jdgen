@@ -58,8 +58,8 @@ public class MapperParameters {
                 configuration,
                 Exec.with(new Random()).run(r -> r.setSeed(configuration.getSeed())),
                 GeometryComputer.compute(rooms),
-                Map.create(geometry.getSize())
-                   .offsetMap(geometry.getXOffset(),geometry.getYOffset()),
+                Map.create(geometry.getSize().addMargin(2))
+                   .offsetMap(geometry.getXOffset()+1,geometry.getYOffset()+1),
                 cellsNotInRoom,
                 rooms,
                 corridors
