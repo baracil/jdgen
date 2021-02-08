@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.math3.random.RandomGenerator;
-import org.apache.commons.math3.random.Well19937c;
 import perococco.jdgen.core.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.DoubleSupplier;
 import java.util.function.ToIntFunction;
 
@@ -20,7 +19,7 @@ public final class CellsGenerator {
         return new CellsGenerator(configuration).generate();
     }
 
-    private final RandomGenerator randomGenerator = new Well19937c();
+    private final Random randomGenerator = new Random();
 
     private final @NonNull JDGenConfiguration configuration;
     private int nbRooms;

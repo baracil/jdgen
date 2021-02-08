@@ -8,13 +8,14 @@
       <VBox alignment="CENTER">
          <children>
             <Label text="Dungeon Size" />
-            <Slider fx:id="dungeonSize" blockIncrement="5.0" max="500.0" min="5.0" showTickLabels="true" showTickMarks="true" value="20.0" />
+            <Slider fx:id="dungeonSize" blockIncrement="5.0" min="30.0" max="100.0" showTickLabels="true" showTickMarks="true" value="50.0" snapToTicks="true"/>
          </children>
       </VBox>
       <VBox alignment="CENTER">
          <children>
             <Label text="Min Length" />
-            <Slider fx:id="minLength" blockIncrement="1.0" majorTickUnit="10.0" max="10.0" min="1.0" minorTickCount="2" showTickLabels="true" showTickMarks="true" value="4" />
+            <Slider fx:id="minLength" blockIncrement="1.0" majorTickUnit="1.0" max="5.0"
+                    min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" value="3" snapToTicks="true"/>
          </children>
       </VBox>
       <VBox alignment="CENTER">

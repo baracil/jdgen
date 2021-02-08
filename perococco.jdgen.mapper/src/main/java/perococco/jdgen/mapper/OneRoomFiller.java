@@ -29,7 +29,7 @@ public class OneRoomFiller {
 
     private final @NonNull MapperParameters parameters;
     private final @NonNull CellType cellType;
-    private final @NonNull boolean withWalls;
+    private final boolean withWalls;
 
     private final @NonNull RectangleGeometry room;
 

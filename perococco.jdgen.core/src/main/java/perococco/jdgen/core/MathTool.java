@@ -1,9 +1,8 @@
 package perococco.jdgen.core;
 
 import lombok.NonNull;
-import org.apache.commons.math3.distribution.NormalDistribution;
-import org.apache.commons.math3.random.RandomGenerator;
 
+import java.util.Random;
 import java.util.function.DoubleSupplier;
 
 public class MathTool {
@@ -15,7 +14,7 @@ public class MathTool {
         return value+1;
     }
 
-    public static @NonNull DoubleSupplier normalDistribution(@NonNull RandomGenerator randomGenerator, int minValue, int maxValue) {
+    public static @NonNull DoubleSupplier normalDistribution(@NonNull Random randomGenerator, int minValue, int maxValue) {
         final double std = Math.max(minValue*0.01,(maxValue-minValue));
         final var normalDistribution = new NormalDistribution(randomGenerator,minValue,std);
         return normalDistribution::sample;
