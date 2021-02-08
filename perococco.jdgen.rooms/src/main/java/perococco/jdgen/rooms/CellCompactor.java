@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.Cell;
-import perococco.jdgen.core.Rectangle;
 import perococco.jdgen.core.RectangleGeometry;
 
 import java.util.Arrays;

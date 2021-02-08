@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.core.*;
 
 import java.util.function.IntFunction;
-import java.util.function.UnaryOperator;
-import java.util.stream.IntStream;
 
 import static perococco.jdgen.core.RectangleGeometry.X_AXIS_GETTER;
 import static perococco.jdgen.core.RectangleGeometry.Y_AXIS_GETTER;

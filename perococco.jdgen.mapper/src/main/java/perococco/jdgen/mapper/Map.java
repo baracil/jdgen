@@ -4,7 +4,6 @@ import lombok.NonNull;
 import perococco.jdgen.core.IntPoint;
 import perococco.jdgen.core.Size;
 
-import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public interface Map {

@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="perococco.jdgen.viewer.ButtonBarController">
    <children>
       <Button mnemonicParsing="false" onAction="#generate" text="Generate" />

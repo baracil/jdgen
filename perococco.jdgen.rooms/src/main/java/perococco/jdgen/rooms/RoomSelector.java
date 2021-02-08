@@ -3,7 +3,10 @@ package perococco.jdgen.rooms;
 import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.core.*;
+import perococco.jdgen.core.Cell;
+import perococco.jdgen.core.JDGenConfiguration;
+import perococco.jdgen.core.RectangleGeometry;
+import perococco.jdgen.core.Room;
 
 @RequiredArgsConstructor
 public class RoomSelector {

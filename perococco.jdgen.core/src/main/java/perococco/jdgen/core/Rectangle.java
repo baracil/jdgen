@@ -3,11 +3,6 @@ package perococco.jdgen.core;
 import lombok.NonNull;
 import perococco.jdgen.core._private.SimpleRectangle;
 
-import java.util.Comparator;
-import java.util.Optional;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 public interface Rectangle extends RectangleGeometry {
 
     static @NonNull Rectangle with(int xc, int yc, int halfWidth, int halfHeight) {

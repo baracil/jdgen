@@ -1,6 +1,5 @@
 package perococco.jdgen.core;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Delegate;

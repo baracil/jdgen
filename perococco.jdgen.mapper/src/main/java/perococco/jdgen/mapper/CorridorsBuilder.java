@@ -1,6 +1,5 @@
 package perococco.jdgen.mapper;
 
-import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

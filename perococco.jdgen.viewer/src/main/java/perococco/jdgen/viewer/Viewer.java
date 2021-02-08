@@ -1,8 +1,6 @@
 package perococco.jdgen.viewer;
 
-import com.google.common.collect.Table;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
