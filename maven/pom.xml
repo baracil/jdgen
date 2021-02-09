@@ -4,7 +4,7 @@
 
     <groupId>perococco.jdgen</groupId>
     <artifactId>jdgen-maven</artifactId>
-    <version>${revision}</version>
+    <version>1.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>${application.name} - ${module.name}</name>
@@ -151,6 +151,11 @@
                         </invalid-on-purpose>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.5</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
