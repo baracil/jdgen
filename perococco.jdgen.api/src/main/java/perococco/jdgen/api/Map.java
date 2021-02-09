@@ -58,7 +58,7 @@ public interface Map {
      * @param cell the cell to set
      * @param position the position of the cell to set
      */
-    default void setCellAt(@NonNull Cell cell, IntPoint position) {
+    default void setCellAt(@NonNull Cell cell, @NonNull IntPoint position) {
         updateCell(c -> cell, position);
     }
 
@@ -67,7 +67,7 @@ public interface Map {
      * @param cell the cell to set if the current cell is empty
      * @param position the position of the cell to set
      */
-    default void setCellAtIfEmpty(@NonNull Cell cell, IntPoint position) {
+    default void setCellAtIfEmpty(@NonNull Cell cell, @NonNull IntPoint position) {
         setCellAtIfEmpty(cell, position.getX(), position.getY());
     }
 
