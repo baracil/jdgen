@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 
 @RequiredArgsConstructor
 public class WallFiller {
@@ -34,7 +34,7 @@ public class WallFiller {
     }
 
     private void setCellAsWall(IntPoint position) {
-        parameters.getMap().setCellAt(new MapCell(CellType.WALL), position);
+        parameters.getMap().setCellAt(new Cell(CellType.WALL), position);
     }
 
     private @NonNull CellType getCellTypeAt(IntPoint position) {

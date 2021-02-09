@@ -8,4 +8,8 @@ public enum CellType {
     DOOR,
     EMPTY,
     ;
+
+    public boolean isFloor() {
+        return this == CORRIDOR_FLOOR || this == ROOM_FLOOR || this == CELL_FLOOR;
+    }
 }

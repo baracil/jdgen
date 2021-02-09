@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 import perococco.jdgen.core.RectangleGeometry;
 import perococco.jdgen.core.RectanglePosition;
 
@@ -38,7 +38,7 @@ public class OneRoomFiller {
     private void fill() {
         streamRectanglePositions()
                 .forEach(p -> {
-                    final var cell = new MapCell(cellType);
+                    final var cell = new Cell(cellType);
                     parameters.getMap().setCellAtIfEmpty(cell, p);
                 });
     }

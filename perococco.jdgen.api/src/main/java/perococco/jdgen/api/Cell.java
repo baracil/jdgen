@@ -5,13 +5,13 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MapCell {
+public class Cell {
 
-    public static @NonNull MapCell empty() {
+    public static @NonNull Cell empty() {
         return EMPTY;
     }
 
-    private static final MapCell EMPTY = new MapCell(CellType.EMPTY);
+    private static final Cell EMPTY = new Cell(CellType.EMPTY);
 
     @Getter
     private final @NonNull CellType type;
@@ -22,6 +22,10 @@ public class MapCell {
 
     public boolean isCorridor() {
         return type == CellType.CORRIDOR_FLOOR;
+    }
+
+    public boolean isFloor() {
+        return type.isFloor();
     }
 
     public boolean isRoom() {

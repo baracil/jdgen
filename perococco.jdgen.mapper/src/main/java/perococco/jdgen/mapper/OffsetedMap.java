@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.IntPoint;
 import perococco.jdgen.api.Map;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 import perococco.jdgen.api.Size;
 
 import java.util.stream.Stream;
@@ -27,13 +27,13 @@ public class OffsetedMap implements OffsetableMap {
     }
 
     @Override
-    public MapCell getCellAt(int x, int y) {
+    public Cell getCellAt(int x, int y) {
         return delegate.getCellAt(x+xOffset,y+yOffset);
     }
 
     @Override
-    public void setCellAt(@NonNull MapCell mapCell, int x, int y) {
-        delegate.setCellAt(mapCell, x+xOffset,y+yOffset);
+    public void setCellAt(@NonNull Cell cell, int x, int y) {
+        delegate.setCellAt(cell, x+xOffset, y+yOffset);
     }
 
     @Override

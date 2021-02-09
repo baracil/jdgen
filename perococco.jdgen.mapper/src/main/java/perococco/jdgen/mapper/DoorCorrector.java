@@ -4,7 +4,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -36,7 +36,7 @@ public class DoorCorrector {
     }
 
     private void setCellTypeAt(@NonNull CellType cellType, IntPoint position) {
-        parameters.getMap().setCellAt(new MapCell(cellType), position);
+        parameters.getMap().setCellAt(new Cell(cellType), position);
     }
 
     private void correctDoor(@NonNull IntPoint position) {

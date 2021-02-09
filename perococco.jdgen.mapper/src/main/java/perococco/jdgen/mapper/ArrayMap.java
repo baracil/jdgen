@@ -14,34 +14,34 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ArrayMap implements OffsetableMap {
 
-    private final static MapCell EMPTY = new MapCell(CellType.EMPTY);
+    private final static Cell EMPTY = new Cell(CellType.EMPTY);
 
     public static @NonNull ArrayMap create(@NonNull Size size) {
-        final MapCell[] mapCells = new MapCell[size.getHeight()*size.getWidth()];
-        Arrays.fill(mapCells, MapCell.empty());
-        return new ArrayMap(size, mapCells);
+        final Cell[] cells = new Cell[size.getHeight()*size.getWidth()];
+        Arrays.fill(cells, Cell.empty());
+        return new ArrayMap(size, cells);
     }
 
     @Getter
     private final @NonNull Size size;
 
-    private final @NonNull MapCell[] mapCells;
+    private final @NonNull Cell[] cells;
 
-    public MapCell getCellAt(int x, int y) {
+    public Cell getCellAt(int x, int y) {
         if (this.isOutside(x, y)) {
             return EMPTY;
         }
-        return mapCells[toLinearCoordinate(x, y)];
+        return cells[toLinearCoordinate(x, y)];
     }
 
-    public void setCellAt(@NonNull MapCell mapCell, int x, int y) {
+    public void setCellAt(@NonNull Cell cell, int x, int y) {
         this.checkCoordinate(x,y);
-        mapCells[toLinearCoordinate(x, y)] = mapCell;
+        cells[toLinearCoordinate(x, y)] = cell;
     }
 
     @Override
     public @NonNull Stream<IntPoint> allMapPositions() {
-        return IntStream.range(0,mapCells.length).mapToObj(this::toPointCoordinate);
+        return IntStream.range(0, cells.length).mapToObj(this::toPointCoordinate);
     }
 
     private int toLinearCoordinate(int x, int y) {
@@ -61,7 +61,7 @@ public final class ArrayMap implements OffsetableMap {
 
     @Override
     public @NonNull OffsetableMap duplicate() {
-        return new ArrayMap(size,mapCells.clone());
+        return new ArrayMap(size, cells.clone());
     }
 
     @Override

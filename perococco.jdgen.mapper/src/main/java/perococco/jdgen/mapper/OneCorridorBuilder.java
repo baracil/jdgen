@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 import perococco.jdgen.core.*;
 
 import java.util.function.IntFunction;
@@ -99,8 +99,8 @@ public class OneCorridorBuilder {
 
 
         fillLine(start,end);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR), start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR), end);
+        parameters.getMap().setCellAt(new Cell(CellType.DOOR), start);
+        parameters.getMap().setCellAt(new Cell(CellType.DOOR), end);
 
     }
 
@@ -129,8 +129,8 @@ public class OneCorridorBuilder {
     private void fillCorridor(@NonNull IntPoint start, @NonNull IntPoint end, @NonNull IntPoint middle) {
         fillLine(start,middle);
         fillLine(end,middle);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),start);
-        parameters.getMap().setCellAt(new MapCell(CellType.DOOR),end);
+        parameters.getMap().setCellAt(new Cell(CellType.DOOR), start);
+        parameters.getMap().setCellAt(new Cell(CellType.DOOR), end);
     }
 
     private void generateCorridorForGaucheHaut() {
@@ -195,14 +195,14 @@ public class OneCorridorBuilder {
             final var ys = Math.min(start.getY(), end.getY());
             final var ye = Math.max(start.getY(), end.getY());
             for (int y = ys; y <= ye ; y++) {
-                parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR),start.getX(),y);
+                parameters.getMap().setCellAtIfEmpty(new Cell(CellType.CORRIDOR_FLOOR), start.getX(), y);
             }
         }
         else if (start.getY() == end.getY()) {
             final var xs = Math.min(start.getX(), end.getX());
             final var xe = Math.max(start.getX(), end.getX());
             for (int x = xs; x <= xe ; x++) {
-                parameters.getMap().setCellAtIfEmpty(new MapCell(CellType.CORRIDOR_FLOOR),x,start.getY());
+                parameters.getMap().setCellAtIfEmpty(new Cell(CellType.CORRIDOR_FLOOR), x, start.getY());
             }
 
         }

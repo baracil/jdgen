@@ -7,8 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import lombok.NonNull;
-import perococco.jdgen.api.Map;
-import perococco.jdgen.api.MapCell;
+import perococco.jdgen.api.Cell;
 
 import java.util.Random;
 
@@ -77,14 +76,14 @@ public class MapView extends Canvas {
 
     private final static Random RANDOM = new Random();
 
-    private void drawCell(@NonNull GraphicsContext context, int x, int y, MapCell mapCell, double cellSize) {
-        final var color = getCellColor(mapCell);
+    private void drawCell(@NonNull GraphicsContext context, int x, int y, Cell cell, double cellSize) {
+        final var color = getCellColor(cell);
         context.setFill(color);
         context.fillRect(x*cellSize,y*cellSize,cellSize,cellSize);
     }
 
-    private Color getCellColor(@NonNull MapCell mapCell) {
-        return switch (mapCell.getType()) {
+    private Color getCellColor(@NonNull Cell cell) {
+        return switch (cell.getType()) {
             case EMPTY -> Color.WHITE;
             case DOOR -> Color.GOLD;
             case CELL_FLOOR -> Color.BLUE;
