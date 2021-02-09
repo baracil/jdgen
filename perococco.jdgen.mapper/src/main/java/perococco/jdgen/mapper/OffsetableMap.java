@@ -9,5 +9,6 @@ public interface OffsetableMap extends Map {
 
     @NonNull Map clearOffsets();
 
-
+    @Override
+    @NonNull OffsetableMap duplicate();
 }

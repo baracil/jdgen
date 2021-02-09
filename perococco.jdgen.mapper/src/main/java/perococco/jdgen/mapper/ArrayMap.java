@@ -59,8 +59,9 @@ public final class ArrayMap implements OffsetableMap {
         }
     }
 
-    public boolean isOutside(int x, int y) {
-        return (x<0 || x >= size.getWidth() || y < 0 || y >= size.getHeight());
+    @Override
+    public @NonNull OffsetableMap duplicate() {
+        return new ArrayMap(size,mapCells.clone());
     }
 
     @Override

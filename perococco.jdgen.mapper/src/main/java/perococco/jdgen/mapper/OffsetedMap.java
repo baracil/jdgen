@@ -17,6 +17,11 @@ public class OffsetedMap implements OffsetableMap {
     private final int yOffset;
 
     @Override
+    public @NonNull OffsetableMap duplicate() {
+        return new OffsetedMap(delegate.duplicate(),xOffset,yOffset);
+    }
+
+    @Override
     public @NonNull Size getSize() {
         return delegate.getSize();
     }
