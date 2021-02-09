@@ -10,9 +10,9 @@ import perococco.jdgen.api.Size;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class OffsetedMap implements Map {
+public class OffsetedMap implements OffsetableMap {
 
-    private final @NonNull Map delegate;
+    private final @NonNull OffsetableMap delegate;
     private final int xOffset;
     private final int yOffset;
 
@@ -32,7 +32,7 @@ public class OffsetedMap implements Map {
     }
 
     @Override
-    public @NonNull Map offsetMap(int xOffset, int yOffset) {
+    public @NonNull OffsetableMap offsetMap(int xOffset, int yOffset) {
         return new OffsetedMap(delegate,this.xOffset+xOffset, this.yOffset+yOffset);
     }
 

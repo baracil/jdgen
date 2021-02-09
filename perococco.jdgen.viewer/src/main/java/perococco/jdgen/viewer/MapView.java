@@ -48,7 +48,7 @@ public class MapView extends Canvas {
         final var h = this.getHeight();
 
 
-        final var map = this.model.get().getState().map().map(Map::clearOffsets).orElse(null);
+        final var map = this.model.get().getState().map().orElse(null);
         if (map == null) {
             context.clearRect(0,0,w,h);
             return;

@@ -20,10 +20,6 @@ public interface Map {
         setCellAt(mapCell,position.getX(),position.getY());
     }
 
-    @NonNull Map offsetMap(int xOffset, int yOffset);
-
-    @NonNull Map clearOffsets();
-
     @NonNull Size getSize();
 
     @NonNull Stream<IntPoint> allMapPositions();

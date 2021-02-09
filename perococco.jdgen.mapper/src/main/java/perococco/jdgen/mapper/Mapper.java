@@ -21,7 +21,7 @@ public final class Mapper {
         this.addCellOverCorridors();
         this.correctDoors();
         this.fillWalls();
-        return mapperParameters.getMap();
+        return mapperParameters.getMap().clearOffsets();
     }
 
     private void fillCellsForMainRooms() {

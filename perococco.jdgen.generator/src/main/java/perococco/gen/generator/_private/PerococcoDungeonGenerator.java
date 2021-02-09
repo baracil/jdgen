@@ -27,8 +27,7 @@ public class PerococcoDungeonGenerator implements DungeonGenerator {
         final var graph = Delaunay.triangulize(rooms, Room::getPosition);
         final var tree = EMSTBuilder.buildTree(graph, Room::getPosition);
         final var corridors = PathBuilder.buildPath(configuration, graph, tree);
-        final var map = Mapper.perform(MapperParameters.create(configuration, compactedCells, rooms, corridors));
-        return map.clearOffsets();
+        return Mapper.perform(MapperParameters.create(configuration, compactedCells, rooms, corridors));
     }
 
 }

@@ -21,7 +21,7 @@ public class MapperParameters {
     private final @NonNull Random random;
     private final @NonNull MapGeometry geometry;
     @Getter
-    private final @NonNull Map map;
+    private final @NonNull OffsetableMap map;
     private final @NonNull ImmutableList<Cell> cells;
     private final @NonNull ImmutableList<Room> rooms;
     private final @NonNull ImmutableList<Couple<Room>> corridors;

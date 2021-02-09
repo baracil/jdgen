@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ArrayMap implements Map {
+public final class ArrayMap implements OffsetableMap {
 
     private final static MapCell EMPTY = new MapCell(CellType.EMPTY);
 
@@ -64,12 +64,12 @@ public final class ArrayMap implements Map {
     }
 
     @Override
-    public @NonNull Map offsetMap(int xOffset, int yOffset) {
+    public @NonNull OffsetableMap offsetMap(int xOffset, int yOffset) {
         return new OffsetedMap(this,xOffset,yOffset);
     }
 
     @Override
-    public @NonNull Map clearOffsets() {
+    public @NonNull OffsetableMap clearOffsets() {
         return this;
     }
 }
