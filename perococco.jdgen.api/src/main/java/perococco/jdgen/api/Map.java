@@ -5,19 +5,19 @@ import lombok.NonNull;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-public interface Map {
+public interface Map<C extends Cell> {
 
     /**
      * @return a deep copy of this map.
      */
-    @NonNull Map duplicate();
+    @NonNull Map<C> duplicate();
 
     /**
      * @param x the x coordinate of the cell
      * @param y the y coordinate of the cell
      * @return the cell at the requested coordinate. If the coordinates are outside of the map, an empty cell will be return
      */
-    @NonNull Cell getCellAt(int x, int y);
+    @NonNull C getCellAt(int x, int y);
 
     /**
      * @return the size of the map
@@ -34,7 +34,7 @@ public interface Map {
      * @param x the x coordinate of the cell to set
      * @param y the y coordinate of the cell to set
      */
-    void setCellAt(@NonNull Cell cell, int x, int y);
+    void setCellAt(@NonNull C cell, int x, int y);
 
     /**
      * @param x the x coordinate
@@ -50,7 +50,7 @@ public interface Map {
      * @param position the requested position
      * @return the cell at the provided position. If the position is outside of the map, an empty cell is returned
      */
-    default @NonNull Cell getCellAt(@NonNull IntPoint position) {
+    default @NonNull C getCellAt(@NonNull IntPoint position) {
         return getCellAt(position.getX(), position.getY());
     }
 
@@ -58,7 +58,7 @@ public interface Map {
      * @param cell the cell to set
      * @param position the position of the cell to set
      */
-    default void setCellAt(@NonNull Cell cell, @NonNull IntPoint position) {
+    default void setCellAt(@NonNull C cell, @NonNull IntPoint position) {
         updateCell(c -> cell, position);
     }
 
@@ -67,7 +67,7 @@ public interface Map {
      * @param cell the cell to set if the current cell is empty
      * @param position the position of the cell to set
      */
-    default void setCellAtIfEmpty(@NonNull Cell cell, @NonNull IntPoint position) {
+    default void setCellAtIfEmpty(@NonNull C cell, @NonNull IntPoint position) {
         setCellAtIfEmpty(cell, position.getX(), position.getY());
     }
 
@@ -77,7 +77,7 @@ public interface Map {
      * @param x the x position of the cell to set
      * @param y the y position of the cell to set
      */
-    default void setCellAtIfEmpty(@NonNull Cell cell, int x, int y) {
+    default void setCellAtIfEmpty(@NonNull C cell, int x, int y) {
         updateCell(c -> c.isEmpty() ? cell : c, x, y);
     }
 
@@ -85,7 +85,7 @@ public interface Map {
      * @param cellUpdater the cell updater
      * @param position the position where the update will be done
      */
-    default void updateCell(@NonNull UnaryOperator<Cell> cellUpdater, @NonNull IntPoint position) {
+    default void updateCell(@NonNull UnaryOperator<C> cellUpdater, @NonNull IntPoint position) {
         updateCell(cellUpdater, position.getX(), position.getY());
     }
 
@@ -94,7 +94,7 @@ public interface Map {
      * @param x the x position where the update will be done
      * @param y the y position where the update will be done
      */
-    default void updateCell(@NonNull UnaryOperator<Cell> cellUpdater, int x, int y) {
+    default void updateCell(@NonNull UnaryOperator<C> cellUpdater, int x, int y) {
         final var cell = getCellAt(x, y);
         final var newCell = cellUpdater.apply(cell);
         setCellAt(newCell, x, y);

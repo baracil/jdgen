@@ -7,34 +7,31 @@ import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.*;
 import perococco.jdgen.core.IntVector;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ArrayMap implements OffsetableMap {
+public final class ArrayMap<C extends Cell> implements MapInConstruction<C> {
 
-    private final static Cell EMPTY = new Cell(CellType.EMPTY);
-
-    public static @NonNull ArrayMap create(@NonNull Size size) {
-        final Cell[] cells = new Cell[size.getHeight()*size.getWidth()];
-        Arrays.fill(cells, Cell.empty());
-        return new ArrayMap(size, cells);
+    public static @NonNull <C extends Cell> ArrayMap<C> create(@NonNull Size size, @NonNull CellFactory<C> cellFactory) {
+        final C[] cells = IntStream.range(0, size.getHeight()*size.getWidth())
+                                      .mapToObj(i -> cellFactory.createCell(CellType.EMPTY))
+                                      .toArray(cellFactory::arrayConstructor);
+        return new ArrayMap<C>(cellFactory, size, cells);
     }
+
+    private final @NonNull CellFactory<C> cellFactory;
 
     @Getter
     private final @NonNull Size size;
 
-    private final @NonNull Cell[] cells;
+    private final @NonNull C[] cells;
 
-    public Cell getCellAt(int x, int y) {
-        if (this.isOutside(x, y)) {
-            return EMPTY;
-        }
+    public C getCellAt(int x, int y) {
         return cells[toLinearCoordinate(x, y)];
     }
 
-    public void setCellAt(@NonNull Cell cell, int x, int y) {
+    public void setCellAt(@NonNull C cell, int x, int y) {
         this.checkCoordinate(x,y);
         cells[toLinearCoordinate(x, y)] = cell;
     }
@@ -60,17 +57,22 @@ public final class ArrayMap implements OffsetableMap {
     }
 
     @Override
-    public @NonNull OffsetableMap duplicate() {
-        return new ArrayMap(size, cells.clone());
+    public @NonNull MapInConstruction<C> duplicate() {
+        return new ArrayMap<>(cellFactory,size, cells.clone());
     }
 
     @Override
-    public @NonNull OffsetableMap offsetMap(int xOffset, int yOffset) {
-        return new OffsetedMap(this,xOffset,yOffset);
+    public @NonNull MapInConstruction<C> offsetMap(int xOffset, int yOffset) {
+        return new OffsetedMap<>(this,xOffset,yOffset);
     }
 
     @Override
-    public @NonNull OffsetableMap clearOffsets() {
+    public @NonNull MapInConstruction<C> clearOffsets() {
         return this;
+    }
+
+    @Override
+    public @NonNull C createCell(@NonNull CellType cellType) {
+        return cellFactory.createCell(cellType);
     }
 }

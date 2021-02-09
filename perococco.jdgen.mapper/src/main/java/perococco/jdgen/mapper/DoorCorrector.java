@@ -35,10 +35,6 @@ public class DoorCorrector {
         return parameters.getMap().getCellAt(position).getType();
     }
 
-    private void setCellTypeAt(@NonNull CellType cellType, IntPoint position) {
-        parameters.getMap().setCellAt(new Cell(cellType), position);
-    }
-
     private void correctDoor(@NonNull IntPoint position) {
         final var cellType = getCellTypeAt(position);
         if (cellType == CellType.DOOR) {
@@ -57,7 +53,7 @@ public class DoorCorrector {
         final var doorIsInvalid = Arrays.stream(Pattern.values())
                                       .noneMatch(p -> p.isDoorValid(parameters.getMap(), position));
         if (doorIsInvalid) {
-            setCellTypeAt(CellType.CORRIDOR_FLOOR,position);
+            parameters.setCellTypeAt(CellType.CORRIDOR_FLOOR,position);
         }
     }
 
@@ -66,7 +62,7 @@ public class DoorCorrector {
         final var shouldBeDoor = Arrays.stream(Pattern.values())
                                         .anyMatch(p -> p.shouldBeDoor(parameters.getMap(), position));
         if (shouldBeDoor) {
-            setCellTypeAt(CellType.DOOR,position);
+            parameters.setCellTypeAt(CellType.DOOR,position);
         }
     }
 }

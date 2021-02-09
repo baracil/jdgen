@@ -4,16 +4,15 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.Cell;
 
 @RequiredArgsConstructor
-public class WallFiller {
+public class WallFiller<C extends perococco.jdgen.api.Cell> {
 
-    public static void fill(@NonNull MapperParameters parameters) {
+    public static <C extends perococco.jdgen.api.Cell> void fill(@NonNull MapperParameters<C> parameters) {
         new WallFiller(parameters).fill();
     }
 
-    private final @NonNull MapperParameters parameters;
+    private final @NonNull MapperParameters<C> parameters;
 
     private void fill() {
         final var map = parameters.getMap();
@@ -24,21 +23,17 @@ public class WallFiller {
     }
 
     private boolean isEmpty(IntPoint position) {
-        return getCellTypeAt(position) == CellType.EMPTY;
+        return parameters.getCellTypeAt(position) == CellType.EMPTY;
     }
 
     private boolean shouldBeAWall(IntPoint position) {
         return position.neighbours()
-                .map(this::getCellTypeAt)
+                .map(parameters::getCellTypeAt)
                 .anyMatch(t -> t != CellType.EMPTY && t != CellType.WALL);
     }
 
     private void setCellAsWall(IntPoint position) {
-        parameters.getMap().setCellAt(new Cell(CellType.WALL), position);
-    }
-
-    private @NonNull CellType getCellTypeAt(IntPoint position) {
-        return parameters.getMap().getCellAt(position).getType();
+        parameters.getMap().setCellAt(parameters.createCell(CellType.WALL), position);
     }
 
 }

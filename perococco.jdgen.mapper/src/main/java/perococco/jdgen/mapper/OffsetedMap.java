@@ -2,23 +2,20 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.Map;
-import perococco.jdgen.api.Cell;
-import perococco.jdgen.api.Size;
+import perococco.jdgen.api.*;
 
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class OffsetedMap implements OffsetableMap {
+public class OffsetedMap<C extends Cell> implements MapInConstruction<C> {
 
-    private final @NonNull OffsetableMap delegate;
+    private final @NonNull MapInConstruction<C> delegate;
     private final int xOffset;
     private final int yOffset;
 
     @Override
-    public @NonNull OffsetableMap duplicate() {
-        return new OffsetedMap(delegate.duplicate(),xOffset,yOffset);
+    public @NonNull MapInConstruction<C> duplicate() {
+        return new OffsetedMap<>(delegate.duplicate(),xOffset,yOffset);
     }
 
     @Override
@@ -27,18 +24,18 @@ public class OffsetedMap implements OffsetableMap {
     }
 
     @Override
-    public Cell getCellAt(int x, int y) {
+    public C getCellAt(int x, int y) {
         return delegate.getCellAt(x+xOffset,y+yOffset);
     }
 
     @Override
-    public void setCellAt(@NonNull Cell cell, int x, int y) {
+    public void setCellAt(@NonNull C cell, int x, int y) {
         delegate.setCellAt(cell, x+xOffset, y+yOffset);
     }
 
     @Override
-    public @NonNull OffsetableMap offsetMap(int xOffset, int yOffset) {
-        return new OffsetedMap(delegate,this.xOffset+xOffset, this.yOffset+yOffset);
+    public @NonNull MapInConstruction<C> offsetMap(int xOffset, int yOffset) {
+        return new OffsetedMap<>(delegate,this.xOffset+xOffset, this.yOffset+yOffset);
     }
 
     @Override
@@ -47,12 +44,17 @@ public class OffsetedMap implements OffsetableMap {
     }
 
     @Override
-    public @NonNull Map clearOffsets() {
+    public @NonNull Map<C> clearOffsets() {
         return delegate.clearOffsets();
     }
 
     @Override
     public boolean isOutside(int x, int y) {
         return delegate.isOutside(x+xOffset,y+yOffset);
+    }
+
+    @Override
+    public @NonNull C createCell(@NonNull CellType cellType) {
+        return delegate.createCell(cellType);
     }
 }

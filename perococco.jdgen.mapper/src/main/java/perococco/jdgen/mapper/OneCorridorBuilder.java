@@ -14,19 +14,19 @@ import static perococco.jdgen.core.RectangleGeometry.X_AXIS_GETTER;
 import static perococco.jdgen.core.RectangleGeometry.Y_AXIS_GETTER;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class OneCorridorBuilder {
+public class OneCorridorBuilder<C extends Cell> {
 
 
-    public static void build(@NonNull MapperParameters parameters, @NonNull Room room1, @NonNull Room room2) {
+    public static <C extends Cell> void build(@NonNull MapperParameters<C> parameters, @NonNull Room room1, @NonNull Room room2) {
         if (room1.getYc()>=room2.getYc()) {
-            new OneCorridorBuilder(parameters, room1, room2).build();
+            new OneCorridorBuilder<>(parameters, room1, room2).build();
         }
         else {
-            new OneCorridorBuilder(parameters, room2, room1).build();
+            new OneCorridorBuilder<>(parameters, room2, room1).build();
         }
     }
 
-    private final @NonNull MapperParameters parameters;
+    private final @NonNull MapperParameters<C> parameters;
     private final @NonNull Room upperRoom;
     private final @NonNull Room lowerRoom;
 
@@ -99,8 +99,8 @@ public class OneCorridorBuilder {
 
 
         fillLine(start,end);
-        parameters.getMap().setCellAt(new Cell(CellType.DOOR), start);
-        parameters.getMap().setCellAt(new Cell(CellType.DOOR), end);
+        parameters.setCellTypeAt(CellType.DOOR, start);
+        parameters.setCellTypeAt(CellType.DOOR, end);
 
     }
 
@@ -129,8 +129,8 @@ public class OneCorridorBuilder {
     private void fillCorridor(@NonNull IntPoint start, @NonNull IntPoint end, @NonNull IntPoint middle) {
         fillLine(start,middle);
         fillLine(end,middle);
-        parameters.getMap().setCellAt(new Cell(CellType.DOOR), start);
-        parameters.getMap().setCellAt(new Cell(CellType.DOOR), end);
+        parameters.setCellTypeAt(CellType.DOOR, start);
+        parameters.setCellTypeAt(CellType.DOOR, end);
     }
 
     private void generateCorridorForGaucheHaut() {
@@ -195,14 +195,14 @@ public class OneCorridorBuilder {
             final var ys = Math.min(start.getY(), end.getY());
             final var ye = Math.max(start.getY(), end.getY());
             for (int y = ys; y <= ye ; y++) {
-                parameters.getMap().setCellAtIfEmpty(new Cell(CellType.CORRIDOR_FLOOR), start.getX(), y);
+                parameters.setCellTypeAtIfEmpty(CellType.CORRIDOR_FLOOR, start.getX(), y);
             }
         }
         else if (start.getY() == end.getY()) {
             final var xs = Math.min(start.getX(), end.getX());
             final var xe = Math.max(start.getX(), end.getX());
             for (int x = xs; x <= xe ; x++) {
-                parameters.getMap().setCellAtIfEmpty(new Cell(CellType.CORRIDOR_FLOOR), x, start.getY());
+                parameters.setCellTypeAtIfEmpty(CellType.CORRIDOR_FLOOR, x, start.getY());
             }
 
         }

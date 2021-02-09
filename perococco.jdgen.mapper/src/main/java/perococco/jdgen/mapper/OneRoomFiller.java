@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class OneRoomFiller {
+public class OneRoomFiller<C extends Cell> {
 
     public static @NonNull Consumer<RectangleGeometry> createFiller(@NonNull MapperParameters parameters,
                                                                     @NonNull CellType cellType,
@@ -22,14 +22,14 @@ public class OneRoomFiller {
         return room -> fillRoom(parameters, cellType, withWalls, room);
     }
 
-    public static void fillRoom(@NonNull MapperParameters parameters,
+    public static <C extends Cell> void fillRoom(@NonNull MapperParameters<C> parameters,
                                 @NonNull CellType cellType,
                                 boolean withWalls,
                                 @NonNull RectangleGeometry room) {
-        new OneRoomFiller(parameters, cellType, withWalls, room).fill();
+        new OneRoomFiller<>(parameters, cellType, withWalls, room).fill();
     }
 
-    private final @NonNull MapperParameters parameters;
+    private final @NonNull MapperParameters<C> parameters;
     private final @NonNull CellType cellType;
     private final boolean withWalls;
 
@@ -38,7 +38,7 @@ public class OneRoomFiller {
     private void fill() {
         streamRectanglePositions()
                 .forEach(p -> {
-                    final var cell = new Cell(cellType);
+                    final var cell = parameters.createCell(cellType);
                     parameters.getMap().setCellAtIfEmpty(cell, p);
                 });
     }

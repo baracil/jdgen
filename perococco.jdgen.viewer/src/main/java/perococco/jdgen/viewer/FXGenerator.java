@@ -1,6 +1,7 @@
 package perococco.jdgen.viewer;
 
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.CellFactory;
 import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.Room;
 import perococco.jdgen.graph.Delaunay;
@@ -45,7 +46,9 @@ public class FXGenerator {
         final var corridors = PathBuilder.buildPath(configuration,graph,tree);
         fxUpdater.update(s -> s.withPath(corridors));
 
-        final var map = Mapper.perform(MapperParameters.create(configuration, compactedCells, rooms, corridors));
+        final var map = Mapper.perform(MapperParameters.create(configuration,
+                                                               CellFactory.with(FXCell::new, FXCell[]::new),
+                                                               compactedCells, rooms, corridors));
 
         fxUpdater.update(s -> s.withMap(map));
 

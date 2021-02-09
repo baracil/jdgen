@@ -1,34 +1,24 @@
 package perococco.jdgen.api;
 
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
-public class Cell {
+public interface Cell {
 
-    public static @NonNull Cell empty() {
-        return EMPTY;
+    @NonNull CellType getType();
+
+    default boolean isEmpty() {
+        return getType() == CellType.EMPTY;
     }
 
-    private static final Cell EMPTY = new Cell(CellType.EMPTY);
-
-    @Getter
-    private final @NonNull CellType type;
-
-    public boolean isEmpty() {
-        return type == CellType.EMPTY;
+    default boolean isCorridor() {
+        return getType() == CellType.CORRIDOR_FLOOR;
     }
 
-    public boolean isCorridor() {
-        return type == CellType.CORRIDOR_FLOOR;
+    default boolean isFloor() {
+        return getType().isFloor();
     }
 
-    public boolean isFloor() {
-        return type.isFloor();
-    }
-
-    public boolean isRoom() {
-        return type == CellType.ROOM_FLOOR;
+    default boolean isRoom() {
+        return getType() == CellType.ROOM_FLOOR;
     }
 }

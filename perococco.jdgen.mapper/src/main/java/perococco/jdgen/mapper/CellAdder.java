@@ -6,13 +6,13 @@ import perococco.jdgen.api.CellType;
 import perococco.jdgen.core.Cell;
 
 @RequiredArgsConstructor
-public class CellAdder {
+public class CellAdder<C extends perococco.jdgen.api.Cell> {
 
-    public static void addCells(@NonNull MapperParameters parameters) {
-        new CellAdder(parameters).addCells();
+    public static <C extends perococco.jdgen.api.Cell> void addCells(@NonNull MapperParameters<C> parameters) {
+        new CellAdder<>(parameters).addCells();
     }
 
-    private final @NonNull MapperParameters parameters;
+    private final @NonNull MapperParameters<C> parameters;
 
     private void addCells() {
         parameters.cellStream()

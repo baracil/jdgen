@@ -3,19 +3,20 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.Cell;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.Map;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class Mapper {
+public final class Mapper<C extends Cell> {
 
-    public static @NonNull Map perform(@NonNull MapperParameters parameters) {
-        return new Mapper(parameters).perform();
+    public static <C extends Cell> @NonNull Map<C> perform(@NonNull MapperParameters<C> parameters) {
+        return new Mapper<>(parameters).perform();
     }
 
-    @NonNull MapperParameters mapperParameters;
+    @NonNull MapperParameters<C> mapperParameters;
 
-    private @NonNull Map perform() {
+    private @NonNull Map<C> perform() {
         this.fillCellsForMainRooms();
         this.createCorridors();
         this.addCellOverCorridors();
