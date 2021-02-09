@@ -18,7 +18,6 @@
     </scm>
 
     <properties>
-        <revision>1.0.3-SNAPSHOT</revision>
         <application.name>Java Dungeon Generator</application.name>
         <module.name>Parent POM</module.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
