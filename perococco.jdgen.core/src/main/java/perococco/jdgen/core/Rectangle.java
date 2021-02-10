@@ -19,7 +19,7 @@ public interface Rectangle extends RectangleGeometry {
 
     @NonNull Rectangle withPos(double posX, double posY);
 
-    @NonNull Rectangle translate(@NonNull IntVector displacement);
+    @NonNull Rectangle translate(@NonNull Vector displacement);
 
 
 

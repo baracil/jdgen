@@ -1,6 +1,7 @@
 package perococco.jdgen.core;
 
 import lombok.NonNull;
+import perococco.jdgen.api.Position;
 
 import java.util.Comparator;
 import java.util.Optional;
@@ -38,11 +39,9 @@ public interface RectangleGeometry {
 
     double getDistance();
 
-    @NonNull Stream<RectanglePosition> streamPositions();
+    @NonNull Stream<Position> streamPositions();
 
-    default @NonNull Stream<RectanglePosition> streamPositionsWithoutBorders() {
-        return streamPositions().filter(p -> !p.isBorder());
-    }
+    @NonNull Stream<Position> streamPositionsWithoutBorders();
 
     @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry rectangle, @NonNull RectangleGeometry.AxisOperations axisOperations);
 

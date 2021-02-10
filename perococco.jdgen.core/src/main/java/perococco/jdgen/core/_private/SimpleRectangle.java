@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
+import perococco.jdgen.api.Position;
 import perococco.jdgen.core.*;
 
 import java.util.Optional;
@@ -31,18 +32,22 @@ public class SimpleRectangle implements Rectangle {
         this.distance = Math.sqrt(xc * xc + yc * yc);
     }
 
-    public @NonNull Stream<RectanglePosition> streamPositions() {
+    public @NonNull Stream<Position> streamPositions() {
         final int width = halfWidth * 2 + 1;
         final int height = halfHeight * 2 + 1;
+        final int dx = xc-halfWidth;
+        final int dy = yc-halfHeight;
         return IntStream.range(0, width * height)
-                        .mapToObj(i -> new IntVector((i % width) - halfWidth, (i / width) - halfHeight))
-                        .map(this::toRectanglePosition);
+                        .mapToObj(i -> Position.at((i % width) + dx, (i / width) + dy));
     }
 
-    private @NonNull RectanglePosition toRectanglePosition(@NonNull IntVector relativePosition) {
-        final boolean border = Math.abs(relativePosition.getX()) == halfWidth || Math.abs(relativePosition.getY()) == halfHeight;
-        return new RectanglePosition(relativePosition.getX() + xc, relativePosition.getY() + yc, border);
+    @Override
+    public @NonNull Stream<Position> streamPositionsWithoutBorders() {
+        return streamPositions().filter(p -> !isOnBorder(p));
+    }
 
+    private @NonNull boolean isOnBorder(@NonNull Position position) {
+        return Math.abs(position.getX()-xc) == halfWidth || Math.abs(position.getY()-yc) == halfHeight;
     }
 
     public @NonNull Optional<Overlap> computeOverlap(@NonNull RectangleGeometry other, @NonNull RectangleGeometry.AxisOperations axisOperations) {
@@ -89,7 +94,7 @@ public class SimpleRectangle implements Rectangle {
         return new SimpleRectangle((int) Math.round(posX), (int) Math.round(posY), halfWidth, halfHeight);
     }
 
-    public @NonNull Rectangle translate(@NonNull IntVector displacement) {
+    public @NonNull Rectangle translate(@NonNull Vector displacement) {
         return new SimpleRectangle(xc + displacement.getX(), yc + displacement.getY(), halfWidth, halfHeight);
     }
 

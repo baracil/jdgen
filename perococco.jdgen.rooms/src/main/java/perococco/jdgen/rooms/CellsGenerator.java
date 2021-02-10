@@ -79,7 +79,7 @@ public final class CellsGenerator {
 
 
         double distance = Double.NEGATIVE_INFINITY;
-        var displacement = IntVector.NIL;
+        var displacement = Vector.NIL;
 
         for (Rectangle rectangle : result) {
             final var rdx = dxComputer.applyAsInt(rectangle);
@@ -90,13 +90,13 @@ public final class CellsGenerator {
                 continue;
             }
             final double l;
-            final IntVector d;
+            final Vector d;
             if (lx < ly) {
                 l = lx;
-                d = new IntVector(rdx, (int) (lx * dy));
+                d = new Vector(rdx, (int) (lx * dy));
             } else {
                 l = ly;
-                d = new IntVector((int) (ly * dx), rdy);
+                d = new Vector((int) (ly * dx), rdy);
             }
             if (distance < l) {
                 distance = l;

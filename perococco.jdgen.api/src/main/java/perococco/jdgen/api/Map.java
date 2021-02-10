@@ -27,7 +27,7 @@ public interface Map<C extends Cell> {
     /**
      * @return a stream of all the positions on the map
      */
-    @NonNull Stream<IntPoint> allMapPositions();
+    @NonNull Stream<Position> allMapPositions();
 
     /**
      * @param cell the cell to set
@@ -50,7 +50,7 @@ public interface Map<C extends Cell> {
      * @param position the requested position
      * @return the cell at the provided position. If the position is outside of the map, an empty cell is returned
      */
-    default @NonNull C getCellAt(@NonNull IntPoint position) {
+    default @NonNull C getCellAt(@NonNull Position position) {
         return getCellAt(position.getX(), position.getY());
     }
 
@@ -58,7 +58,7 @@ public interface Map<C extends Cell> {
      * @param cell the cell to set
      * @param position the position of the cell to set
      */
-    default void setCellAt(@NonNull C cell, @NonNull IntPoint position) {
+    default void setCellAt(@NonNull C cell, @NonNull Position position) {
         updateCell(c -> cell, position);
     }
 
@@ -67,7 +67,7 @@ public interface Map<C extends Cell> {
      * @param cell the cell to set if the current cell is empty
      * @param position the position of the cell to set
      */
-    default void setCellAtIfEmpty(@NonNull C cell, @NonNull IntPoint position) {
+    default void setCellAtIfEmpty(@NonNull C cell, @NonNull Position position) {
         setCellAtIfEmpty(cell, position.getX(), position.getY());
     }
 
@@ -85,7 +85,7 @@ public interface Map<C extends Cell> {
      * @param cellUpdater the cell updater
      * @param position the position where the update will be done
      */
-    default void updateCell(@NonNull UnaryOperator<C> cellUpdater, @NonNull IntPoint position) {
+    default void updateCell(@NonNull UnaryOperator<C> cellUpdater, @NonNull Position position) {
         updateCell(cellUpdater, position.getX(), position.getY());
     }
 
@@ -104,7 +104,7 @@ public interface Map<C extends Cell> {
      * @param position the requested position
      * @return true if the position is outside of the map
      */
-    default boolean isOutside(@NonNull IntPoint position) {
+    default boolean isOutside(@NonNull Position position) {
         return isOutside(position.getX(), position.getY());
     }
 

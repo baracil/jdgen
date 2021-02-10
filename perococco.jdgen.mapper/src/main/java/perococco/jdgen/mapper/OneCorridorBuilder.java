@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.IntPoint;
+import perococco.jdgen.api.Position;
 import perococco.jdgen.api.Cell;
 import perococco.jdgen.core.*;
 
@@ -75,19 +75,19 @@ public class OneCorridorBuilder<C extends Cell> {
 
     private void buildVerticalCorridor() {
         assert xOverlap != null;
-        buildLinearCorridor(xOverlap,x -> y -> new IntVector(x,y), Y_AXIS_GETTER);
+        buildLinearCorridor(xOverlap,x -> y -> Position.at(x, y), Y_AXIS_GETTER);
     }
 
     private void buildHorizontalCorridor() {
         assert yOverlap != null;
-        buildLinearCorridor(yOverlap,y -> x -> new IntVector(x,y), X_AXIS_GETTER);
+        buildLinearCorridor(yOverlap,y -> x -> Position.at(x, y), X_AXIS_GETTER);
     }
 
     private void buildLinearCorridor(@NonNull Overlap overlap,
-                                     @NonNull IntFunction<IntFunction<IntVector>> doorFactory,
+                                     @NonNull IntFunction<IntFunction<Position>> doorFactory,
                                      @NonNull RectangleGeometry.AxisOperations op) {
         final var doorPosition = overlap.pickAtRandom(parameters.getRandom());
-        final IntFunction<IntVector> corridorPoint = doorFactory.apply(doorPosition);
+        final IntFunction<Position> corridorPoint = doorFactory.apply(doorPosition);
 
 
         final var room1IsHigher = op.getCenter(upperRoom) > op.getCenter(lowerRoom);
@@ -126,7 +126,7 @@ public class OneCorridorBuilder<C extends Cell> {
         generator.run();
     }
 
-    private void fillCorridor(@NonNull IntPoint start, @NonNull IntPoint end, @NonNull IntPoint middle) {
+    private void fillCorridor(@NonNull Position start, @NonNull Position end, @NonNull Position middle) {
         fillLine(start,middle);
         fillLine(end,middle);
         parameters.setCellTypeAt(CellType.DOOR, start);
@@ -140,9 +140,9 @@ public class OneCorridorBuilder<C extends Cell> {
         var xe = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
         var ye = Y_AXIS_GETTER.getUpperBound(lowerRoom);
 
-        final var start = new IntVector(xs,ys);
-        final var end = new IntVector(xe,ye);
-        final var middle = new IntVector(xe,ys);
+        final var start = Position.at(xs, ys);
+        final var end = Position.at(xe, ye);
+        final var middle = Position.at(xe, ys);
 
         fillCorridor(start,end,middle);
     }
@@ -153,9 +153,9 @@ public class OneCorridorBuilder<C extends Cell> {
         var xe = X_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
         var ye = Y_AXIS_GETTER.getUpperBound(lowerRoom);
 
-        final var start = new IntVector(xs,ys);
-        final var end = new IntVector(xe,ye);
-        final var middle = new IntVector(xe,ys);
+        final var start = Position.at(xs, ys);
+        final var end = Position.at(xe, ye);
+        final var middle = Position.at(xe, ys);
 
         fillCorridor(start,end,middle);
     }
@@ -167,9 +167,9 @@ public class OneCorridorBuilder<C extends Cell> {
         var xe = X_AXIS_GETTER.getUpperBound(lowerRoom);
         var ye = Y_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom, parameters.getRandom());
 
-        final var start = new IntVector(xs,ys);
-        final var end = new IntVector(xe,ye);
-        final var middle = new IntVector(xs,ye);
+        final var start = Position.at(xs, ys);
+        final var end = Position.at(xe, ye);
+        final var middle = Position.at(xs, ye);
 
         fillCorridor(start,end,middle);
     }
@@ -181,16 +181,16 @@ public class OneCorridorBuilder<C extends Cell> {
         var xe = X_AXIS_GETTER.getLowerBound(lowerRoom);
         var ye = Y_AXIS_GETTER.pickPositionOnSizeWithoutBorder(lowerRoom,parameters.getRandom());
 
-        final var start = new IntVector(xs,ys);
-        final var end = new IntVector(xe,ye);
-        final var middle = new IntVector(xs,ye);
+        final var start = Position.at(xs, ys);
+        final var end = Position.at(xe, ye);
+        final var middle = Position.at(xs, ye);
 
         fillCorridor(start,end,middle);
     }
 
 
 
-    private void fillLine(@NonNull IntPoint start, @NonNull IntPoint end) {
+    private void fillLine(@NonNull Position start, @NonNull Position end) {
         if (start.getX() == end.getX()) {
             final var ys = Math.min(start.getY(), end.getY());
             final var ye = Math.max(start.getY(), end.getY());

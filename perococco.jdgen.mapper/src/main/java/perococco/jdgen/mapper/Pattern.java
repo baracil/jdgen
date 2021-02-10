@@ -3,7 +3,7 @@ package perococco.jdgen.mapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.IntPoint;
+import perococco.jdgen.api.Position;
 import perococco.jdgen.api.Map;
 
 import java.util.function.Function;
@@ -12,19 +12,19 @@ import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public enum Pattern {
-    UP(IntPoint::upperNeighbours, IntPoint::left, IntPoint::right),
-    LEFT(IntPoint::leftNeighbours, IntPoint::above, IntPoint::below),
-    RIGHT(IntPoint::rightNeighbours, IntPoint::above, IntPoint::below),
-    BELOW(IntPoint::lowerNeighbours, IntPoint::left, IntPoint::right);
+    UP(Position::upperNeighbours, Position::left, Position::right),
+    LEFT(Position::leftNeighbours, Position::above, Position::below),
+    RIGHT(Position::rightNeighbours, Position::above, Position::below),
+    BELOW(Position::lowerNeighbours, Position::left, Position::right);
 
 
-    private final @NonNull Function<IntPoint, Stream<IntPoint>> rowStream;
-    private final @NonNull Function<IntPoint, IntPoint> side1Provider;
-    private final @NonNull Function<IntPoint, IntPoint> side2Provider;
+    private final @NonNull Function<Position, Stream<Position>> rowStream;
+    private final @NonNull Function<Position, Position> side1Provider;
+    private final @NonNull Function<Position, Position> side2Provider;
 
 
-    public @NonNull boolean isDoorValid(@NonNull Map map, @NonNull IntPoint point) {
-        final Function<IntPoint, CellType> cellTypeGetter = p -> map.getCellAt(p).getType();
+    public @NonNull boolean isDoorValid(@NonNull Map map, @NonNull Position point) {
+        final Function<Position, CellType> cellTypeGetter = p -> map.getCellAt(p).getType();
         final var nbRooms = rowStream.apply(point)
                                      .map(cellTypeGetter)
                                      .filter(c -> c == CellType.ROOM_FLOOR)
@@ -40,8 +40,8 @@ public enum Pattern {
         return false;
     }
 
-    public boolean shouldBeDoor(@NonNull Map map, @NonNull IntPoint point) {
-        final Function<IntPoint, CellType> cellTypeGetter = p -> map.getCellAt(p).getType();
+    public boolean shouldBeDoor(@NonNull Map map, @NonNull Position point) {
+        final Function<Position, CellType> cellTypeGetter = p -> map.getCellAt(p).getType();
         final var has3Rooms = rowStream.apply(point)
                                        .map(cellTypeGetter)
                                        .allMatch(c -> c == CellType.ROOM_FLOOR);

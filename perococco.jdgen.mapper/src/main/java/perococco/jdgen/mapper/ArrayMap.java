@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.*;
-import perococco.jdgen.core.IntVector;
+import perococco.jdgen.core.Vector;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -37,7 +37,7 @@ public final class ArrayMap<C extends Cell> implements MapInConstruction<C> {
     }
 
     @Override
-    public @NonNull Stream<IntPoint> allMapPositions() {
+    public @NonNull Stream<Position> allMapPositions() {
         return IntStream.range(0, cells.length).mapToObj(this::toPointCoordinate);
     }
 
@@ -45,9 +45,9 @@ public final class ArrayMap<C extends Cell> implements MapInConstruction<C> {
         return x+y*size.getWidth();
     }
 
-    private @NonNull IntPoint toPointCoordinate(int linearCoordinate) {
+    private @NonNull Position toPointCoordinate(int linearCoordinate) {
         final var width = size.getWidth();
-        return new IntVector(linearCoordinate%width, linearCoordinate/width);
+        return Position.at(linearCoordinate % width, linearCoordinate / width);
     }
 
     private void checkCoordinate(int x, int y) {

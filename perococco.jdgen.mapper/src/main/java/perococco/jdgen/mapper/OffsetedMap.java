@@ -39,7 +39,7 @@ public class OffsetedMap<C extends Cell> implements MapInConstruction<C> {
     }
 
     @Override
-    public @NonNull Stream<IntPoint> allMapPositions() {
+    public @NonNull Stream<Position> allMapPositions() {
         return delegate.allMapPositions().map(p -> p.translate(-xOffset,-yOffset));
     }
 

@@ -3,7 +3,7 @@ package perococco.jdgen.mapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.IntPoint;
+import perococco.jdgen.api.Position;
 
 @RequiredArgsConstructor
 public class WallFiller<C extends perococco.jdgen.api.Cell> {
@@ -22,17 +22,17 @@ public class WallFiller<C extends perococco.jdgen.api.Cell> {
            .forEach(this::setCellAsWall);
     }
 
-    private boolean isEmpty(IntPoint position) {
+    private boolean isEmpty(Position position) {
         return parameters.getCellTypeAt(position) == CellType.EMPTY;
     }
 
-    private boolean shouldBeAWall(IntPoint position) {
+    private boolean shouldBeAWall(Position position) {
         return position.neighbours()
                 .map(parameters::getCellTypeAt)
                 .anyMatch(t -> t != CellType.EMPTY && t != CellType.WALL);
     }
 
-    private void setCellAsWall(IntPoint position) {
+    private void setCellAsWall(Position position) {
         parameters.getMap().setCellAt(parameters.createCell(CellType.WALL), position);
     }
 

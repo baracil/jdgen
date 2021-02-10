@@ -4,10 +4,10 @@ package perococco.jdgen.mapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.Cell;
+import perococco.jdgen.api.CellType;
+import perococco.jdgen.api.Position;
 import perococco.jdgen.core.RectangleGeometry;
-import perococco.jdgen.core.RectanglePosition;
 
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -38,12 +38,11 @@ public class OneRoomFiller<C extends Cell> {
     private void fill() {
         streamRectanglePositions()
                 .forEach(p -> {
-                    final var cell = parameters.createCell(cellType);
-                    parameters.getMap().setCellAtIfEmpty(cell, p);
+                    parameters.setCellTypeAtIfEmpty(cellType, p);
                 });
     }
 
-    public Stream<RectanglePosition> streamRectanglePositions() {
+    public Stream<? extends Position> streamRectanglePositions() {
         if (withWalls) {
             return room.streamPositions();
         } else {

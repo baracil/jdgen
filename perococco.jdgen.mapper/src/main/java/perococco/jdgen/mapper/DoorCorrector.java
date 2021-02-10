@@ -3,8 +3,7 @@ package perococco.jdgen.mapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.IntPoint;
-import perococco.jdgen.api.Cell;
+import perococco.jdgen.api.Position;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -24,32 +23,32 @@ public class DoorCorrector {
         applyToAllPositions(this::correctDoor);
     }
 
-    private void applyToAllPositions(@NonNull Consumer<? super IntPoint> action) {
+    private void applyToAllPositions(@NonNull Consumer<? super Position> action) {
         parameters.getMap()
                   .allMapPositions()
-                  .sorted(Comparator.comparingInt(IntPoint::getX).thenComparingInt(IntPoint::getY))
+                  .sorted(Comparator.comparingInt(Position::getX).thenComparingInt(Position::getY))
                   .forEach(action);
     }
 
-    private @NonNull CellType getCellTypeAt(IntPoint position) {
+    private @NonNull CellType getCellTypeAt(Position position) {
         return parameters.getMap().getCellAt(position).getType();
     }
 
-    private void correctDoor(@NonNull IntPoint position) {
+    private void correctDoor(@NonNull Position position) {
         final var cellType = getCellTypeAt(position);
         if (cellType == CellType.DOOR) {
             checkIfDoorIsValid(position);
         }
     }
 
-    private void correctCorridor(@NonNull IntPoint position) {
+    private void correctCorridor(@NonNull Position position) {
         final var cellType = getCellTypeAt(position);
         if (cellType == CellType.CORRIDOR_FLOOR) {
             checkIfCorridorShouldBeADoor(position);
         }
     }
 
-    private void checkIfDoorIsValid(IntPoint position) {
+    private void checkIfDoorIsValid(Position position) {
         final var doorIsInvalid = Arrays.stream(Pattern.values())
                                       .noneMatch(p -> p.isDoorValid(parameters.getMap(), position));
         if (doorIsInvalid) {
@@ -58,7 +57,7 @@ public class DoorCorrector {
     }
 
 
-    private void checkIfCorridorShouldBeADoor(IntPoint position) {
+    private void checkIfCorridorShouldBeADoor(Position position) {
         final var shouldBeDoor = Arrays.stream(Pattern.values())
                                         .anyMatch(p -> p.shouldBeDoor(parameters.getMap(), position));
         if (shouldBeDoor) {

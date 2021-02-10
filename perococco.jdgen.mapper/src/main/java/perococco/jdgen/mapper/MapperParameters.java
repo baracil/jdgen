@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perococco.jdgen.api.CellFactory;
 import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.IntPoint;
+import perococco.jdgen.api.Position;
 import perococco.jdgen.api.JDGenConfiguration;
 import perococco.jdgen.core.*;
 
@@ -41,12 +41,16 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
         corridors.forEach(corridorConsumer);
     }
 
-    public void setCellTypeAt(@NonNull CellType cellType,@NonNull IntPoint position) {
+    public void setCellTypeAt(@NonNull CellType cellType,@NonNull Position position) {
         map.setCellAt(createCell(cellType),position);
     }
 
     public void setCellTypeAtIfEmpty(CellType cellType, int x, int y) {
         map.setCellAtIfEmpty(createCell(cellType),x,y);
+    }
+
+    public void setCellTypeAtIfEmpty(CellType cellType, @NonNull Position position) {
+        map.setCellAtIfEmpty(createCell(cellType),position.getX(),position.getY());
     }
 
 
@@ -79,7 +83,7 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
         );
     }
 
-    public @NonNull CellType getCellTypeAt(@NonNull IntPoint position) {
+    public @NonNull CellType getCellTypeAt(@NonNull Position position) {
         if (map.isOutside(position)) {
             return CellType.EMPTY;
         }
