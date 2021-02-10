@@ -2,6 +2,7 @@ package perococco.jdgen.mapper;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perococco.jdgen.api.Cell;
 import perococco.jdgen.api.CellType;
 import perococco.jdgen.api.Position;
 
@@ -10,13 +11,13 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 
 @RequiredArgsConstructor
-public class DoorCorrector {
+public class DoorCorrector<C extends Cell> {
 
-    public static void correct(@NonNull MapperParameters parameters) {
-        new DoorCorrector(parameters).correct();//53a444e93732424f
+    public static <C extends Cell> void correct(@NonNull MapperParameters<C> parameters) {
+        new DoorCorrector(parameters).correct();
     }
 
-    private final @NonNull MapperParameters parameters;
+    private final @NonNull MapperParameters<C> parameters;
 
     private void correct() {
         applyToAllPositions(this::correctCorridor);

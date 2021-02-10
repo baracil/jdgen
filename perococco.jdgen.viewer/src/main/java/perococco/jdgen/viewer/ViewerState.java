@@ -27,9 +27,9 @@ public class ViewerState {
 
     private final @NonNull ImmutableList<Couple<Room>> path;
 
-    private final Map map;
+    private final Map<FXCell> map;
 
-    public @NonNull Optional<Map> map() {
+    public @NonNull Optional<Map<FXCell>> map() {
         return Optional.ofNullable(map);
     }
 
@@ -61,7 +61,7 @@ public class ViewerState {
         return toBuilder().path(path).build();
     }
 
-    public @NonNull ViewerState withMap(@NonNull Map map) {
+    public @NonNull ViewerState withMap(@NonNull Map<FXCell> map) {
         return toBuilder().map(map).build();
     }
 }

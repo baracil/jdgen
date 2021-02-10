@@ -22,7 +22,7 @@ public final class Mapper<C extends Cell> {
         this.addCellOverCorridors();
         this.correctDoors();
         this.fillWalls();
-        return mapperParameters.getMap().clearOffsets();
+        return mapperParameters.getMap().clearTransformation();
     }
 
     private void fillCellsForMainRooms() {

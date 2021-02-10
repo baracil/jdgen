@@ -60,10 +60,14 @@ public class MapView extends Canvas {
 
         final var cellSize = Math.min(sizeX,sizeY);
 
+        map.allMapPositions().forEach(p -> {
+            var cell = map.getCellAt(p);
+            drawCell(context,p.getX(),p.getY(),cell,cellSize);
+
+        });
+
         for (int x = 0; x < size.getWidth(); x++) {
             for(int y = 0; y<size.getHeight();y++) {
-                var cell = map.getCellAt(x,y);
-                drawCell(context,x,y,cell,cellSize);
             }
          }
     }

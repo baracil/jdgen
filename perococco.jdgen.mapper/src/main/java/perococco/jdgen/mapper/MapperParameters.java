@@ -4,11 +4,9 @@ import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perococco.jdgen.api.CellFactory;
-import perococco.jdgen.api.CellType;
-import perococco.jdgen.api.Position;
-import perococco.jdgen.api.JDGenConfiguration;
+import perococco.jdgen.api.*;
 import perococco.jdgen.core.*;
+import perococco.jdgen.core.Cell;
 
 import java.util.Random;
 import java.util.function.Consumer;
@@ -23,7 +21,7 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
     @Getter
     private final @NonNull Random random;
     @Getter
-    private final @NonNull MapInConstruction<C> map;
+    private final @NonNull Map<C> map;
     private final @NonNull ImmutableList<Cell> cells;
     private final @NonNull ImmutableList<Room> rooms;
     private final @NonNull ImmutableList<Couple<Room>> corridors;
@@ -45,12 +43,8 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
         map.setCellAt(createCell(cellType),position);
     }
 
-    public void setCellTypeAtIfEmpty(CellType cellType, int x, int y) {
-        map.setCellAtIfEmpty(createCell(cellType),x,y);
-    }
-
     public void setCellTypeAtIfEmpty(CellType cellType, @NonNull Position position) {
-        map.setCellAtIfEmpty(createCell(cellType),position.getX(),position.getY());
+        map.setCellAtIfEmpty(createCell(cellType),position);
     }
 
 
@@ -71,12 +65,15 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
         final var cellsNotInRoom = cells.stream().filter(c -> !cellAsRoom.contains(c)).collect(ImmutableList.toImmutableList());
         final var geometry = GeometryComputer.compute(rooms);
 
-        return new MapperParameters<>(
+        final var dx = geometry.getXOffset()+1;
+        final var dy = geometry.getYOffset()+1;
+
+        return new MapperParameters<C>(
                 configuration,
                 cellFactory,
                 Exec.with(new Random()).run(r -> r.setSeed(configuration.getSeed())),
                 ArrayMap.create(geometry.getSize().addMargin(2), cellFactory)
-                        .offsetMap(geometry.getXOffset() + 1, geometry.getYOffset() + 1),
+                        .setTransformation(Transformation.offset(dx,dy)),
                 cellsNotInRoom,
                 rooms,
                 corridors

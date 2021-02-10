@@ -8,7 +8,9 @@ import perococco.jdgen.api.Position;
 import perococco.jdgen.api.Cell;
 import perococco.jdgen.core.*;
 
+import java.util.function.Consumer;
 import java.util.function.IntFunction;
+import java.util.stream.IntStream;
 
 import static perococco.jdgen.core.RectangleGeometry.X_AXIS_GETTER;
 import static perococco.jdgen.core.RectangleGeometry.Y_AXIS_GETTER;
@@ -191,20 +193,20 @@ public class OneCorridorBuilder<C extends Cell> {
 
 
     private void fillLine(@NonNull Position start, @NonNull Position end) {
+        final Consumer<Position> setAsCorridor = p -> parameters.setCellTypeAtIfEmpty(CellType.CORRIDOR_FLOOR,p);
         if (start.getX() == end.getX()) {
             final var ys = Math.min(start.getY(), end.getY());
             final var ye = Math.max(start.getY(), end.getY());
-            for (int y = ys; y <= ye ; y++) {
-                parameters.setCellTypeAtIfEmpty(CellType.CORRIDOR_FLOOR, start.getX(), y);
-            }
+            IntStream.rangeClosed(ys,ye)
+                     .mapToObj(y -> Position.at(start.getX(),y))
+                     .forEach(setAsCorridor);
         }
         else if (start.getY() == end.getY()) {
             final var xs = Math.min(start.getX(), end.getX());
             final var xe = Math.max(start.getX(), end.getX());
-            for (int x = xs; x <= xe ; x++) {
-                parameters.setCellTypeAtIfEmpty(CellType.CORRIDOR_FLOOR, x, start.getY());
-            }
-
+            IntStream.rangeClosed(xs,xe)
+                     .mapToObj(x -> Position.at(x,start.getY()))
+                     .forEach(setAsCorridor);
         }
 
     }
