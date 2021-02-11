@@ -65,8 +65,8 @@ public class MapperParameters<C extends perococco.jdgen.api.Cell> {
         final var cellsNotInRoom = cells.stream().filter(c -> !cellAsRoom.contains(c)).collect(ImmutableList.toImmutableList());
         final var geometry = GeometryComputer.compute(rooms);
 
-        final var dx = geometry.getXOffset()+1;
-        final var dy = geometry.getYOffset()+1;
+        final var dx = geometry.getXOffset()+2;
+        final var dy = geometry.getYOffset()+2;
 
         return new MapperParameters<C>(
                 configuration,
