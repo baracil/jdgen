@@ -4,7 +4,7 @@
 
     <groupId>perococco.jdgen</groupId>
     <artifactId>jdgen-maven</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8</version>
     <packaging>pom</packaging>
 
     <name>${application.name} - ${module.name}</name>
