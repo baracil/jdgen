@@ -1,4 +1,5 @@
 import perococco.gen.generator.DungeonGenerator;
+import perococco.gen.generator._private.PerococcoDungeonGenerator;
 
 module jdgen.generator {
     uses DungeonGenerator;
@@ -11,4 +12,6 @@ module jdgen.generator {
 
 
     exports perococco.gen.generator;
+
+    provides DungeonGenerator with PerococcoDungeonGenerator;
 }

@@ -1,6 +1,7 @@
 package perococco.gen.generator;
 
 import lombok.NonNull;
+import perococco.gen.generator._private.Loader;
 import perococco.gen.generator._private.PerococcoDungeonGenerator;
 import perococco.gen.generator._private.SimpleCell;
 import perococco.jdgen.api.Cell;
@@ -19,11 +20,11 @@ public interface DungeonGenerator {
     }
 
     static @NonNull DungeonGenerator create() {
-        return ServiceLoader.load(DungeonGenerator.class)
-                            .stream()
-                            .map(ServiceLoader.Provider::get)
-                            .findFirst()
-                            .orElseGet(PerococcoDungeonGenerator::new);
+        return new Loader().create();
+    }
+
+    static @NonNull DungeonGenerator create(@NonNull ModuleLayer moduleLayer) {
+        return new Loader().create(moduleLayer);
     }
 
 }
